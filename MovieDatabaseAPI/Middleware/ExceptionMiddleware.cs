@@ -32,7 +32,7 @@ namespace MovieDatabaseAPI.Middleware
                 httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                 var response = _hostEnvironment.IsDevelopment()
-                    ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+                    ? new ApiException(httpContext.Response.StatusCode, ex.Message, ex.StackTrace ?? "Stack trace not available")
                     : new ApiException(httpContext.Response.StatusCode, ex.Message, "Internal Server Error");
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

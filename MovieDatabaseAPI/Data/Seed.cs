@@ -1,19 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Entities;
 
 namespace MovieDatabaseAPI.Data
 {
     public class Seed
     {
-        public static async Task SeedUsers(DataContext context)
+        public static async Task SeedUsers(UserManager<User> userManager)
         {
-            if (await context.Users.AnyAsync()) return;
+            if (await userManager.Users.AnyAsync()) return;
 
             var usersToSeed = new List<User>
             {
                 new User
                 {
                     Id = Guid.NewGuid(),
+                    UserName = "John123",
                     KnownAs = "John Doe",
                     Gender = "Male",
                     Introduction = "Hello, I'm John Doe!",
@@ -23,6 +25,7 @@ namespace MovieDatabaseAPI.Data
                 new User
                 {
                     Id = Guid.NewGuid(),
+                    UserName = "Jane31",
                     KnownAs = "Jane Doe",
                     Gender = "Female",
                     Introduction = "Hi, I'm Jane Doe!",
@@ -31,9 +34,11 @@ namespace MovieDatabaseAPI.Data
                 },
             };
 
-            context.Users.AddRange(usersToSeed);
-
-            await context.SaveChangesAsync();
+            foreach (var user in usersToSeed)
+            {
+                user.UserName = user.UserName!.ToLower();
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+            }
         }
     }
 }

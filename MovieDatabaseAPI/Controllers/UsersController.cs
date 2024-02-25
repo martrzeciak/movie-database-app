@@ -16,20 +16,20 @@ namespace MovieDatabaseAPI.Controllers
             _dataContext = dataContext;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            var users = await _dataContext.Users.ToListAsync();
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        //{
+        //    var users = await _dataContext.Users.ToListAsync();
 
-            return users;
-        }
+        //    return users;
+        //}
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
-        {
-            var user = await _dataContext.Users.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetUser(Guid id)
+        //{
+        //    var user = await _dataContext.Users.FindAsync(id);
 
-            return user;
-        }
+        //    return user;
+        //}
     }
 }
