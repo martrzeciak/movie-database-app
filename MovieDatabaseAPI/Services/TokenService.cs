@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,18 +11,24 @@ namespace MovieDatabaseAPI.Services
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        public TokenService(IConfiguration configuration)
+        private readonly UserManager<User> _userManager;
+
+        public TokenService(IConfiguration configuration, UserManager<User> userManager)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]!));
+            _userManager = userManager;
         }
 
-        public string CreateToken(User user)
+        public async Task<string> CreateTokenAsync(User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName!),
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

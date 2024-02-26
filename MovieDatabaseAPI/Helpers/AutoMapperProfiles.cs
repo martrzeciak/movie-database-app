@@ -9,6 +9,9 @@ namespace MovieDatabaseAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<RegisterDto, User>();
+            CreateMap<Movie, MovieDto>();
+            CreateMap<Movie, MovieDetailDto>();
+            CreateMap<Genre, GenreDto>();
         }
     }
 }

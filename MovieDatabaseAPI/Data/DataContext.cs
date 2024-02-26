@@ -9,6 +9,8 @@ namespace MovieDatabaseAPI.Data
         IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>
     {
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {

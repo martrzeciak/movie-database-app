@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
-using MovieDatabaseAPI.Entities;
 
 namespace MovieDatabaseAPI.Controllers
 {

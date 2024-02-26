@@ -3,30 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Extensions;
-using MovieDatabaseAPI.Helpers;
-using MovieDatabaseAPI.Interfaces;
 using MovieDatabaseAPI.Middleware;
-using MovieDatabaseAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors();
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
-builder.Services.AddScoped<ITokenService, TokenService>();
-
 
 var app = builder.Build();
 
@@ -44,13 +32,12 @@ app.UseCors(builder => builder
     .AllowAnyMethod()
     .WithOrigins("https://localhost:4200"));
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 // Seed users data
 using var scope = app.Services.CreateScope();
@@ -61,7 +48,7 @@ try
     var userManager = services.GetRequiredService<UserManager<User>>();
     var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedUsers(userManager);
+    await Seed.SeedUsers(context, userManager, roleManager);
 }
 catch (Exception ex)
 {
