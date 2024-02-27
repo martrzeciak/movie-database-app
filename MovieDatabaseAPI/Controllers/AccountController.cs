@@ -62,7 +62,6 @@ namespace MovieDatabaseAPI.Controllers
             {
                 UserName = user.UserName!,
                 Token = await _tokenService.CreateTokenAsync(user),
-                PhotoUrl = user.PhotoUrl,
                 Gender = user.Gender
             };
 
