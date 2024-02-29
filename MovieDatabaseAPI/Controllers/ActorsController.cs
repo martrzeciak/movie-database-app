@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
@@ -18,25 +19,27 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ActorDto>> GetActors()
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
-            var actors = await _dataContext.Actors
-                .Include(i => i.ActorImage)
-                .ToListAsync();
+            var actors = _dataContext.Actors
+                .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking();
 
-            return _mapper.Map<IEnumerable<ActorDto>>(actors);
+            if (actors == null) return NotFound();
+
+            return Ok(actors);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActorDetailsDto> GetActor(Guid id)
+        public async Task<ActionResult<ActorDetailsDto>> GetActor(Guid id)
         {
             var actor = await _dataContext.Actors
                 .Include(i => i.ActorImage)
-                .Include(m => m.Movies)
-                    .ThenInclude(p => p.Poster)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            return _mapper.Map<ActorDetailsDto>(actor);
+            if (actor == null) return NotFound();
+
+            return Ok(_mapper.Map<ActorDetailsDto>(actor));
         }
     }
 }

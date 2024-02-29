@@ -116,7 +116,7 @@ namespace MovieDatabaseAPI.Data
                         "role in the children's television series The " +
                         "Electric Company.",
                     HeightInCentimeters = 188,
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
+                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" },
                 },
                 new Actor // 1
                 {
@@ -276,7 +276,7 @@ namespace MovieDatabaseAPI.Data
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
                     Poster = new Poster() { PosterUrl = "Image Placeholder" },
-                    Actors = new List<Actor> { actors[0], actors[1] }
+                    Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
                 new Movie // 1
@@ -291,7 +291,7 @@ namespace MovieDatabaseAPI.Data
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
                     Poster = new Poster() { PosterUrl = "Image Placeholder" },
-                    Actors = new List<Actor> { actors[2], actors[3] }
+                    Actors = new List<Actor> { actors[2], actors[3] },
                 },
                 new Movie // 2
                 {
@@ -306,103 +306,183 @@ namespace MovieDatabaseAPI.Data
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
                     Poster = new Poster() { PosterUrl = "Image Placeholder" },
-                    Actors = new List<Actor> { actors[5], actors[6] }
+                    Actors = new List<Actor> { actors[5], actors[6] },
                 },
-                //new Movie // 3
-                //{
-                //    Title = "12 Angry Men",
-                //    ReleaseDate = 1957,
-                //    DurationInMinutes = 152,
-                //    Genres = new List<Genre> { genres[6], genres[1] },
-                //    Director = "Sidney Lumet",
-                //    Description =
-                //        "The jury in a New York City murder trial is frustrated " +
-                //        "by a single member whose skeptical caution forces them " +
-                //        "to more carefully consider the evidence before jumping to " +
-                //        "a hasty verdict.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 4
-                //{
-                //    Title = "Lista Schindlera",
-                //    ReleaseDate = 1993,
-                //    DurationInMinutes = 195,
-                //    Genres = new List<Genre> { genres[5], genres[1], genres[11] },
-                //    Director = "Steven Spielberg",
-                //    Description =
-                //        "In German-occupied Poland during World War II, industrialist " +
-                //        "Oskar Schindler gradually becomes concerned for his Jewish " +
-                //        "workforce after witnessing their persecution by the Nazis.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 5
-                //{
-                //    Title = "Terminator 2: Judgment Day",
-                //    ReleaseDate = 1991,
-                //    DurationInMinutes = 137,
-                //    Genres = new List<Genre> { genres[0], genres[17] },
-                //    Director = "James Cameron",
-                //    Description =
-                //        "A cyborg, identical to the one who failed to kill Sarah Connor, must " +
-                //        "now protect her ten year old son John from an even more advanced and " +
-                //        "powerful cyborg.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 6
-                //{
-                //    Title = "The Lord of the Rings: The Return of the King",
-                //    ReleaseDate = 2003,
-                //    DurationInMinutes = 201,
-                //    Genres = new List<Genre> { genres[0], genres[1], genres[3] },
-                //    Director = "Peter Jackson",
-                //    Description =
-                //        "Gandalf and Aragorn lead the World of Men against Sauron's " +
-                //        "army to draw his gaze from Frodo and Sam as they approach " +
-                //        "Mount Doom with the One Ring.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 7
-                //{
-                //    Title = "Pulp Fiction",
-                //    ReleaseDate = 1994,
-                //    DurationInMinutes = 153,
-                //    Genres = new List<Genre> { genres[1], genres[6] },
-                //    Director = "Quentin Tarantino",
-                //    Description =
-                //        "The lives of two mob hitmen, a boxer, a gangster and his wife, " +
-                //        "and a pair of diner bandits intertwine in four tales of violence " +
-                //        "and redemption.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 8
-                //{
-                //    Title = "Fight Club",
-                //    ReleaseDate = 1999,
-                //    DurationInMinutes = 139,
-                //    Genres = new List<Genre> { genres[1] },
-                //    Director = "David Fincher",
-                //    Description =
-                //        "An insomniac office worker and a devil-may-care soap maker form an " +
-                //        "underground fight club that evolves into much more.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
-                //new Movie // 9
-                //{
-                //    Title = "The Matrix",
-                //    ReleaseDate = 1999,
-                //    DurationInMinutes = 136,
-                //    Genres = new List<Genre> { genres[0], genres[17] },
-                //    Director = "Lana Wachowski, Lilly Wachowski",
-                //    Description =
-                //        "When a beautiful stranger leads computer hacker Neo to a forbidding " +
-                //        "underworld, he discovers the shocking truth--the life he knows is " +
-                //        "the elaborate deception of an evil cyber-intelligence.",
-                //    Image = new Image() { ImageUrl = "Image Placeholder" }
-                //},
+            //new Movie // 3
+            //{
+            //    Title = "12 Angry Men",
+            //    ReleaseDate = 1957,
+            //    DurationInMinutes = 152,
+            //    Genres = new List<Genre> { genres[6], genres[1] },
+            //    Director = "Sidney Lumet",
+            //    Description =
+            //        "The jury in a New York City murder trial is frustrated " +
+            //        "by a single member whose skeptical caution forces them " +
+            //        "to more carefully consider the evidence before jumping to " +
+            //        "a hasty verdict.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 4
+            //{
+            //    Title = "Lista Schindlera",
+            //    ReleaseDate = 1993,
+            //    DurationInMinutes = 195,
+            //    Genres = new List<Genre> { genres[5], genres[1], genres[11] },
+            //    Director = "Steven Spielberg",
+            //    Description =
+            //        "In German-occupied Poland during World War II, industrialist " +
+            //        "Oskar Schindler gradually becomes concerned for his Jewish " +
+            //        "workforce after witnessing their persecution by the Nazis.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 5
+            //{
+            //    Title = "Terminator 2: Judgment Day",
+            //    ReleaseDate = 1991,
+            //    DurationInMinutes = 137,
+            //    Genres = new List<Genre> { genres[0], genres[17] },
+            //    Director = "James Cameron",
+            //    Description =
+            //        "A cyborg, identical to the one who failed to kill Sarah Connor, must " +
+            //        "now protect her ten year old son John from an even more advanced and " +
+            //        "powerful cyborg.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 6
+            //{
+            //    Title = "The Lord of the Rings: The Return of the King",
+            //    ReleaseDate = 2003,
+            //    DurationInMinutes = 201,
+            //    Genres = new List<Genre> { genres[0], genres[1], genres[3] },
+            //    Director = "Peter Jackson",
+            //    Description =
+            //        "Gandalf and Aragorn lead the World of Men against Sauron's " +
+            //        "army to draw his gaze from Frodo and Sam as they approach " +
+            //        "Mount Doom with the One Ring.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 7
+            //{
+            //    Title = "Pulp Fiction",
+            //    ReleaseDate = 1994,
+            //    DurationInMinutes = 153,
+            //    Genres = new List<Genre> { genres[1], genres[6] },
+            //    Director = "Quentin Tarantino",
+            //    Description =
+            //        "The lives of two mob hitmen, a boxer, a gangster and his wife, " +
+            //        "and a pair of diner bandits intertwine in four tales of violence " +
+            //        "and redemption.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 8
+            //{
+            //    Title = "Fight Club",
+            //    ReleaseDate = 1999,
+            //    DurationInMinutes = 139,
+            //    Genres = new List<Genre> { genres[1] },
+            //    Director = "David Fincher",
+            //    Description =
+            //        "An insomniac office worker and a devil-may-care soap maker form an " +
+            //        "underground fight club that evolves into much more.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
+            //new Movie // 9
+            //{
+            //    Title = "The Matrix",
+            //    ReleaseDate = 1999,
+            //    DurationInMinutes = 136,
+            //    Genres = new List<Genre> { genres[0], genres[17] },
+            //    Director = "Lana Wachowski, Lilly Wachowski",
+            //    Description =
+            //        "When a beautiful stranger leads computer hacker Neo to a forbidding " +
+            //        "underworld, he discovers the shocking truth--the life he knows is " +
+            //        "the elaborate deception of an evil cyber-intelligence.",
+            //    Image = new Image() { ImageUrl = "Image Placeholder" }
+            //},
             };
 
             await dataContext.Movies.AddRangeAsync(movies);
             await dataContext.SaveChangesAsync();
+
+            // add comments
+            var comments = new List<Comment>
+            {
+                new Comment // 0
+                {
+                    CommentContent =
+                        "orem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lobortis, " +
+                        "neque vitae interdum iaculis, ipsum arcu lobortis eros, et aliquam purus ante " +
+                        "vel erat. Praesent eu ipsum aliquet, cursus tellus quis, rhoncus lectus. Donec " +
+                        "volutpat, lacus scelerisque imperdiet pretium, velit tellus fringilla enim, " +
+                        "sit amet auctor risus nunc scelerisque diam. In hac habitasse platea dictumst. " +
+                        "Suspendisse porttitor nisi quis lorem fermentum elementum. Sed et justo finibus,",
+                    CreatedAt = DateTime.Now,
+                    Likes = 24,
+                    IsEdited = false,
+                    UserId = usersToSeed[0].Id,
+                    MovieId = movies[0].Id,
+                },
+                new Comment // 1
+                {
+                    CommentContent =
+                        "orem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lobortis, " +
+                        "neque vitae interdum iaculis, ipsum arcu lobortis eros, et aliquam purus ante " +
+                        "vel erat. Praesent eu ipsum aliquet, cursus tellus quis, rhoncus lectus. Donec " +
+                        "volutpat, lacus scelerisque imperdiet pretium, velit tellus fringilla enim, " +
+                        "sit amet auctor risus nunc scelerisque diam. In hac habitasse platea dictumst. " +
+                        "Suspendisse porttitor nisi quis lorem fermentum elementum. Sed et justo finibus,",
+                    CreatedAt = DateTime.Now,
+                    Likes = 24,
+                    IsEdited = false,
+                    UserId = usersToSeed[1].Id,
+                    MovieId = movies[0].Id,
+                },
+                new Comment // 2
+                {
+                    CommentContent =
+                        "porta massa a, vulputate tortor. Aliquam lobortis felis sit amet ante tristique, non " +
+                        "fermentum mauris iaculis. Donec et pretium urna. Maecenas iaculis orci a lobortis " +
+                        "sollicitudin. Nunc commodo sagittis blandit. Ut at metus et magna lobortis accumsan. " +
+                        "Etiam imperdiet tincidunt dolor vel fermentum. Pellentesque habitant morbi tristique " +
+                        "senectus et netus et malesuada fames ac turpis egestas.",
+                    CreatedAt = DateTime.Now,
+                    Likes = 24,
+                    IsEdited = false,
+                    UserId = usersToSeed[1].Id,
+                    MovieId = movies[0].Id,
+                },
+                new Comment // 3
+                {
+                    CommentContent =
+                        "Nam porttitor dui tempor, congue ipsum et, malesuada neque. Vivamus quis quam ipsum. Suspendisse " +
+                        "lectus velit, auctor vitae vulputate at, euismod a libero. Duis et metus dictum, ullamcorper urna " +
+                        "a, porta risus. Maecenas ac mi placerat, hendrerit ipsum ac, faucibus nisl. Aliquam hendrerit purus" +
+                        " id neque commodo, vitae tincidunt enim pellentesque. Vivamus tempus aliquam nulla, eget tincidunt " +
+                        "diam semper quis. Maecenas placerat et libero quis interdum. ",
+                    CreatedAt = DateTime.Now,
+                    Likes = 24,
+                    IsEdited = false,
+                    UserId = usersToSeed[1].Id,
+                    MovieId = movies[0].Id,
+                },
+                new Comment // 4
+                {
+                    CommentContent =
+                        "Vestibulum viverra porttitor vestibulum. Praesent ac interdum tellus. Cras quis purus placerat, " +
+                        "pulvinar massa non, consequat nibh. Aliquam erat volutpat. Duis non dolor non lacus semper pellentesque. " +
+                        "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin ac viverra " +
+                        "lacus. Morbi consequat, ex sit amet scelerisque pharetra, lectus nisi mattis ante, eu aliquam lectus metus" +
+                        " id quam. Proin venenatis risus ipsum",
+                    CreatedAt = DateTime.Now,
+                    Likes = 24,
+                    IsEdited = false,
+                    UserId = usersToSeed[1].Id,
+                    MovieId = movies[0].Id,
+                },
+            };
+            await dataContext.Comments.AddRangeAsync(comments);
+            await dataContext.SaveChangesAsync();
+
         }
     }
 }

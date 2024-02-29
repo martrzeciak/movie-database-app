@@ -11,6 +11,7 @@ namespace MovieDatabaseAPI.Entities
         public string Localization { get; set; } = string.Empty;
 
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
         //public Guid? ImageId { get; set; }
         //public Image? Image { get; set; }

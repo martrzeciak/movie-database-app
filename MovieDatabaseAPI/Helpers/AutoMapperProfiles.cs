@@ -8,12 +8,12 @@ namespace MovieDatabaseAPI.Helpers
     {
         public AutoMapperProfiles()
         {
+            // CreateMap<User, UserDto>();
+            CreateMap<User, MemberDto>();
             CreateMap<RegisterDto, User>();
             CreateMap<Genre, GenreDto>();
+            CreateMap<Comment, CommentDto>();
             CreateMap<Movie, MovieDto>()
-                .ForMember(dest => dest.PosterUrl,
-                    opt => opt.MapFrom(src => src.Poster.PosterUrl));
-            CreateMap<Movie, MovieDetailsDto>()
                 .ForMember(dest => dest.PosterUrl,
                     opt => opt.MapFrom(src => src.Poster.PosterUrl));
             CreateMap<Actor, ActorDto>()

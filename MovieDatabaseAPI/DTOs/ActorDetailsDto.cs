@@ -10,6 +10,5 @@
         public string Biography { get; set; } = string.Empty;
         public int HeightInCentimeters { get; set; }
         public string ActorImageUrl { get; set; } = string.Empty;
-        public ICollection<MovieDto> Movies { get; set; } = null!;
     }
 }

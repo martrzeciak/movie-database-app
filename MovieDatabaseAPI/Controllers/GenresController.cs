@@ -18,20 +18,20 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<GenreDto>> GetGenres()
+        public async Task<ActionResult<IEnumerable<GenreDto>>> GetGenres()
         {
             var genres = await _dataContext.Genres.ToListAsync();
 
-            return _mapper.Map<IEnumerable<GenreDto>>(genres);
+            return Ok(_mapper.Map<IEnumerable<GenreDto>>(genres));
         }
 
         [HttpGet("{id}")]
-        public async Task<GenreDto> GetGenre(Guid id)
+        public async Task<ActionResult<GenreDto>> GetGenre(Guid id)
         {
             var genre = await _dataContext.Genres
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            return _mapper.Map<GenreDto>(genre);
+            return Ok(_mapper.Map<GenreDto>(genre));
         }
     }
 }
