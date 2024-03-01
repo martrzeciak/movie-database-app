@@ -12,7 +12,7 @@ using MovieDatabaseAPI.Data;
 namespace MovieDatabaseAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240229182929_UpdateEntities")]
+    [Migration("20240229232434_UpdateEntities")]
     partial class UpdateEntities
     {
         /// <inheritdoc />
@@ -194,7 +194,7 @@ namespace MovieDatabaseAPI.Migrations
                     b.HasIndex("ActorId")
                         .IsUnique();
 
-                    b.ToTable("ActorImage");
+                    b.ToTable("ActorImages");
                 });
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.AppRole", b =>
@@ -326,7 +326,7 @@ namespace MovieDatabaseAPI.Migrations
                     b.HasIndex("MovieId")
                         .IsUnique();
 
-                    b.ToTable("Poster");
+                    b.ToTable("Posters");
                 });
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.User", b =>
@@ -412,6 +412,27 @@ namespace MovieDatabaseAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MovieDatabaseAPI.Entities.UserImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserImages");
                 });
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.UserRole", b =>
@@ -540,6 +561,17 @@ namespace MovieDatabaseAPI.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("MovieDatabaseAPI.Entities.UserImage", b =>
+                {
+                    b.HasOne("MovieDatabaseAPI.Entities.User", "User")
+                        .WithOne("UserImage")
+                        .HasForeignKey("MovieDatabaseAPI.Entities.UserImage", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MovieDatabaseAPI.Entities.UserRole", b =>
                 {
                     b.HasOne("MovieDatabaseAPI.Entities.AppRole", "Role")
@@ -583,6 +615,8 @@ namespace MovieDatabaseAPI.Migrations
             modelBuilder.Entity("MovieDatabaseAPI.Entities.User", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("UserImage");
 
                     b.Navigation("UserRoles");
                 });

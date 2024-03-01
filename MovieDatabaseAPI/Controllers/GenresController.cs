@@ -1,26 +1,27 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.DTOs;
+using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
 {
     public class GenresController : BaseApiController
     {
-        private readonly DataContext _dataContext;
+        private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
 
-        public GenresController(DataContext dataContext, IMapper mapper)
+        public GenresController(IGenreRepository genreRepository, IMapper mapper)
         {
-            _dataContext = dataContext;
+            _genreRepository = genreRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GenreDto>>> GetGenres()
         {
-            var genres = await _dataContext.Genres.ToListAsync();
+            var genres = await _genreRepository.GetGenresAsync();
+
+            if (!genres.Any()) return NotFound();
 
             return Ok(_mapper.Map<IEnumerable<GenreDto>>(genres));
         }
@@ -28,8 +29,9 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GenreDto>> GetGenre(Guid id)
         {
-            var genre = await _dataContext.Genres
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var genre = await _genreRepository.GetGenreAsync(id);
+
+            if (genre == null) return NotFound();
 
             return Ok(_mapper.Map<GenreDto>(genre));
         }

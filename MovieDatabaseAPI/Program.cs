@@ -39,7 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Seed users data
+// Seed data
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try

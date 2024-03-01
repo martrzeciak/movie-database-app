@@ -4,28 +4,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.DTOs;
+using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
 {
     public class ActorsController : BaseApiController
     {
-        private readonly DataContext _dataContext;
+        private readonly IActorRepository _actorRepository;
         private readonly IMapper _mapper;
 
-        public ActorsController(DataContext dataContext, IMapper mapper)
+        public ActorsController( IActorRepository actorRepository, IMapper mapper)
         {
-            _dataContext = dataContext;
+            _actorRepository = actorRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
-            var actors = _dataContext.Actors
-                .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
-                .AsNoTracking();
+            var actors = await _actorRepository.GetActors();
 
-            if (actors == null) return NotFound();
+            if (!actors.Any()) return NotFound();
 
             return Ok(actors);
         }
@@ -33,9 +32,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ActorDetailsDto>> GetActor(Guid id)
         {
-            var actor = await _dataContext.Actors
-                .Include(i => i.ActorImage)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var actor = await _actorRepository.GetActor(id);
 
             if (actor == null) return NotFound();
 

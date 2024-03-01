@@ -10,10 +10,8 @@ namespace MovieDatabaseAPI.Entities
         public DateTime Created { get; set; } = DateTime.UtcNow;
         public string Localization { get; set; } = string.Empty;
 
+        public UserImage? UserImage { get; set; }
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
-        //public Guid? ImageId { get; set; }
-        //public Image? Image { get; set; }
     }
 }

@@ -12,7 +12,10 @@ namespace MovieDatabaseAPI.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Actor> Actors { get; set; }
+        public DbSet<Poster> Posters { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<ActorImage> ActorImages { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {

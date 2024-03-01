@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.DTOs;
+using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
 {
@@ -10,19 +11,21 @@ namespace MovieDatabaseAPI.Controllers
     [ApiController]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _dataContext;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UsersController(DataContext dataContext, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            _dataContext = dataContext;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            var users = await _dataContext.Users.ToListAsync();
+            var users = await _userRepository.GetUsersAsync();
+
+            if (!users.Any()) return NotFound();
 
             return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
         }
@@ -30,8 +33,9 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
-            var user = await _dataContext.Users
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userRepository.GetUserAsync(id);
+
+            if (user == null) return NotFound();
 
             return Ok(_mapper.Map<UserDto>(user));
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
+using MovieDatabaseAPI.Data.Repositories;
 using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 using MovieDatabaseAPI.Services;
@@ -18,6 +19,10 @@ namespace MovieDatabaseAPI.Extensions
             services.AddCors();
             services.AddAutoMapper(typeof(AutoMapperProfiles));
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IActorRepository, ActorRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

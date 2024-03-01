@@ -49,7 +49,26 @@ namespace MovieDatabaseAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActorImage",
+                name: "UserImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserImages_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ActorImages",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -58,9 +77,9 @@ namespace MovieDatabaseAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActorImage", x => x.Id);
+                    table.PrimaryKey("PK_ActorImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActorImage_Actors_ActorId",
+                        name: "FK_ActorImages_Actors_ActorId",
                         column: x => x.ActorId,
                         principalTable: "Actors",
                         principalColumn: "Id",
@@ -151,7 +170,7 @@ namespace MovieDatabaseAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Poster",
+                name: "Posters",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -160,9 +179,9 @@ namespace MovieDatabaseAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Poster", x => x.Id);
+                    table.PrimaryKey("PK_Posters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Poster_Movies_MovieId",
+                        name: "FK_Posters_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -170,8 +189,8 @@ namespace MovieDatabaseAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActorImage_ActorId",
-                table: "ActorImage",
+                name: "IX_ActorImages_ActorId",
+                table: "ActorImages",
                 column: "ActorId",
                 unique: true);
 
@@ -201,9 +220,15 @@ namespace MovieDatabaseAPI.Migrations
                 column: "MoviesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Poster_MovieId",
-                table: "Poster",
+                name: "IX_Posters_MovieId",
+                table: "Posters",
                 column: "MovieId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserImages_UserId",
+                table: "UserImages",
+                column: "UserId",
                 unique: true);
         }
 
@@ -211,7 +236,7 @@ namespace MovieDatabaseAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ActorImage");
+                name: "ActorImages");
 
             migrationBuilder.DropTable(
                 name: "ActorMovie");
@@ -223,7 +248,10 @@ namespace MovieDatabaseAPI.Migrations
                 name: "GenreMovie");
 
             migrationBuilder.DropTable(
-                name: "Poster");
+                name: "Posters");
+
+            migrationBuilder.DropTable(
+                name: "UserImages");
 
             migrationBuilder.DropTable(
                 name: "Actors");

@@ -1,33 +1,27 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.DTOs;
+using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
 {
     public class MoviesController : BaseApiController
     {
-        private readonly DataContext _dataContext;
+        private readonly IMovieRepository _movieRepository;
         private readonly IMapper _mapper;
 
-        public MoviesController(DataContext dataContext, IMapper mapper)
+        public MoviesController(IMovieRepository movieRepository, IMapper mapper)
         {
-            _dataContext = dataContext;
+            _movieRepository = movieRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
         {
-            var movies = await _dataContext.Movies
-                .Include(p => p.Poster)
-                .Include(g => g.Genres)
-                .ToListAsync();
+            var movies = await _movieRepository.GetMoviesAsync();
 
-            if (movies == null)
-                return NotFound();
+            if (!movies.Any()) return NotFound();
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(movies));
         }
@@ -35,10 +29,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieDto>> GetMovie(Guid id)
         {
-            var movie = await _dataContext.Movies
-                .Include(g => g.Genres)
-                .Include(p => p.Poster)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await _movieRepository.GetMovieAsync(id);
 
             if (movie == null) return NotFound();
 
@@ -46,14 +37,11 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet("actor-movies/{id}")]
-        public async Task<ActionResult<MovieDto>> GetMoviesForActor(Guid id)
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMoviesForActor(Guid id)
         {
-            var moviesForActor = _dataContext.Movies
-                .Where(movie => movie.Actors.Any(actor => actor.Id == id))
-                .ProjectTo<MovieDto>(_mapper.ConfigurationProvider);
+            var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id);
 
-            if (moviesForActor == null)
-                return NotFound();
+            if (!moviesForActor.Any()) return NotFound();
 
             return Ok(moviesForActor);
         }

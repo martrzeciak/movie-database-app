@@ -33,7 +33,7 @@ namespace MovieDatabaseAPI.Data
                     Gender = "Male",
                     Introduction = "Hello, I'm John Doe!",
                     Localization = "en-US",
-                    //Image = new Image() { ImageUrl = "https://randomuser.me/api/portraits/men/75.jpg" }
+                    UserImage = new UserImage() { ImageUrl = "https://randomuser.me/api/portraits/men/75.jpg" }
                 },
                 new User
                 {
@@ -43,7 +43,7 @@ namespace MovieDatabaseAPI.Data
                     Gender = "Female",
                     Introduction = "Hi, I'm Jane Doe!",
                     Localization = "en-US",
-                    //Image = new Image() { ImageUrl = "https://randomuser.me/api/portraits/women/76.jpg" }
+                    UserImage = new UserImage() { ImageUrl = "https://randomuser.me/api/portraits/women/76.jpg" }
                 },
             };
 
@@ -284,14 +284,14 @@ namespace MovieDatabaseAPI.Data
                     Title = "The Godfather",
                     ReleaseDate = 1972,
                     DurationInMinutes = 175,
-                    Genres = new List<Genre> { genres[1], genres[6] },
+                    Genres = new List<Genre> { genres[0], genres[6] },
                     Director = "Francis Ford Coppola",
                     Description =
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
                     Poster = new Poster() { PosterUrl = "Image Placeholder" },
-                    Actors = new List<Actor> { actors[2], actors[3] },
+                    Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
                 {
