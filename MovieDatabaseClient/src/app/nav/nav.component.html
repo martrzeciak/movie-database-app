@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand">MovieDatabase</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Actors</a>
+                </li>
+            </ul>
+            <form class="d-flex" autocomplete="off">
+                <input name="username" class="form-control me-2" type="text" placeholder="Username">
+                <input name="password" class="form-control me-2" type="password" placeholder="Password">
+                <button class="btn btn-dark" type="submit">Login</button>
+            </form>
+            <div class="navbar-text">
+                <a class="btn btn-dark" routerLink="/register" routerLinkActive="active">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,60 @@
+<div class="container col-4 mt-5">
+    <h2 class="text-center">Sign up</h2>
+    <hr>
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()">
+        <!-- Other form controls -->
+
+        <app-text-input 
+            [formControl]="$any(registerForm.controls['username'])" 
+            [label]="'Username'"
+        ></app-text-input>
+
+        <app-text-input 
+            [formControl]="$any(registerForm.controls['password'])" 
+            [label]="'Password'" 
+            [type]="'password'"
+        ></app-text-input>
+
+        <app-text-input 
+            [formControl]="$any(registerForm.controls['confirmPassword'])" 
+            [label]="'Confirm Password'"
+        ></app-text-input>
+
+        <app-date-picker
+        [formControl]="$any(registerForm.controls['dateOfBirth'])" 
+        [label]="'Date of Birth'"
+        [maxDate]="maxDate"
+        ></app-date-picker>
+
+        <div class="mb-3">
+
+            <label for="" style="margin-right: 10px;">I am a:</label>
+    
+            <label for="" class="form-check-label">
+                <input 
+                    type="radio" 
+                    class="form-check-input" 
+                    value="male" 
+                    formControlName="gender"
+                >
+                Male
+            </label>
+    
+            <label for="" class="form-check-label ms-3">
+                <input 
+                    type="radio" 
+                    class="form-check-input" 
+                    value="female" 
+                    formControlName="gender"
+                >
+                Female
+            </label>
+    
+        </div>   
+        <hr>
+        <div class="text-center">
+            <button [disabled]="!registerForm.valid" class="btn btn-primary me-2" type="submit">Register</button>
+            <a class="btn btn-dark" routerLink="/" >Cancel</a>
+        </div>
+    </form>
+</div>
