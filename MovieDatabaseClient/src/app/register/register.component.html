@@ -2,8 +2,6 @@
     <h2 class="text-center">Sign up</h2>
     <hr>
     <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()">
-        <!-- Other form controls -->
-
         <app-text-input 
             [formControl]="$any(registerForm.controls['username'])" 
             [label]="'Username'"
@@ -18,6 +16,7 @@
         <app-text-input 
             [formControl]="$any(registerForm.controls['confirmPassword'])" 
             [label]="'Confirm Password'"
+            [type]="'password'"
         ></app-text-input>
 
         <app-date-picker
@@ -49,7 +48,6 @@
                 >
                 Female
             </label>
-    
         </div>   
         <hr>
         <div class="text-center">

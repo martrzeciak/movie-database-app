@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +15,8 @@ export class RegisterComponent implements OnInit {
   validationErrors: string[] | undefined;
   
   constructor(
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder, private accountService: AccountService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.initalizeForm();
@@ -24,10 +27,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       gender: ['male'],
       username: ['', Validators.required],
-      knownAs: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
       password: ['', 
         [Validators.required, 
         Validators.minLength(4), 
@@ -48,20 +48,16 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    // const date = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
-    // const values = {...this.registerForm.value, dateOfBirth: date};
-    // this.accountService.register(values).subscribe({
-    //   next: _ =>  {
-    //     this.router.navigateByUrl('/members')
-    //   },
-    //   error: error => {
-    //     this.validationErrors = error;
-    //   }
-    // })
-  }
-
-  cancel() {
-    this.cancelRegister.emit(false);
+    const date = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
+    const values = {...this.registerForm.value, dateOfBirth: date};
+    this.accountService.register(values).subscribe({
+      next: _ =>  {
+        this.router.navigateByUrl('/actors')
+      },
+      error: error => {
+        this.validationErrors = error;
+      }
+    })
   }
 
   private getDateOnly(date: string | undefined) {

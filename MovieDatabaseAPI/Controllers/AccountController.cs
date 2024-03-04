@@ -50,6 +50,7 @@ namespace MovieDatabaseAPI.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.Users
+                .Include(i => i.UserImage)
                 .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
 
             if (user == null) return Unauthorized("Invalid username");
@@ -62,7 +63,8 @@ namespace MovieDatabaseAPI.Controllers
             {
                 UserName = user.UserName!,
                 Token = await _tokenService.CreateTokenAsync(user),
-                Gender = user.Gender
+                Gender = user.Gender,
+                PhotoUrl = user.UserImage?.ImageUrl
             };
 
             return Ok(userDto);
