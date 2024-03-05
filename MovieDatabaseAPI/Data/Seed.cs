@@ -308,6 +308,232 @@ namespace MovieDatabaseAPI.Data
                     Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
+                new Movie // 0
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = 1994,
+                    DurationInMinutes = 144,
+                    Genres = new List<Genre> { genres[1] },
+                    Director = "Frank Darabont",
+                    Description =
+                        "Over the course of several years, " +
+                        "two convicts form a friendship, seeking " +
+                        "consolation and, eventually, redemption " +
+                        "through basic compassion.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[1] },
+
+                },
+                new Movie // 1
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = 1972,
+                    DurationInMinutes = 175,
+                    Genres = new List<Genre> { genres[0], genres[6] },
+                    Director = "Francis Ford Coppola",
+                    Description =
+                        "The aging patriarch of an organized crime " +
+                        "dynasty transfers control of his clandestine " +
+                        "empire to his reluctant son.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[3] },
+                },
+                new Movie // 2
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = 2008,
+                    DurationInMinutes = 152,
+                    Genres = new List<Genre> { genres[0], genres[6], genres[1] },
+                    Director = "Christopher Nolan",
+                    Description =
+                        "When the menace known as the Joker wreaks havoc and " +
+                        "chaos on the people of Gotham, Batman must accept one " +
+                        "of the greatest psychological and physical tests of " +
+                        "his ability to fight injustice.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[5], actors[6] },
+                },
+                new Movie // 0
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = 1994,
+                    DurationInMinutes = 144,
+                    Genres = new List<Genre> { genres[1] },
+                    Director = "Frank Darabont",
+                    Description =
+                        "Over the course of several years, " +
+                        "two convicts form a friendship, seeking " +
+                        "consolation and, eventually, redemption " +
+                        "through basic compassion.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[1] },
+
+                },
+                new Movie // 1
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = 1972,
+                    DurationInMinutes = 175,
+                    Genres = new List<Genre> { genres[0], genres[6] },
+                    Director = "Francis Ford Coppola",
+                    Description =
+                        "The aging patriarch of an organized crime " +
+                        "dynasty transfers control of his clandestine " +
+                        "empire to his reluctant son.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[3] },
+                },
+                new Movie // 2
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = 2008,
+                    DurationInMinutes = 152,
+                    Genres = new List<Genre> { genres[0], genres[6], genres[1] },
+                    Director = "Christopher Nolan",
+                    Description =
+                        "When the menace known as the Joker wreaks havoc and " +
+                        "chaos on the people of Gotham, Batman must accept one " +
+                        "of the greatest psychological and physical tests of " +
+                        "his ability to fight injustice.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[5], actors[6] },
+                },
+                new Movie // 0
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = 1994,
+                    DurationInMinutes = 144,
+                    Genres = new List<Genre> { genres[1] },
+                    Director = "Frank Darabont",
+                    Description =
+                        "Over the course of several years, " +
+                        "two convicts form a friendship, seeking " +
+                        "consolation and, eventually, redemption " +
+                        "through basic compassion.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[1] },
+
+                },
+                new Movie // 1
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = 1972,
+                    DurationInMinutes = 175,
+                    Genres = new List<Genre> { genres[0], genres[6] },
+                    Director = "Francis Ford Coppola",
+                    Description =
+                        "The aging patriarch of an organized crime " +
+                        "dynasty transfers control of his clandestine " +
+                        "empire to his reluctant son.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[3] },
+                },
+                new Movie // 2
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = 2008,
+                    DurationInMinutes = 152,
+                    Genres = new List<Genre> { genres[0], genres[6], genres[1] },
+                    Director = "Christopher Nolan",
+                    Description =
+                        "When the menace known as the Joker wreaks havoc and " +
+                        "chaos on the people of Gotham, Batman must accept one " +
+                        "of the greatest psychological and physical tests of " +
+                        "his ability to fight injustice.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[5], actors[6] },
+                },
+                new Movie // 0
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = 1994,
+                    DurationInMinutes = 144,
+                    Genres = new List<Genre> { genres[1] },
+                    Director = "Frank Darabont",
+                    Description =
+                        "Over the course of several years, " +
+                        "two convicts form a friendship, seeking " +
+                        "consolation and, eventually, redemption " +
+                        "through basic compassion.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[1] },
+
+                },
+                new Movie // 1
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = 1972,
+                    DurationInMinutes = 175,
+                    Genres = new List<Genre> { genres[0], genres[6] },
+                    Director = "Francis Ford Coppola",
+                    Description =
+                        "The aging patriarch of an organized crime " +
+                        "dynasty transfers control of his clandestine " +
+                        "empire to his reluctant son.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[3] },
+                },
+                new Movie // 2
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = 2008,
+                    DurationInMinutes = 152,
+                    Genres = new List<Genre> { genres[0], genres[6], genres[1] },
+                    Director = "Christopher Nolan",
+                    Description =
+                        "When the menace known as the Joker wreaks havoc and " +
+                        "chaos on the people of Gotham, Batman must accept one " +
+                        "of the greatest psychological and physical tests of " +
+                        "his ability to fight injustice.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[5], actors[6] },
+                },
+                new Movie // 0
+                {
+                    Title = "The Shawshank Redemption",
+                    ReleaseDate = 1994,
+                    DurationInMinutes = 144,
+                    Genres = new List<Genre> { genres[1] },
+                    Director = "Frank Darabont",
+                    Description =
+                        "Over the course of several years, " +
+                        "two convicts form a friendship, seeking " +
+                        "consolation and, eventually, redemption " +
+                        "through basic compassion.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[1] },
+
+                },
+                new Movie // 1
+                {
+                    Title = "The Godfather",
+                    ReleaseDate = 1972,
+                    DurationInMinutes = 175,
+                    Genres = new List<Genre> { genres[0], genres[6] },
+                    Director = "Francis Ford Coppola",
+                    Description =
+                        "The aging patriarch of an organized crime " +
+                        "dynasty transfers control of his clandestine " +
+                        "empire to his reluctant son.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[0], actors[3] },
+                },
+                new Movie // 2
+                {
+                    Title = "The Dark Knight",
+                    ReleaseDate = 2008,
+                    DurationInMinutes = 152,
+                    Genres = new List<Genre> { genres[0], genres[6], genres[1] },
+                    Director = "Christopher Nolan",
+                    Description =
+                        "When the menace known as the Joker wreaks havoc and " +
+                        "chaos on the people of Gotham, Batman must accept one " +
+                        "of the greatest psychological and physical tests of " +
+                        "his ability to fight injustice.",
+                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
+                    Actors = new List<Actor> { actors[5], actors[6] },
+                },
+
             //new Movie // 3
             //{
             //    Title = "12 Angry Men",

@@ -22,6 +22,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
+import { ActorCardComponent } from './actors/actor-card/actor-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
     ActorListComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    EditUserComponent
+    EditUserComponent,
+    MovieDetailComponent,
+    ActorCardComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,7 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
+    PaginationModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

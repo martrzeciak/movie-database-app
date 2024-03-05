@@ -1,11 +1,26 @@
-<div class="card mb-4" >
+<a *ngIf="movie" [routerLink]="'/members/' + movie.title" class="card mb-3" 
+    style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;
+            text-decoration: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <div class="card-img-wrapper">
-        <img src="{{ './assets/default-movie.jpg' }}" class="card-img-top">
+        <img src="{{'./assets/default-movie.jpg' }}" class="card-img-top" alt="Movie Image">
     </div>
-    <div class="card-body p1">
-        <h6 class="card-title text-center mb-1">
-            title
+    <div class="card-body p-2">
+        <h6 class="card-title text-center mb-2">
+            {{ movie.title }}
         </h6>
-        <p class="card-text text-muted text-center">genre</p>
+        <p class="card-text text-muted text-center mb-1" *ngIf="movie.genres && movie.genres.length > 0">
+            <span *ngFor="let genre of movie.genres; let last = last">
+                {{ genre.name }}{{ !last ? ', ' : '' }}
+            </span>
+        </p>
+        <p class="card-text text-muted text-center mb-1" *ngIf="!movie.genres || movie.genres.length === 0">
+            <em>No genres available.</em>
+        </p>
+        <p class="card-text text-muted text-center mb-1">
+            <strong>Director:</strong> {{ movie.director }}
+        </p>
+        <p class="card-text text-muted text-center mb-1">
+            <strong>Release Year:</strong> {{ movie.releaseDate }}
+        </p>
     </div>
-</div>
+</a>
