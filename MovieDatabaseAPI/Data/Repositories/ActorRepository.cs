@@ -10,18 +10,16 @@ namespace MovieDatabaseAPI.Data.Repositories
     public class ActorRepository : IActorRepository
     {
         private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
 
-        public ActorRepository(DataContext dataContext, IMapper mapper)
+        public ActorRepository(DataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ActorDto>> GetActors()
+        public async Task<IEnumerable<Actor>> GetActors()
         {
             var actors = await _dataContext.Actors
-                .ProjectTo<ActorDto>(_mapper.ConfigurationProvider)
+                .Include(i => i.ActorImage)
                 .ToListAsync();
 
             return actors;

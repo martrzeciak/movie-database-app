@@ -1,26 +1,30 @@
-<a *ngIf="movie" [routerLink]="'/members/' + movie.title" class="card mb-3" 
-    style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;
-            text-decoration: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="card-img-wrapper">
-        <img src="{{'./assets/default-movie.jpg' }}" class="card-img-top" alt="Movie Image">
-    </div>
-    <div class="card-body p-2">
+<div class="container" *ngIf="movie">
+    <a class="card mb-3 position-relative" [routerLink]="'/movies/' + movie.id"
+      style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;
+             text-decoration: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <div class="card-img-wrapper">
+        <img src="./assets/default-movie.jpg" class="card-img-top" alt="Movie Image">
+        <button class="btn btn-primary position-absolute top-0 end-0 m-2"><i class="fa fa-solid fa-plus"></i></button>
+      </div>
+      <div class="card-body p-2">
         <h6 class="card-title text-center mb-2">
-            {{ movie.title }}
+          {{ movie.title }}
         </h6>
         <p class="card-text text-muted text-center mb-1" *ngIf="movie.genres && movie.genres.length > 0">
-            <span *ngFor="let genre of movie.genres; let last = last">
-                {{ genre.name }}{{ !last ? ', ' : '' }}
-            </span>
+          <span *ngFor="let genre of movie.genres; let last = last">
+            {{ genre.name }}{{ !last ? ', ' : '' }}
+          </span>
         </p>
         <p class="card-text text-muted text-center mb-1" *ngIf="!movie.genres || movie.genres.length === 0">
-            <em>No genres available.</em>
+          No genres available.
         </p>
         <p class="card-text text-muted text-center mb-1">
-            <strong>Director:</strong> {{ movie.director }}
+          <strong>Director:</strong> {{ movie.director }}
         </p>
         <p class="card-text text-muted text-center mb-1">
-            <strong>Release Year:</strong> {{ movie.releaseDate }}
+          <strong>Release Year:</strong> {{ movie.releaseDate }}
         </p>
-    </div>
-</a>
+      </div>
+    </a>
+  </div>
+  

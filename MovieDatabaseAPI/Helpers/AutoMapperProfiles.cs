@@ -19,9 +19,6 @@ namespace MovieDatabaseAPI.Helpers
             CreateMap<Actor, ActorDto>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.ActorImage.ImageUrl));
-            CreateMap<Actor, ActorDetailsDto>()
-                .ForMember(dest => dest.ActorImageUrl,
-                    opt => opt.MapFrom(src => src.ActorImage.ImageUrl));
         }
     }
 }

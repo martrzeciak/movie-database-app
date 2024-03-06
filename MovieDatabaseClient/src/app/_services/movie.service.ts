@@ -22,4 +22,10 @@ export class MovieService {
       })
     )
   }
+
+  getMovie(movieId: string) {
+    const movie = this.movies.find(x => x.id === movieId);
+    if (movie) return of(movie);
+    return this.http.get<Movie>(this.baseUrl + 'movies/' + movieId);
+  }
 }

@@ -5,7 +5,7 @@ namespace MovieDatabaseAPI.Interfaces
 {
     public interface IActorRepository
     {
-        Task<IEnumerable<ActorDto>> GetActors();
+        Task<IEnumerable<Actor>> GetActors();
         Task<Actor?> GetActor(Guid id);
     }
 }

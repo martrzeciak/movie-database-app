@@ -1,25 +1,34 @@
-<div class="modal-header">
-    <h4 class="modal-title">Movie Title</h4>
-    <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6">
-            <img src="{{'./assets/default-movie.jpg' }}" class="cimg-fluid" alt="Movie Image">
-        </div>
-        <div class="col-md-6">
-          <p><strong>Release Date:</strong> 2000</p>
-          <p><strong>Duration:</strong> 55 minutes</p>
-          <p><strong>Director:</strong> director</p>
-          <p><strong>Genres:</strong> genres</p>
-          <p><strong>Description:</strong> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab eveniet recusandae id. Illo, aut rem nisi neque deleniti quis quia odit dolore, expedita dignissimos similique laudantium suscipit corrupti. Aperiam, minus.</p>
-        </div>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{{'./assets/default-movie.jpg' }}" class="img-fluid" alt="movie poster"
+            style="width: 100%; max-width: 370px; height: auto;"
+      >
     </div>
+    <div class="col-md-5">
+        <h2><strong>{{ movie?.title }} </strong></h2>
+        <h4><strong>Release year:</strong></h4> 
+        <h5>{{ movie?.releaseDate }}</h5>
+        <h4><strong>Duration:</strong></h4> 
+        <h5>{{ movie?.durationInMinutes }} minutes</h5>
+        <h4><strong>Director:</strong></h4> 
+        <h5>{{ movie?.director }}</h5>
+        <h4><strong>Genres:</strong></h4> 
+        <h5>
+          <span *ngFor="let genre of movie?.genres; let last = last">
+            {{ genre.name }}{{ !last ? ', ' : '' }}
+          </span>
+        </h5>
+        <h4><strong>Description:</strong></h4> 
+        <h5>{{ movie?.description }}</h5>
+    </div>
+    <div class="col-md-3 ">
+      <h2><strong>Popularity:</strong></h2>
+      <h4> 1 in ranking</h4>
+      <h4><strong>Rating:</strong></h4> 
+      <h5>8,3 (52 votes)</h5>
+      <h4><strong>Your rating:</strong></h4> 
+      <h5>1 2 3 4 5</h5>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary">Close</button>
   </div>
+</div>
