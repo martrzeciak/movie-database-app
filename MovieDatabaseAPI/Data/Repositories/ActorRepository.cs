@@ -33,5 +33,14 @@ namespace MovieDatabaseAPI.Data.Repositories
 
             return actor;
         }
+
+        public async Task<IEnumerable<Actor>> GetActorsForMovieAsync(Guid id)
+        {
+            var moviesForActor = await _dataContext.Actors
+                .Where(actor => actor.Movies.Any(movie => movie.Id == id))
+                .ToListAsync();
+
+            return moviesForActor;
+        }
     }
 }

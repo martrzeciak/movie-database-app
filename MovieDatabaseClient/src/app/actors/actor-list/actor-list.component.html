@@ -1,70 +1,60 @@
-<div class="container mt-3" >
-    <form #form="ngForm" class="d-flex mb-3" autocomplete="off">
-        <div class="d-flex px-2 align-items-center">
-            <div class="d-flex mx-2">
-              <label class="col-form-label"><strong>Search:</strong></label>
-              <div class="input-group ms-1">
-                <input type="text" class="form-control" name="searchQuery">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
+<div class="container mt-3">
+  <form #form="ngForm" class="d-flex mb-3" autocomplete="off">
+    <div class="d-flex px-2 align-items-center">
+      <div class="d-flex mx-2">
+        <label class="col-form-label"><strong>Search:</strong></label>
+        <div class="input-group ms-1">
+          <input type="text" class="form-control" name="searchQuery">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
         </div>
+      </div>
 
-        <div class="d-flex px-2">
-            <label class="col-form-label me-2"><strong>Gender: </strong></label>
-            <select name="genre" style="width: 150px;" class="form-select ms-1">
-              <option>gender</option>
-            </select>
-          </div>
+      <div class="d-flex px-2">
+        <label class="col-form-label me-2"><strong>Gender:</strong></label>
+        <select name="genre" style="width: 150px;" class="form-select ms-1">
+          <option>gender</option>
+        </select>
+      </div>
 
-        <button class="btn btn-primary ms-1" type="submit">
-            Apply
-        </button>
+      <button class="btn btn-primary ms-1" type="submit">Apply</button>
+      <button class="btn btn-secondary ms-1" type="submit">Reset</button>
 
-        <button class="btn btn-secondary ms-1" type="submit">
-            Reset
-        </button>
-
-        <div class="col d-flex justify-content-end">
-            <label class="col-form-label me-2"><strong>Order: </strong></label>
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary me-1" name="orderBy" btnRadio="alphabetical">
-                Alphabetical
-              </button>
-          
-              <button type="button" class="btn btn-secondary" name="orderBy" btnRadio="popularity">
-                Popularity
-              </button>
-            </div>
-          </div>
-                 
-    </form>
+      <div class="col d-flex justify-content-end">
+        <label class="col-form-label me-2"><strong>Order:</strong></label>
+        <div class="btn-group">
+          <button type="button" class="btn btn-secondary me-1" name="orderBy" btnRadio="alphabetical">
+            Alphabetical
+          </button>
+          <button type="button" class="btn btn-secondary" name="orderBy" btnRadio="popularity">
+            Popularity
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 
-<div *ngIf="actors.length > 0; else noActors">
-    <div class="row justify-content-start">
-        <div *ngFor="let actor of actors" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-            <app-actor-card [actor]="actor"></app-actor-card>
-        </div>
-    </div>
+<div *ngIf="actors.length > 0; else noActors" class="row justify-content-start">
+  <div *ngFor="let actor of actors" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+    <app-actor-card [actor]="actor"></app-actor-card>
+  </div>
 </div>
 
 <ng-template #noActors>
-    <p class="text-center">No actors available.</p>
+  <p class="text-center">No actors available.</p>
 </ng-template>
 
-<div class="d-flex justify-content-center" >
-    <pagination 
-        [boundaryLinks]="true" 
-        [totalItems]="50"
-        [itemsPerPage]="25"
-        [maxSize]="10"
-        previousText="&lsaquo;" 
-        nextText="&rsaquo;" 
-        firstText="&laquo;" 
-        lastText="&raquo;"
-    >
-    </pagination>
+<div class="d-flex justify-content-center">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="50"
+    [itemsPerPage]="25"
+    [maxSize]="10"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+  ></pagination>
 </div>

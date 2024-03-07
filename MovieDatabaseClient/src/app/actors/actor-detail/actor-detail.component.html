@@ -1,0 +1,28 @@
+<div class="container" *ngIf="actor">
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{{ './assets/user.png' }}" class="img-fluid" alt="actor photo" style="width: 100%; max-width: 370px; height: auto;">
+    </div>
+    <div class="col-md-5">
+      <h2><strong>{{ actor.firstName }} {{ actor.lastName }}</strong></h2>
+      <h4><strong>Date of Birth:</strong></h4>
+      <h5>{{ actor.dateOfBirth | date:'fullDate' }}</h5>
+      <h4><strong>Birthplace:</strong></h4>
+      <h5>{{ actor.birthplace }}</h5>
+      <h4><strong>Biography:</strong></h4>
+      <h5>{{ actor.biography }}</h5>
+      <h4><strong>Height:</strong></h4>
+      <h5>{{ actor.heightInCentimeters }} cm</h5>
+    </div>
+    <div class="col-md-3">
+      <h2><strong>Popularity:</strong></h2>
+      <h4>1 in ranking</h4>
+      <h4><strong>Rating:</strong></h4>
+      <h5>8.3 (52 votes)</h5>
+      <h4><strong>Your rating:</strong></h4>
+      <h5>1 2 3 4 5</h5>
+    </div>
+  </div>
+  <h3>Known for:</h3>
+  <app-actor-movie-list [actorId]="actor.id"></app-actor-movie-list>
+</div>

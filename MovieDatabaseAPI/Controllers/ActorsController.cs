@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.Data;
+using MovieDatabaseAPI.Data.Repositories;
 using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Interfaces;
@@ -38,6 +39,14 @@ namespace MovieDatabaseAPI.Controllers
             if (actor == null) return NotFound();
 
             return Ok(_mapper.Map<ActorDto>(actor));
+        }
+
+        [HttpGet("movie-actors/{id}")]
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetActorsForMovie(Guid id)
+        {
+            var actorsForMovies = await _actorRepository.GetActorsForMovieAsync(id);
+
+            return Ok(_mapper.Map<IEnumerable<ActorDto>>(actorsForMovies));
         }
     }
 }

@@ -8,13 +8,15 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
+import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'movies', component: MovieListComponent },
-  { path: 'movies/:title', component: MovieDetailComponent },
+  { path: 'movies/:id', component: MovieDetailComponent },
   { path: 'actors', component: ActorListComponent },
+  { path: 'actors/:id', component: ActorDetailComponent },
   { path: 'user/edit', component: EditUserComponent, canDeactivate: [] },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },

@@ -19,7 +19,7 @@ export class MovieDetailComponent implements OnInit {
 
 
   loadMovie() {
-    var id = this.route.snapshot.paramMap.get('title');
+    var id = this.route.snapshot.paramMap.get('id');
     console.log(id)
     if (id == null) return;
     this.movieService.getMovie(id).subscribe({

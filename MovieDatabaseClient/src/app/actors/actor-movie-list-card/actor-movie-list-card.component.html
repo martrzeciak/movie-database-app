@@ -1,0 +1,21 @@
+<div *ngIf="movie" class="card mb-3" style="max-width: 540px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <a [routerLink]="'/movies/' + movie.id" style="text-decoration: none;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ './assets/default-movie.jpg' }}" class="img-fluid rounded-start" alt="movie image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title text-dark">{{ movie.title }}</h5>
+            <p class="card-text text-dark">{{ movie.description }}</p>
+            <p class="card-text text-dark" *ngIf="movie.director"><strong>Director:</strong> {{ movie.director }}</p>
+            <p class="card-text text-dark mb-1" *ngIf="movie.genres && movie.genres.length > 0">
+              <strong>Genres:</strong>
+              <span *ngFor="let genre of movie.genres; let last = last">{{ genre.name }}{{ !last ? ', ' : '' }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </a>
+</div>
+  

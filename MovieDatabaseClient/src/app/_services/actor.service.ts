@@ -22,4 +22,10 @@ export class ActorService {
       })
     )
   }
+
+  getActor(actorId: string) {
+    const actor = this.actors.find(x => x.id === actorId);
+    if (actor) return of(actor);
+    return this.http.get<Actor>(this.baseUrl + 'actors/' + actorId);
+  }
 }

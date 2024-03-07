@@ -13,7 +13,7 @@
                     <a class="nav-link" routerLink="/actors" routerLinkActive="active">Actors</a>
                 </li>
             </ul>
-            <div class="dropdown" *ngIf="(accountService.currentUser$| async) as user" dropdown>
+            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
                 <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo" class="me-2">
                 <a class="btn btn-secondary dropdown-toggle text-white text-decoration-none" dropdownToggle>Welcome {{user.userName}}</a>
                 <div class="dropdown-menu mt-3" *dropdownMenu>

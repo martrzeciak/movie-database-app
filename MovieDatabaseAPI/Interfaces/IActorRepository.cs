@@ -7,5 +7,6 @@ namespace MovieDatabaseAPI.Interfaces
     {
         Task<IEnumerable<Actor>> GetActors();
         Task<Actor?> GetActor(Guid id);
+        Task<IEnumerable<Actor>> GetActorsForMovieAsync(Guid id);
     }
 }

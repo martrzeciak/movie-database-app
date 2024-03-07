@@ -25,6 +25,9 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
 import { ActorCardComponent } from './actors/actor-card/actor-card.component';
+import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
+import { ActorMovieListComponent } from './actors/actor-movie-list/actor-movie-list.component';
+import { ActorMovieListCardComponent } from './actors/actor-movie-list-card/actor-movie-list-card.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { ActorCardComponent } from './actors/actor-card/actor-card.component';
     ServerErrorComponent,
     EditUserComponent,
     MovieDetailComponent,
-    ActorCardComponent
+    ActorCardComponent,
+    ActorDetailComponent,
+    ActorMovieListComponent,
+    ActorMovieListCardComponent,
   ],
   imports: [
     BrowserModule,

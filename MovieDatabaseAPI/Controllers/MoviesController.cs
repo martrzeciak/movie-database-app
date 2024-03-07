@@ -21,7 +21,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var movies = await _movieRepository.GetMoviesAsync();
 
-            if (!movies.Any()) return NotFound();
+            // if (!movies.Any()) return NotFound();
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(movies));
         }
@@ -41,7 +41,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id);
 
-            if (!moviesForActor.Any()) return NotFound();
+            //if (!moviesForActor.Any()) return NotFound();
 
             return Ok(moviesForActor);
         }
