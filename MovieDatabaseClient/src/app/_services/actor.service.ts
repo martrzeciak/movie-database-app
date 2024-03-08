@@ -28,4 +28,8 @@ export class ActorService {
     if (actor) return of(actor);
     return this.http.get<Actor>(this.baseUrl + 'actors/' + actorId);
   }
+
+  getMovieActors(movieId: string) {
+    return this.http.get<Actor[]>(this.baseUrl + 'actors/movie-actors/' + movieId);
+  }
 }

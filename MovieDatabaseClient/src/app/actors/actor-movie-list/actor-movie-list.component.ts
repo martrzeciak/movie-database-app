@@ -14,7 +14,6 @@ export class ActorMovieListComponent implements OnInit {
   constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
-    console.log(this.actorId)
     if (this.actorId) {
       this.loadMoviesForActor(this.actorId)
     }

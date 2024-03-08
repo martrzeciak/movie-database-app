@@ -7,10 +7,10 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title text-dark">{{ movie.title }}</h5>
-            <p class="card-text text-dark">{{ movie.description }}</p>
+            <p class="card-text text-dark description">{{ movie.description }}</p>
             <p class="card-text text-dark" *ngIf="movie.director"><strong>Director:</strong> {{ movie.director }}</p>
             <p class="card-text text-dark mb-1" *ngIf="movie.genres && movie.genres.length > 0">
-              <strong>Genres:</strong>
+              <strong>Genres: </strong>
               <span *ngFor="let genre of movie.genres; let last = last">{{ genre.name }}{{ !last ? ', ' : '' }}</span>
             </p>
           </div>

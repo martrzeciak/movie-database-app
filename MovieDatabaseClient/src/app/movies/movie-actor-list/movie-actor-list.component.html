@@ -1,0 +1,15 @@
+<hr>
+<div *ngIf="actors.length > 0; else noMovies">
+  <div class="row justify-content-start">
+      <div *ngFor="let actor of actors" class="col-2 mb-4 d-flex justify-content-center">
+        <app-movie-actor-list-card [actor]="actor"></app-movie-actor-list-card>
+      </div>
+  </div>
+</div>
+
+<ng-template #noMovies>
+  <p>No movies available for this actor.</p>
+</ng-template>
+<hr>
+
+

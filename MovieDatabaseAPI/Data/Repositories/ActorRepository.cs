@@ -37,6 +37,7 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<IEnumerable<Actor>> GetActorsForMovieAsync(Guid id)
         {
             var moviesForActor = await _dataContext.Actors
+                .Include(i => i.ActorImage)
                 .Where(actor => actor.Movies.Any(movie => movie.Id == id))
                 .ToListAsync();
 
