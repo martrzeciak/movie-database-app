@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Actor } from 'src/app/_models/actor';
+import { ActorParams } from 'src/app/_models/actorParams';
+import { Pagination } from 'src/app/_models/pagination';
 import { ActorService } from 'src/app/_services/actor.service';
 
 @Component({
@@ -9,16 +11,39 @@ import { ActorService } from 'src/app/_services/actor.service';
 })
 export class ActorListComponent implements OnInit {
   actors: Actor[] = [];
+  pagination: Pagination | undefined;
+  actorParams: ActorParams | undefined;
 
-  constructor(private actorService: ActorService) {}
+  constructor(private actorService: ActorService) {
+    this.actorParams = this.actorService.getActorParams();
+    console.log(this.actorParams);
+  }
 
   ngOnInit(): void {
     this.loadActors();
+    //this.actorService.resetActorParams();
   }
 
-  loadActors() {
-    this.actorService.getActors().subscribe((actors) => {
-      this.actors = actors;
-    });
+  loadActors() : void {
+    if (this.actorParams) {
+      console.log("asd")
+      this.actorService.setActorParams(this.actorParams);
+      this.actorService.getActors(this.actorParams).subscribe({
+        next: response => {
+          if (response.result && response.pagination) {
+            this.actors = response.result;
+            this.pagination = response.pagination;
+          }
+        }
+      })
+    }
+  }
+
+  pageChanged(event: any) {
+    if (this.actorParams && this.actorParams?.pageNumber !== event.page) {
+      this.actorParams.pageNumber = event.page;
+      this.actorService.setActorParams(this.actorParams);
+      this.loadActors();
+    }
   }
 }

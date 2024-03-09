@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
+using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Data.Repositories
@@ -18,14 +19,13 @@ namespace MovieDatabaseAPI.Data.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync()
+        public async Task<PagedList<MovieDto>> GetMoviesAsync(MovieParams movieParams)
         {
-            var movies = await _dataContext.Movies
-                .Include(p => p.Poster)
-                .Include(g => g.Genres)
-                .ToListAsync();
+            var query = _dataContext.Movies.AsQueryable();
 
-            return movies;
+            return await PagedList<MovieDto>.CreateAsync(
+                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider), 
+                movieParams.PageNumber, movieParams.PageSize);
         }
 
         public async Task<Movie?> GetMovieAsync(Guid id)
@@ -38,14 +38,15 @@ namespace MovieDatabaseAPI.Data.Repositories
             return movie;
         }
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesForActorAsync(Guid id)
+        public async Task<PagedList<MovieDto>> GetMoviesForActorAsync(Guid id, PaginationParams paginationParams)
         {
-            var moviesForActor = await _dataContext.Movies
-                .Where(movie => movie.Actors.Any(actor => actor.Id == id))
-                .ProjectTo<MovieDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var query = _dataContext.Movies.AsQueryable();
+            
+            query.Where(movie => movie.Actors.Any(actor => actor.Id == id));
 
-            return moviesForActor;
+            return await PagedList<MovieDto>.CreateAsync(
+                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider), 
+                paginationParams.PageNumber, paginationParams.PageSize);
         }
     }
 }

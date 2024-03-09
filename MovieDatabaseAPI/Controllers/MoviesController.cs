@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieDatabaseAPI.DTOs;
+using MovieDatabaseAPI.Entities;
+using MovieDatabaseAPI.Extensions;
+using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
@@ -17,13 +20,14 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
+        public async Task<ActionResult<PagedList<MovieDto>>> GetMovies([FromQuery] MovieParams movieParams)
         {
-            var movies = await _movieRepository.GetMoviesAsync();
+            var movies = await _movieRepository.GetMoviesAsync(movieParams);
 
-            // if (!movies.Any()) return NotFound();
+            Response.AddPaginationHeader(new PaginationHeader(
+                movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages));
 
-            return Ok(_mapper.Map<IEnumerable<MovieDto>>(movies));
+            return Ok(movies);
         }
 
         [HttpGet("{id}")]
@@ -37,11 +41,16 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet("actor-movies/{id}")]
-        public async Task<ActionResult<IEnumerable<MovieDto>>> GetMoviesForActor(Guid id)
+        public async Task<ActionResult<PagedList<MovieDto>>> GetMoviesForActor(Guid id, 
+            [FromQuery] PaginationParams paginationParams)
         {
-            var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id);
+            var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id, paginationParams);
 
-            //if (!moviesForActor.Any()) return NotFound();
+            Response.AddPaginationHeader(new PaginationHeader(
+                moviesForActor.CurrentPage, 
+                moviesForActor.PageSize, 
+                moviesForActor.TotalCount, 
+                moviesForActor.TotalPages));
 
             return Ok(moviesForActor);
         }

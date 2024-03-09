@@ -46,15 +46,18 @@
   <p class="text-center">No actors available.</p>
 </ng-template>
 
-<div class="d-flex justify-content-center">
-  <pagination
-    [boundaryLinks]="true"
-    [totalItems]="50"
-    [itemsPerPage]="25"
-    [maxSize]="10"
-    previousText="&lsaquo;"
-    nextText="&rsaquo;"
-    firstText="&laquo;"
-    lastText="&raquo;"
-  ></pagination>
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <pagination 
+      [boundaryLinks]="true" 
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [maxSize]="10"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;" 
+      nextText="&rsaquo;" 
+      firstText="&laquo;" 
+      lastText="&raquo;"
+  >
+  </pagination>
 </div>

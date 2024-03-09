@@ -1,12 +1,13 @@
 ﻿using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
+using MovieDatabaseAPI.Helpers;
 
 namespace MovieDatabaseAPI.Interfaces
 {
     public interface IMovieRepository
     {
-        Task<IEnumerable<Movie>> GetMoviesAsync();
+        Task<PagedList<MovieDto>> GetMoviesAsync(MovieParams movieParams);
         Task<Movie?> GetMovieAsync(Guid id);
-        Task<IEnumerable<MovieDto>> GetMoviesForActorAsync(Guid id);
+        Task<PagedList<MovieDto>> GetMoviesForActorAsync(Guid id, PaginationParams paginationParams);
     }
 }
