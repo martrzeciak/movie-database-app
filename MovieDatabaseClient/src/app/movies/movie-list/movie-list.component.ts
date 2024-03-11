@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
 import { MovieParams } from 'src/app/_models/movieParams';
@@ -16,12 +17,10 @@ export class MovieListComponent implements OnInit {
   genres: Genre[] = [];
   pagination: Pagination | undefined;
   movieParams: MovieParams | undefined;
-  // movie: Movie | undefined;
 
   constructor(private movieService: MovieService, 
-    private genreService: GenreService) {
+    private genreService: GenreService, private router: Router) {
       this.movieParams = this.movieService.getMovieParams();
-      console.log(this.movieParams)
     }
 
   ngOnInit(): void {
@@ -32,6 +31,7 @@ export class MovieListComponent implements OnInit {
 
   loadMovies(): void {
     if (this.movieParams) {
+      console.log(this.movieParams.releaseDate)
       this.movieService.setMovieParams(this.movieParams);
       this.movieService.getMovies(this.movieParams).subscribe({
         next: response => {
@@ -46,7 +46,8 @@ export class MovieListComponent implements OnInit {
 
   loadGenres(): void {
     this.genreService.getGenres().subscribe((genres) => {
-      this.genres = genres;
+      const emptyGenre: Genre = { id: '', name: '' };
+      this.genres = [emptyGenre, ...genres];
     });
   }
 
@@ -56,5 +57,10 @@ export class MovieListComponent implements OnInit {
       this.movieService.setMovieParams(this.movieParams);
       this.loadMovies();
     }
+  }
+
+  resetFiliters() {
+    this.movieParams = this.movieService.resetMovieParams();
+    this.loadMovies();
   }
 }

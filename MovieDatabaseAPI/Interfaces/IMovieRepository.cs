@@ -9,5 +9,6 @@ namespace MovieDatabaseAPI.Interfaces
         Task<PagedList<MovieDto>> GetMoviesAsync(MovieParams movieParams);
         Task<Movie?> GetMovieAsync(Guid id);
         Task<PagedList<MovieDto>> GetMoviesForActorAsync(Guid id, PaginationParams paginationParams);
+        Task<IEnumerable<string>> GetSearchSuggestionsAsync(string query);
     }
 }

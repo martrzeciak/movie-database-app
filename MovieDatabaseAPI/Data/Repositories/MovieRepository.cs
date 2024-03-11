@@ -23,8 +23,18 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             var query = _dataContext.Movies.AsQueryable();
 
+            if (movieParams.ReleaseDate != -1)
+            {
+                query = query.Where(m => m.ReleaseDate == movieParams.ReleaseDate);
+            }
+
+            if (!string.IsNullOrEmpty(movieParams.Genre))
+            {
+                query = query.Where(m => m.Genres.Any(g => g.Name == movieParams.Genre));
+            }
+
             return await PagedList<MovieDto>.CreateAsync(
-                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider), 
+                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
                 movieParams.PageNumber, movieParams.PageSize);
         }
 
@@ -41,12 +51,27 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<PagedList<MovieDto>> GetMoviesForActorAsync(Guid id, PaginationParams paginationParams)
         {
             var query = _dataContext.Movies.AsQueryable();
-            
+
             query.Where(movie => movie.Actors.Any(actor => actor.Id == id));
 
             return await PagedList<MovieDto>.CreateAsync(
-                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider), 
+                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
                 paginationParams.PageNumber, paginationParams.PageSize);
+        }
+
+        public async Task<IEnumerable<string>> GetSearchSuggestionsAsync(string query)
+        {
+            return await _dataContext.Movies
+                .Where(m => m.Title.Contains(query))
+                .Select(m => m.Title)
+                .Distinct()
+                .Take(5)
+                .ToListAsync();
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return await _dataContext.SaveChangesAsync() > 0;
         }
     }
 }

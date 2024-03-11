@@ -13,6 +13,7 @@ namespace MovieDatabaseAPI.Helpers
             CreateMap<RegisterDto, User>();
             CreateMap<Genre, GenreDto>();
             CreateMap<Comment, CommentDto>();
+            CreateMap<MemberUpdateDto, User>();
             CreateMap<Movie, MovieDto>()
                 .ForMember(dest => dest.PosterUrl,
                     opt => opt.MapFrom(src => src.Poster.PosterUrl));

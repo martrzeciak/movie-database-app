@@ -29,6 +29,16 @@ export class MovieService {
 
     let params = getPaginationHeaders(movieParams.pageNumber, movieParams.pageSize);
 
+    params = params.append('genre', movieParams.genre);
+    console.log(movieParams.genre)
+
+    if (movieParams.releaseDate) {
+      params = params.append('releaseDate', movieParams.releaseDate);
+    }
+    else {
+      params = params.append('releaseDate', -1);
+    }
+      
     return getPaginatedResult<Movie[]>(this.baseUrl + 'movies', params, this.http).pipe(
       map(response => {
         this.movieCache.set(Object.values(movieParams).join('-'), response);
@@ -79,5 +89,9 @@ export class MovieService {
   resetActorMovieParams() {
     this.actorMovieParams = new ActorMovieParams();
     return this.actorMovieParams;
+  }
+
+  getSearchSuggestions(query: string) {
+    return this.http.get<string[]>(`${this.baseUrl}movies/search-suggestions?query=${query}`);
   }
 }

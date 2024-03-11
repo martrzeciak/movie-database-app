@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieDatabaseAPI.DTOs;
-using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Extensions;
 using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
@@ -41,18 +40,26 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet("actor-movies/{id}")]
-        public async Task<ActionResult<PagedList<MovieDto>>> GetMoviesForActor(Guid id, 
+        public async Task<ActionResult<PagedList<MovieDto>>> GetMoviesForActor(Guid id,
             [FromQuery] PaginationParams paginationParams)
         {
             var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id, paginationParams);
 
             Response.AddPaginationHeader(new PaginationHeader(
-                moviesForActor.CurrentPage, 
-                moviesForActor.PageSize, 
-                moviesForActor.TotalCount, 
+                moviesForActor.CurrentPage,
+                moviesForActor.PageSize,
+                moviesForActor.TotalCount,
                 moviesForActor.TotalPages));
 
             return Ok(moviesForActor);
+        }
+
+        [HttpGet("search-suggestions")]
+        public async Task<ActionResult<IEnumerable<string>>> GetSearchSuggestions([FromQuery] string query)
+        {
+            var suggestions = await _movieRepository.GetSearchSuggestionsAsync(query);
+
+            return Ok(suggestions);
         }
     }
 }

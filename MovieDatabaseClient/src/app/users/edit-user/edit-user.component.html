@@ -1,19 +1,28 @@
-<div class="row">
+<div class="row" *ngIf="member">
     <div class="col-4">
-        <h1>Edit Profile</h1>
+        <h1>Your profile</h1>
     </div>
     <div class="col-8">
         <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
-            <p><strong>Information:</strong> You have made changes. Any unsaved changes will be lost.</p>
+            <p><strong>Information:</strong> You have made changes, Any unsaved changes will be lost</p>
         </div>
     </div>
     <div class="col-4">
         <div class="card">
             <div class="card-body">
-                <img src="{{ './assets/user.png'}}" class="card-img-top img-thumbnail">
+                <img src="{{ './assets/user.png'}}" alt="{{ member.userName }}"
+                    class="card-img-top img-thumbnail">
+                    <div>
+                        <strong>Username:</strong>
+                        <p>{{ member.userName }}</p>
+                    </div>
+                <div>
+                    <strong>Member since:</strong>
+                    <p>{{ member.created | date}}</p>
+                </div>
                 <div>
                     <strong>Gender:</strong>
-                    <p>User Gender</p>
+                    <p>{{ member.gender | titlecase }}</p>
                 </div>
             </div>
             <div class="card-footer">
@@ -22,12 +31,12 @@
         </div>
     </div>
     <div class="col-8">
-        <form #editForm="ngForm" id="editForm">
-            <h4 class="mt-2">Edit Profile</h4>
-            <div class="form-group">
-                <label for="userName">Username:</label>
-                <input type="text" name="userName" class="form-control">
-            </div>
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+            <h4 class="mt-2">Description</h4>
+            <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
+            <h4 class="mt-2">Location</h4>
+            <input type="text" class="form-control" [(ngModel)]="member.localization" name="localization">             
         </form>
+         <app-user-photo-uploader [member]="member"></app-user-photo-uploader>
     </div>
 </div>

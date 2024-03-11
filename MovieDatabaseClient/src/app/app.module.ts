@@ -30,6 +30,10 @@ import { ActorMovieListComponent } from './actors/actor-movie-list/actor-movie-l
 import { ActorMovieListCardComponent } from './actors/actor-movie-list-card/actor-movie-list-card.component';
 import { MovieActorListComponent } from './movies/movie-actor-list/movie-actor-list.component';
 import { MovieActorListCardComponent } from './movies/movie-actor-list-card/movie-actor-list-card.component';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FileUploadModule } from 'ng2-file-upload';
+import { UserPhotoUploaderComponent } from './users/user-photo-uploader/user-photo-uploader.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +56,8 @@ import { MovieActorListCardComponent } from './movies/movie-actor-list-card/movi
     ActorMovieListCardComponent,
     MovieActorListComponent,
     MovieActorListCardComponent,
+    ConfirmDialogComponent,
+    UserPhotoUploaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +72,8 @@ import { MovieActorListCardComponent } from './movies/movie-actor-list-card/movi
       positionClass: 'toast-bottom-right'
     }),
     PaginationModule.forRoot(),
+    ModalModule.forRoot(),
+    FileUploadModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

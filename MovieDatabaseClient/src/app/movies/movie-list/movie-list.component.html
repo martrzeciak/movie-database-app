@@ -1,6 +1,6 @@
-<div class="container mt-3" >
-    <form #form="ngForm" class="d-flex mb-3" autocomplete="off">
-        <div class="d-flex px-2 align-items-center">
+<div class="container mt-3" *ngIf="movieParams">
+    <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
+        <!-- <div class="d-flex px-2 align-items-center">
             <div class="d-flex mx-2">
               <label class="col-form-label"><strong>Search:</strong></label>
               <div class="input-group ms-1">
@@ -10,12 +10,16 @@
                 </button>
               </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="d-flex px-2">
             <label class="col-form-label me-2"><strong>Genre: </strong></label>
-            <select name="genre" style="width: 150px;" class="form-select ms-1">
-              <option *ngFor="let genre of genres">{{ genre.name }}</option>
+            <select 
+              name="genre" 
+              style="width: 150px;" 
+              class="form-select ms-1" 
+              [(ngModel)]="movieParams.genre">
+                <option *ngFor="let genre of genres">{{ genre.name }}</option>
             </select>
         </div>
 
@@ -25,7 +29,8 @@
                 type="number" 
                 class="form-control ms-1" 
                 style="width: 80px;" 
-                name="minAge" 
+                name="releaseDate" 
+                [(ngModel)]="movieParams.releaseDate"
             >
         </div>
 
@@ -33,7 +38,7 @@
             Apply
         </button>
 
-        <button class="btn btn-secondary ms-1" type="submit">
+        <button (click)="resetFiliters()" class="btn btn-secondary ms-1" type="submit">
             Reset
         </button>
 

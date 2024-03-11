@@ -29,7 +29,6 @@ namespace MovieDatabaseAPI.Data
                 {
                     Id = Guid.NewGuid(),
                     UserName = "John123",
-                    KnownAs = "John Doe",
                     Gender = "Male",
                     Introduction = "Hello, I'm John Doe!",
                     Localization = "en-US",
@@ -39,7 +38,6 @@ namespace MovieDatabaseAPI.Data
                 {
                     Id = Guid.NewGuid(),
                     UserName = "Jane31",
-                    KnownAs = "Jane Doe",
                     Gender = "Female",
                     Introduction = "Hi, I'm Jane Doe!",
                     Localization = "en-US",
