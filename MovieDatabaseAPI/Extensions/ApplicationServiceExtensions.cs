@@ -18,7 +18,9 @@ namespace MovieDatabaseAPI.Extensions
 
             services.AddCors();
             services.AddAutoMapper(typeof(AutoMapperProfiles));
+            services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();

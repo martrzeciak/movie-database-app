@@ -37,7 +37,7 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<User?> GetUserByUserNameAsync(string username)
         {
             var user = await _dataContext.Users
-                .Include(i => i.UserImage)
+                .Include(i => i.UserImages)
                 .FirstOrDefaultAsync(x => x.UserName == username);
 
             return user;
@@ -46,7 +46,7 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<User?> GetUserByIdAsync(Guid id)
         {
             var user = await _dataContext.Users
-                .Include(i => i.UserImage)
+                .Include(i => i.UserImages)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return user;

@@ -1,7 +1,7 @@
 export interface User {
     userName: string;
     token: string; 
-    photoUrl: string;
+    imageUrl: string;
     gender: string;
     roles: string[];
 }

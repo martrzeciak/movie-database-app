@@ -39,7 +39,7 @@ export class UserPhotoUploaderComponent implements OnInit {
 
   initializeFileUploader() {
     this.uploader = new FileUploader({
-      url: this.baseUrl + 'users/add-photo',
+      url: this.baseUrl + 'users/add-user-image',
       authToken: 'Bearer ' + this.user?.token,
       isHTML5: true,
       allowedFileType: ['image'],
@@ -56,13 +56,39 @@ export class UserPhotoUploaderComponent implements OnInit {
     this.uploader.onSuccessItem = (_item, response, status, _headers) => {
       if (response) {
         const photo = JSON.parse(response);
-        //this.member?.photoUrl
-        if (this.user && this.member) {
-          this.user.photoUrl = photo.url;
-          this.member.photoUrl = photo.url;
+        this.member?.userImages.push(photo);
+        if (photo.isMain && this.user && this.member) {
+          this.user.imageUrl = photo.imageUrl;
           this.accountService.setCurrentUser(this.user);
+          this.member.imageUrl = photo.imageUrl;
         }
       }
     };
+  }
+
+  setMainPhoto(photo: any) {
+    this.memberService.setMainPhoto(photo.id).subscribe({
+      next: () => {
+        if (this.user && this.member) {
+          this.user.imageUrl = photo.imageUrl;
+          this.accountService.setCurrentUser(this.user);
+          this.member.imageUrl = photo.imageUrl;
+          this.member.userImages.forEach(p => {
+            if (p.isMain) p.isMain = false;
+            if (p.id === photo.id) p.isMain = true;
+          })
+        }
+      } 
+    })
+  }
+
+  deletePhoto(photoId: string) {
+    this.memberService.deletePhoto(photoId).subscribe({
+      next: () => {
+        if (this.member) {
+          this.member.userImages = this.member.userImages.filter(x => x.id !== photoId);
+        }
+      }
+    })
   }
 }

@@ -32,7 +32,6 @@ namespace MovieDatabaseAPI.Data
                     Gender = "Male",
                     Introduction = "Hello, I'm John Doe!",
                     Localization = "en-US",
-                    UserImage = new UserImage() { ImageUrl = "https://randomuser.me/api/portraits/men/75.jpg" }
                 },
                 new User
                 {
@@ -41,7 +40,6 @@ namespace MovieDatabaseAPI.Data
                     Gender = "Female",
                     Introduction = "Hi, I'm Jane Doe!",
                     Localization = "en-US",
-                    UserImage = new UserImage() { ImageUrl = "https://randomuser.me/api/portraits/women/76.jpg" }
                 },
             };
 

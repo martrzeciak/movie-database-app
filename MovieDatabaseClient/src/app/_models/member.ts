@@ -1,3 +1,5 @@
+import { userImage } from "./userImage";
+
 export interface Member {
     id: string,
     userName: string,
@@ -5,5 +7,6 @@ export interface Member {
     introduction: string,
     created: string,
     localization: string,
-    photoUrl: string
+    imageUrl: string,
+    userImages: userImage[]
 }
