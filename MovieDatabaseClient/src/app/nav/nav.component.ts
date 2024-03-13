@@ -17,7 +17,7 @@ export class NavComponent {
     login() {
       this.accountService.login(this.model).subscribe({
         next: _ => {
-          this.router.navigateByUrl('/actors');
+          this.router.navigateByUrl('/');
           this.model = {};
         }
       })

@@ -36,7 +36,12 @@ namespace MovieDatabaseAPI.Controllers
 
             if (movie == null) return NotFound();
 
-            return Ok(_mapper.Map<MovieDto>(movie));
+            var movieDto = _mapper.Map<MovieDto>(movie);
+
+            movieDto.AverageRating = await _movieRepository.GetAverageRatingForMovieAsync(id);
+            movieDto.RatingCount = await _movieRepository.GetRatingCountForMovieAsync(id);
+
+            return Ok(movieDto);
         }
 
         [HttpGet("actor-movies/{id}")]

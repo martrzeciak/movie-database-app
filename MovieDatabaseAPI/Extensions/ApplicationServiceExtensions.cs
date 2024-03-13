@@ -25,6 +25,7 @@ namespace MovieDatabaseAPI.Extensions
             services.AddScoped<IActorRepository, ActorRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
 
             return services;
         }

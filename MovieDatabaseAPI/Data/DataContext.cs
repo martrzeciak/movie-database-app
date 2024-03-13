@@ -16,6 +16,7 @@ namespace MovieDatabaseAPI.Data
         public DbSet<Comment> Comments { get; set; }
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<ActorImage> ActorImages { get; set; }
+        public DbSet<MovieRating> MovieRatings { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -36,6 +37,21 @@ namespace MovieDatabaseAPI.Data
                 .HasOne(u => u.Role)
                 .WithMany(ur => ur.UserRoles)
                 .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
+            modelBuilder.Entity<MovieRating>()
+                .HasKey(mr => new { mr.UserId, mr.MovieId });
+
+            modelBuilder.Entity<MovieRating>()
+                .HasOne(u => u.User)
+                .WithMany(mr => mr.MovieRatings)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<MovieRating>()
+                .HasOne(u => u.Movie)
+                .WithMany(ur => ur.MovieRatings)
+                .HasForeignKey(ur => ur.MovieId)
                 .IsRequired();
         }
     }

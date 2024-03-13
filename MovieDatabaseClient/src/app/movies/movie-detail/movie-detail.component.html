@@ -26,11 +26,26 @@
       <h2><strong>Popularity:</strong></h2>
       <h4> 1 in ranking</h4>
       <h4><strong>Rating:</strong></h4> 
-      <h5>8,3 (52 votes)</h5>
-      <h4><strong>Your rating:</strong></h4> 
-      <h5>1 2 3 4 5</h5>
+      <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
+      <ng-container *ngIf="!(accountService.currentUser$ | async)">
+          <h4><strong>Your rating:</strong></h4> 
+          <h5>Please log in</h5>
+      </ng-container>
+      <ng-container  *ngIf="(accountService.currentUser$ | async)">
+        <h4><strong>Your rating: {{rate}}/5</strong></h4>
+        <div>
+          <rating [max]="max" [(ngModel)]="rate" [customTemplate]="tt"></rating>
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
+              <span *ngIf="i < v"><i class="fa fa-star"></i></span>
+              <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
+            </button>
+          </ng-template>
+        </div>
+      </ng-container>
     </div>
   </div>
   <h3 class="mt-4">Actors:</h3>
   <app-movie-actor-list [movieId]="movie.id"></app-movie-actor-list>
 </div>
+

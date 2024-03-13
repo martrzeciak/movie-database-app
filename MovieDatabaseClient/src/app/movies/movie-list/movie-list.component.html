@@ -45,11 +45,25 @@
         <div class="col d-flex justify-content-end">
             <label class="col-form-label me-2"><strong>Order: </strong></label>
             <div class="btn-group">
-              <button type="button" class="btn btn-secondary me-1" name="orderBy" btnRadio="alphabetical">
+              <button 
+                type="button" 
+                class="btn btn-secondary me-1" 
+                name="orderBy" 
+                [(ngModel)]="movieParams.orderBy"
+                btnRadio="alphabetical"
+                (click)="loadMovies()"
+              >
                 Alphabetical
               </button>
           
-              <button type="button" class="btn btn-secondary" name="orderBy" btnRadio="popularity">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                name="orderBy"
+                [(ngModel)]="movieParams.orderBy"
+                btnRadio="popularity"
+                (click)="loadMovies()"
+              >
                 Popularity
               </button>
             </div>

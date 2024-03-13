@@ -3,4 +3,5 @@ export class MovieParams {
     pageSize = 8;
     genre = '';
     releaseDate: number | undefined;
+    orderBy = 'popularity';
 }

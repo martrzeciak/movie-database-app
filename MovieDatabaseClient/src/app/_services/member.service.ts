@@ -60,7 +60,6 @@ export class MemberService {
       map( () => {
         const index = this.members.indexOf(member);
         this.members[index] = {...this.members[index], ...member};
-        console.log('dsad')
       })
     )   
   }

@@ -24,14 +24,16 @@ export class MovieListComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    console.log('onInit movie list')
     this.loadMovies();
     this.loadGenres();
     this.movieService.resetMovieParams();
   }
 
   loadMovies(): void {
+    console.log('movie list - loadMovies')
     if (this.movieParams) {
-      console.log(this.movieParams.releaseDate)
+      console.log(this.movieParams.orderBy)
       this.movieService.setMovieParams(this.movieParams);
       this.movieService.getMovies(this.movieParams).subscribe({
         next: response => {
@@ -45,6 +47,7 @@ export class MovieListComponent implements OnInit {
   }
 
   loadGenres(): void {
+    console.log('movie list - loadGenres')
     this.genreService.getGenres().subscribe((genres) => {
       const emptyGenre: Genre = { id: '', name: '' };
       this.genres = [emptyGenre, ...genres];

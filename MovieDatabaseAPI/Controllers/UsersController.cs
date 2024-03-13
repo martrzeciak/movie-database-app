@@ -123,6 +123,7 @@ namespace MovieDatabaseAPI.Controllers
             return BadRequest("Failed to set main photo");
         }
 
+        [Authorize]
         [HttpDelete("delete-user-image/{imageId}")]
         public async Task<ActionResult> DeletePhoto(Guid imageId)
         {

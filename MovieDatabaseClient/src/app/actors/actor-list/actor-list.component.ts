@@ -16,7 +16,6 @@ export class ActorListComponent implements OnInit {
 
   constructor(private actorService: ActorService) {
     this.actorParams = this.actorService.getActorParams();
-    console.log(this.actorParams);
   }
 
   ngOnInit(): void {
@@ -26,7 +25,6 @@ export class ActorListComponent implements OnInit {
 
   loadActors() : void {
     if (this.actorParams) {
-      console.log("asd")
       this.actorService.setActorParams(this.actorParams);
       this.actorService.getActors(this.actorParams).subscribe({
         next: response => {

@@ -33,6 +33,12 @@ namespace MovieDatabaseAPI.Data.Repositories
                 query = query.Where(m => m.Genres.Any(g => g.Name == movieParams.Genre));
             }
 
+            query = movieParams.OrderBy switch
+            {
+                "alphabetical" => query.OrderByDescending(m => m.Title),
+                _ => query.OrderByDescending(u => u.MovieRatings.Count())
+            };
+
             return await PagedList<MovieDto>.CreateAsync(
                 query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
                 movieParams.PageNumber, movieParams.PageSize);
@@ -67,6 +73,23 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .Distinct()
                 .Take(5)
                 .ToListAsync();
+        }
+        public async Task<int> GetRatingCountForMovieAsync(Guid movieId)
+        {
+            return await _dataContext.MovieRatings
+                .Where(r => r.MovieId == movieId)
+                .CountAsync();
+        }
+
+        public async Task<double> GetAverageRatingForMovieAsync(Guid movieId)
+        {
+            var averageRating = await _dataContext.MovieRatings
+                .Where(r => r.MovieId == movieId)
+                .Select(r => (double)r.Rating)
+                .DefaultIfEmpty()
+                .AverageAsync(); 
+
+            return Math.Round(averageRating, 1);
         }
 
         public async Task<bool> SaveAllAsync()

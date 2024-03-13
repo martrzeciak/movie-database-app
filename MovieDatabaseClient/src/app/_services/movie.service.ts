@@ -23,14 +23,10 @@ export class MovieService {
   }
 
   getMovies(movieParams: MovieParams) {
-    const response = this.movieCache.get(Object.values(movieParams).join('-'));
-
-    if (response) return of(response);
-
     let params = getPaginationHeaders(movieParams.pageNumber, movieParams.pageSize);
 
     params = params.append('genre', movieParams.genre);
-    console.log(movieParams.genre)
+    params = params.append('orderBy', movieParams.orderBy);
 
     if (movieParams.releaseDate) {
       params = params.append('releaseDate', movieParams.releaseDate);
@@ -39,20 +35,10 @@ export class MovieService {
       params = params.append('releaseDate', -1);
     }
       
-    return getPaginatedResult<Movie[]>(this.baseUrl + 'movies', params, this.http).pipe(
-      map(response => {
-        this.movieCache.set(Object.values(movieParams).join('-'), response);
-        return response;
-      })
-    )
+    return getPaginatedResult<Movie[]>(this.baseUrl + 'movies', params, this.http);
   }
 
   getMovie(movieId: string) {
-    const movie = [...this.movieCache.values()]
-      .reduce((arr, elem) => arr.concat(elem.result), [])
-      .find((movie: Movie) => movie.id === movieId);
-
-    if (movie) return of(movie);
 
     return this.http.get<Movie>(this.baseUrl + 'movies/' + movieId);
   }

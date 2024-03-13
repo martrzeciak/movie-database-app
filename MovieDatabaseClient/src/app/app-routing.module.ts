@@ -11,6 +11,8 @@ import { MovieDetailComponent } from './movies/movie-detail/movie-detail.compone
 import { ActorDetailComponent } from './actors/actor-detail/actor-detail.component';
 import { authGuard } from './_guard/authGuard';
 import { preventUnsavedChangesGuard } from './_guard/prevent-unsaved-changes.guard';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { adminGuard } from './_guard/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +21,7 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'edit/user', component: EditUserComponent, canDeactivate: [preventUnsavedChangesGuard] },
+      { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
     ]
   },
   { path: 'register', component: RegisterComponent },

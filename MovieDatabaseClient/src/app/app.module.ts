@@ -34,6 +34,11 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UserPhotoUploaderComponent } from './users/user-photo-uploader/user-photo-uploader.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @NgModule({
   declarations: [
@@ -58,6 +63,9 @@ import { UserPhotoUploaderComponent } from './users/user-photo-uploader/user-pho
     MovieActorListCardComponent,
     ConfirmDialogComponent,
     UserPhotoUploaderComponent,
+    HasRoleDirective,
+    AdminPanelComponent,
+    UserManagmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +81,9 @@ import { UserPhotoUploaderComponent } from './users/user-photo-uploader/user-pho
     }),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    RatingModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -19,7 +19,6 @@ export class ActorDetailComponent implements OnInit {
 
   loadActor() {
     var id = this.route.snapshot.paramMap.get('id');
-    console.log(id);
     if (id == null) return;
     this.actorService.getActor(id).subscribe({
       next: actor => {

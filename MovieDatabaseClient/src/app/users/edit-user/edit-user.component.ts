@@ -40,7 +40,6 @@ export class EditUserComponent {
     this.memberService.getMember(this.user.userName).subscribe({
       next: member => {
         this.member = member;
-        console.log(member)
       }
     })
   }

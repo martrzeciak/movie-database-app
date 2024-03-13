@@ -8,5 +8,7 @@ export interface Movie {
     director: string,
     description: string,
     posterUrl: string,
+    averageRating: number,
+    ratingCount: number,
     genres: Genre[]
 }
