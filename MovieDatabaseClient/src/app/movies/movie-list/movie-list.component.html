@@ -47,17 +47,6 @@
             <div class="btn-group">
               <button 
                 type="button" 
-                class="btn btn-secondary me-1" 
-                name="orderBy" 
-                [(ngModel)]="movieParams.orderBy"
-                btnRadio="alphabetical"
-                (click)="loadMovies()"
-              >
-                Alphabetical
-              </button>
-          
-              <button 
-                type="button" 
                 class="btn btn-secondary" 
                 name="orderBy"
                 [(ngModel)]="movieParams.orderBy"
@@ -65,6 +54,17 @@
                 (click)="loadMovies()"
               >
                 Popularity
+              </button>
+
+              <button 
+                type="button" 
+                class="btn btn-secondary ms-1" 
+                name="orderBy" 
+                [(ngModel)]="movieParams.orderBy"
+                btnRadio="alphabetical"
+                (click)="loadMovies()"
+              >
+                Alphabetical
               </button>
             </div>
           </div>            
@@ -83,7 +83,7 @@
     <p class="text-center">No movies available.</p>
 </ng-template>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" *ngIf="pagination" >
   <pagination 
       [boundaryLinks]="true" 
       [totalItems]="pagination.totalItems"

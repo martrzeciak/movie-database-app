@@ -2,7 +2,7 @@
 {
     public class MovieParams : PaginationParams
     {
-        public int ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; } = string.Empty;
         public string? Genre { get; set; }
         public string OrderBy { get; set; } = "popularity";
     }

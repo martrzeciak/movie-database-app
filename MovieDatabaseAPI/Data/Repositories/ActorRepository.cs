@@ -23,6 +23,17 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             var query = _dataContext.Actors.AsQueryable();
 
+            if (!string.IsNullOrEmpty(actorParams.Gender))
+            {
+                query = query.Where(a => a.Gender == actorParams.Gender);
+            }
+
+            query = actorParams.OrderBy switch
+            {
+                "alphabetical" => query.OrderBy(m => m.LastName),
+                _ => query.OrderByDescending(u => u.ActorRatings.Count())
+            };
+
             return await PagedList<ActorDto>.CreateAsync(
                 query.ProjectTo<ActorDto>(_mapper.ConfigurationProvider),
                 actorParams.PageNumber, actorParams.PageSize);

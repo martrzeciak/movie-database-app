@@ -27,13 +27,9 @@ export class MovieService {
 
     params = params.append('genre', movieParams.genre);
     params = params.append('orderBy', movieParams.orderBy);
-
-    if (movieParams.releaseDate) {
+    
+    if (movieParams.releaseDate)
       params = params.append('releaseDate', movieParams.releaseDate);
-    }
-    else {
-      params = params.append('releaseDate', -1);
-    }
       
     return getPaginatedResult<Movie[]>(this.baseUrl + 'movies', params, this.http);
   }

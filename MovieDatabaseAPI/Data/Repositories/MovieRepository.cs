@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Helpers;
@@ -23,9 +24,9 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             var query = _dataContext.Movies.AsQueryable();
 
-            if (movieParams.ReleaseDate != -1)
+            if (!string.IsNullOrEmpty(movieParams.ReleaseDate))
             {
-                query = query.Where(m => m.ReleaseDate == movieParams.ReleaseDate);
+                query = query.Where(m => m.ReleaseDate == int.Parse(movieParams.ReleaseDate));
             }
 
             if (!string.IsNullOrEmpty(movieParams.Genre))

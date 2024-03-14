@@ -13,6 +13,7 @@ export class ActorListComponent implements OnInit {
   actors: Actor[] = [];
   pagination: Pagination | undefined;
   actorParams: ActorParams | undefined;
+  genderList = [null , 'male', 'female'];
 
   constructor(private actorService: ActorService) {
     this.actorParams = this.actorService.getActorParams();
@@ -43,5 +44,10 @@ export class ActorListComponent implements OnInit {
       this.actorService.setActorParams(this.actorParams);
       this.loadActors();
     }
+  }
+
+  resetFiliters() {
+    this.actorParams = this.actorService.resetActorParams();
+    this.loadActors();
   }
 }

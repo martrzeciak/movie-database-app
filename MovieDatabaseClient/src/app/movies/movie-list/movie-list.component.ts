@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
@@ -17,6 +17,8 @@ export class MovieListComponent implements OnInit {
   genres: Genre[] = [];
   pagination: Pagination | undefined;
   movieParams: MovieParams | undefined;
+
+
 
   constructor(private movieService: MovieService, 
     private genreService: GenreService, private router: Router) {
@@ -47,7 +49,6 @@ export class MovieListComponent implements OnInit {
   }
 
   loadGenres(): void {
-    console.log('movie list - loadGenres')
     this.genreService.getGenres().subscribe((genres) => {
       const emptyGenre: Genre = { id: '', name: '' };
       this.genres = [emptyGenre, ...genres];

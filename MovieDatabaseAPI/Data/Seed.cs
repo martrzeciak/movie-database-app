@@ -112,6 +112,7 @@ namespace MovieDatabaseAPI.Data
                         "role in the children's television series The " +
                         "Electric Company.",
                     HeightInCentimeters = 188,
+                    Gender = "male",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" },
                 },
                 new Actor // 1
@@ -128,6 +129,7 @@ namespace MovieDatabaseAPI.Data
                         "his work in Mystic River. He was born in West Covina, " +
                         "Los Angeles County and raised in New York City.",
                     HeightInCentimeters = 196,
+                    Gender = "male",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 2
@@ -144,6 +146,7 @@ namespace MovieDatabaseAPI.Data
                         "films such as The Shawshank Redemption, " +
                         "The Asphalt Jungle, and Give 'em Hell, Harry!",
                     HeightInCentimeters = 183,
+                    Gender = "male",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 3
@@ -159,6 +162,7 @@ namespace MovieDatabaseAPI.Data
                         "across film, television, and theater, Gunton has " +
                         "established himself as a versatile actor.",
                     HeightInCentimeters = 183,
+                    Gender = "female",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
 
@@ -177,6 +181,7 @@ namespace MovieDatabaseAPI.Data
                         "SquarePants. Brown has showcased his talent across " +
                         "a wide range of genres.",
                     HeightInCentimeters = 196,
+                    Gender = "female",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 // the goodfather
@@ -192,6 +197,7 @@ namespace MovieDatabaseAPI.Data
                         "he is best known for his performances in A Streetcar Named " +
                         "Desire, On the Waterfront, and, of course, The Godfather.",
                     HeightInCentimeters = 175,
+                    Gender = "female",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 6
@@ -207,6 +213,7 @@ namespace MovieDatabaseAPI.Data
                         "for his roles in The Godfather series, Scarface, and " +
                         "Scent of a Woman.",
                     HeightInCentimeters = 170,
+                    Gender = "female",
                     ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 7
@@ -221,6 +228,7 @@ namespace MovieDatabaseAPI.Data
                         "Caan received an Academy Award nomination for his role " +
                         "in The Godfather.",
                     HeightInCentimeters = 175,
+                    Gender = "female",
                     //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 8
@@ -236,6 +244,7 @@ namespace MovieDatabaseAPI.Data
                         "known for his roles in The Godfather, Apocalypse Now, " +
                         "and Tender Mercies.",
                     HeightInCentimeters = 174,
+                    Gender = "male",
                     //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 9
@@ -250,6 +259,7 @@ namespace MovieDatabaseAPI.Data
                         "and Something's Gotta Give. Keaton has received various " +
                         "awards, including an Academy Award and a BAFTA Award.",
                     HeightInCentimeters = 170,
+                    Gender = "male",
                     //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
             };

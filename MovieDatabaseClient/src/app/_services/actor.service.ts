@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Actor } from '../_models/actor';
 import { HttpClient } from '@angular/common/http';
-import { map, of } from 'rxjs';
 import { ActorParams } from '../_models/actorParams';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 import { MovieActorParams } from '../_models/movieActorParams';
@@ -24,6 +23,10 @@ export class ActorService {
 
   getActors(actorParams: ActorParams) {
     let params = getPaginationHeaders(actorParams.pageNumber, actorParams.pageSize);
+
+    params = params.append('orderBy', actorParams.orderBy);
+    if (actorParams.gender)
+      params = params.append('gender', actorParams.gender);
 
     return getPaginatedResult<Actor[]>(this.baseUrl + 'actors', params, this.http);
   }
