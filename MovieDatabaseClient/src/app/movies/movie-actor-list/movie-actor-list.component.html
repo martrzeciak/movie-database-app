@@ -1,7 +1,7 @@
 <hr>
-<div *ngIf="actors.length > 0; else noMovies">
+<div *ngIf="actors.length > 0; else noMovies" class="border border-2 rounded shadow p-3">
   <div class="row justify-content-start">
-      <div *ngFor="let actor of actors" class="col-2 mb-4 d-flex justify-content-center">
+      <div *ngFor="let actor of actors" class="col-2 d-flex justify-content-center">
         <app-movie-actor-list-card [actor]="actor"></app-movie-actor-list-card>
       </div>
   </div>

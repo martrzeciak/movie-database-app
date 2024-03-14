@@ -23,6 +23,7 @@ namespace MovieDatabaseAPI.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IActorRepository, ActorRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();

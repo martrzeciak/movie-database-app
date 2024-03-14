@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MovieDatabaseAPI.Data;
 using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Interfaces;
 
@@ -12,20 +11,29 @@ namespace MovieDatabaseAPI.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
 
-        public CommentsController(ICommentRepository commentRepository, IMapper mapper)
+        public CommentsController(ICommentRepository commentRepository, IUserRepository userRepository, IMapper mapper)
         {
             _commentRepository = commentRepository;
             _mapper = mapper;
         }
 
-        [HttpGet("movie-comments/{id}")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsForMovie(Guid id)
+        [HttpGet("movie-comments/{movieId}")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsForMovie(Guid movieId)
         {
-            var comments = await _commentRepository.GetCommentsForMovieAsync(id);
-
-            if (!comments.Any()) return NotFound();
+            var comments = await _commentRepository.GetCommentsForMovieAsync(movieId);
 
             return Ok(_mapper.Map<IEnumerable<CommentDto>>(comments));
+        }
+
+        [Authorize]
+        [HttpGet("{commentId}")]
+        public async Task<ActionResult<CommentDto>> GetComment(Guid commentId)
+        {
+            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+
+            if (comment == null) return NotFound();
+
+            return Ok(_mapper.Map<CommentDto>(comment));
         }
     }
 }

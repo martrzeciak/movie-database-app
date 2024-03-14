@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
@@ -18,8 +18,6 @@ export class MovieListComponent implements OnInit {
   pagination: Pagination | undefined;
   movieParams: MovieParams | undefined;
 
-
-
   constructor(private movieService: MovieService, 
     private genreService: GenreService, private router: Router) {
       this.movieParams = this.movieService.getMovieParams();
@@ -33,7 +31,6 @@ export class MovieListComponent implements OnInit {
   }
 
   loadMovies(): void {
-    console.log('movie list - loadMovies')
     if (this.movieParams) {
       console.log(this.movieParams.orderBy)
       this.movieService.setMovieParams(this.movieParams);

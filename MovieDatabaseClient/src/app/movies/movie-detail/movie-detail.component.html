@@ -1,11 +1,51 @@
 <div class="container-fluid" *ngIf="movie">
   <div class="row">
-    <div class="col-md-4">
-      <img src="{{'./assets/default-movie.jpg'}}" class="img-fluid" alt="movie poster"
+    <div class="col-4">
+      <img src="{{'./assets/default-movie.jpg'}}" class="img-fluid rounded-3 shadow" alt="movie poster"
             style="width: 100%; max-width: 370px; height: auto;"
       >
     </div>
-    <div class="col-md-5">
+    <div class="col-5 border border-2 rounded shadow me-3">
+      <h2><strong>{{ movie.title }} </strong></h2>
+      <h4><strong>Release year:</strong></h4> 
+      <h5>{{ movie.releaseDate }}</h5>
+      <h4><strong>Duration:</strong></h4> 
+      <h5>{{ movie.durationInMinutes }} minutes</h5>
+      <h4><strong>Director:</strong></h4> 
+      <h5>{{ movie.director }}</h5>
+      <h4><strong>Genres:</strong></h4> 
+      <h5>
+          <span *ngFor="let genre of movie.genres; let last = last">
+              {{ genre.name }}{{ !last ? ', ' : '' }}
+          </span>
+      </h5>
+      <h4><strong>Description:</strong></h4> 
+      <h5>{{ movie.description }}</h5>
+    </div>
+    <div class="col">
+      <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
+        <h2><strong>Popularity:</strong></h2>
+        <h4> 1 in ranking</h4>
+        <h4><strong>Rating:</strong></h4> 
+        <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
+        <ng-container *ngIf="!(accountService.currentUser$ | async)">
+            <h4><strong>Your rating:</strong></h4> 
+            <h5>Please log in</h5>
+        </ng-container>
+        <ng-container  *ngIf="(accountService.currentUser$ | async)">
+          <h4><strong>Your rating: {{rating}}/5</strong></h4>
+          <div>
+            <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
+            <ng-template #tt let-i="index" let-v="value">
+              <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
+                <span *ngIf="i < v"><i class="fa fa-star"></i></span>
+                <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
+              </button>
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+      <div class="row border border-2 rounded shadow p-2">
         <h2><strong>{{ movie.title }} </strong></h2>
         <h4><strong>Release year:</strong></h4> 
         <h5>{{ movie.releaseDate }}</h5>
@@ -13,39 +53,15 @@
         <h5>{{ movie.durationInMinutes }} minutes</h5>
         <h4><strong>Director:</strong></h4> 
         <h5>{{ movie.director }}</h5>
-        <h4><strong>Genres:</strong></h4> 
-        <h5>
-          <span *ngFor="let genre of movie.genres; let last = last">
-            {{ genre.name }}{{ !last ? ', ' : '' }}
-          </span>
-        </h5>
-        <h4><strong>Description:</strong></h4> 
-        <h5>{{ movie.description }}</h5>
-    </div>
-    <div class="col-md-3 ">
-      <h2><strong>Popularity:</strong></h2>
-      <h4> 1 in ranking</h4>
-      <h4><strong>Rating:</strong></h4> 
-      <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
-      <ng-container *ngIf="!(accountService.currentUser$ | async)">
-          <h4><strong>Your rating:</strong></h4> 
-          <h5>Please log in</h5>
-      </ng-container>
-      <ng-container  *ngIf="(accountService.currentUser$ | async)">
-        <h4><strong>Your rating: {{rating}}/5</strong></h4>
-        <div>
-          <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
-          <ng-template #tt let-i="index" let-v="value">
-            <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
-              <span *ngIf="i < v"><i class="fa fa-star"></i></span>
-              <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
-            </button>
-          </ng-template>
-        </div>
-      </ng-container>
+      </div>
     </div>
   </div>
   <h3 class="mt-4">Actors:</h3>
   <app-movie-actor-list [movieId]="movie.id"></app-movie-actor-list>
+  <app-comment-form></app-comment-form>
+  <hr>
+  <h3 class="mt-4">Comments:</h3>
+  <app-comment-list [movieId]="movie.id"></app-comment-list>
+  <hr>
 </div>
 

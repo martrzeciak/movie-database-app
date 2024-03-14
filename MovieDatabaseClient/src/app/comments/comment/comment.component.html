@@ -1,0 +1,33 @@
+<div *ngIf="comment">
+    <div class="container my-2 py-1 text-dark">
+      <div class="row d-flex justify-content-start">
+        <div class="col-md-12">
+
+          <div class="d-flex flex-start">
+            <img class="rounded-circle shadow-1-strong me-3"
+              src="{{ comment.user.imageUrl }}" alt="avatar" width="65"
+              height="65" />
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <div class="d-inline-block">
+                    <h5 class="d-inline">{{ comment.user.userName }}</h5>
+                    <p *ngIf="!comment.isEdited" class="medium d-inline ms-2">[Edited]</p>
+                 </div>
+                <p class="medium">{{ comment.createdAt | timeago}} </p>
+                <p>
+                  {{ comment.commentContent }}
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <a href="#!" class="link-muted me-2"><i class="fa fas fa-thumbs-up me-2"></i>{{ comment.likes }}</a>
+                  </div>
+                  <a href="#!" class="btn btn-secondary"><i class="fa fas fa-edit me-1"></i>Edit</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

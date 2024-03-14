@@ -39,6 +39,11 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { CommentComponent } from './comments/comment/comment.component';
+import { CommentListComponent } from './comments/comment-list/comment-list.component';
+import { CommentFormComponent } from './comments/comment-form/comment-form.component';
+import { TimeagoModule } from "ngx-timeago";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +71,10 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     HasRoleDirective,
     AdminPanelComponent,
     UserManagmentComponent,
+    CommentComponent,
+    CommentListComponent,
+    CommentFormComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +92,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     ModalModule.forRoot(),
     FileUploadModule,
     RatingModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    TimeagoModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

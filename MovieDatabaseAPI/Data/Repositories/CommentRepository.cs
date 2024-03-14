@@ -13,14 +13,25 @@ namespace MovieDatabaseAPI.Data.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsForMovieAsync(Guid id)
+        public async Task<IEnumerable<Comment>> GetCommentsForMovieAsync(Guid movieId)
         {
             var comments = await _dataContext.Comments
                 .Include(u => u.User)
-                .Where(comment => comment.Movie.Id == id)
+                    .ThenInclude(i => i.UserImages)
+                .Where(comment => comment.Movie.Id == movieId)
                 .ToListAsync();
 
             return comments;
+        }
+
+        public async Task<Comment?> GetCommentByIdAsync(Guid commentId)
+        {
+            var comment = await _dataContext.Comments
+                .Include(u => u.User)
+                    .ThenInclude(i => i.UserImages)
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+
+            return comment;
         }
     }
 }

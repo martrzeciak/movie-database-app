@@ -1,0 +1,40 @@
+<div class="container mt-3" >
+    <form #form="ngForm" class="d-flex mb-1" autocomplete="off">
+        <div class="col d-flex justify-content-end">
+            <label class="col-form-label me-2"><strong>Order: </strong></label>
+            <div class="btn-group">
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                name="orderBy"
+                btnRadio="popularity"
+              >
+                Popularity
+              </button>
+
+              <button 
+                type="button" 
+                class="btn btn-secondary ms-1" 
+                name="orderBy" 
+                btnRadio="alphabetical"
+              >
+                Alphabetical
+              </button>
+            </div>
+          </div>            
+    </form>
+</div>
+
+
+
+<div *ngIf="comments.length > 0; else noComments">
+    <div class="row">
+        <div *ngFor="let comment of comments" class="col-12">
+            <app-comment [comment]="comment"></app-comment>
+        </div>
+    </div>
+</div>
+
+<ng-template #noComments>
+    <p class="text-center">No movies available.</p>
+</ng-template>
