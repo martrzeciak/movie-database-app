@@ -13,5 +13,6 @@ namespace MovieDatabaseAPI.Entities
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public ICollection<MovieRating> MovieRatings { get; set; } = new List<MovieRating>();
+        public ICollection<ActorRating> ActorRatings { get; set; } = new List<ActorRating>();
     }
 }

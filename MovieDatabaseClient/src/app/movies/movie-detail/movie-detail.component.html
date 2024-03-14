@@ -32,9 +32,9 @@
           <h5>Please log in</h5>
       </ng-container>
       <ng-container  *ngIf="(accountService.currentUser$ | async)">
-        <h4><strong>Your rating: {{rate}}/5</strong></h4>
+        <h4><strong>Your rating: {{rating}}/5</strong></h4>
         <div>
-          <rating [max]="max" [(ngModel)]="rate" [customTemplate]="tt"></rating>
+          <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
           <ng-template #tt let-i="index" let-v="value">
             <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
               <span *ngIf="i < v"><i class="fa fa-star"></i></span>

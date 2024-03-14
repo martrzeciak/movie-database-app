@@ -74,23 +74,6 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .Take(5)
                 .ToListAsync();
         }
-        public async Task<int> GetRatingCountForMovieAsync(Guid movieId)
-        {
-            return await _dataContext.MovieRatings
-                .Where(r => r.MovieId == movieId)
-                .CountAsync();
-        }
-
-        public async Task<double> GetAverageRatingForMovieAsync(Guid movieId)
-        {
-            var averageRating = await _dataContext.MovieRatings
-                .Where(r => r.MovieId == movieId)
-                .Select(r => (double)r.Rating)
-                .DefaultIfEmpty()
-                .AverageAsync(); 
-
-            return Math.Round(averageRating, 1);
-        }
 
         public async Task<bool> SaveAllAsync()
         {

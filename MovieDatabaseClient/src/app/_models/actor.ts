@@ -6,6 +6,8 @@ export interface Actor {
     birthplace: string,
     biography: string,
     heightInCentimeters: number,
+    averageRating: number,
+    ratingCount: number,
     imageUrl: string
 }
 

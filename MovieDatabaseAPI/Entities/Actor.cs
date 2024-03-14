@@ -12,6 +12,6 @@
 
         public ActorImage ActorImage { get; set; } = null!;
         public ICollection<Movie> Movies { get; set; } = new List<Movie>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<ActorRating> ActorRatings { get; set; } = new List<ActorRating>();
     }
 }

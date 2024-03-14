@@ -23,27 +23,12 @@ export class ActorService {
   }
 
   getActors(actorParams: ActorParams) {
-    const response = this.actorCache.get(Object.values(actorParams).join('-'));
-
-    if (response) return of(response);
-
     let params = getPaginationHeaders(actorParams.pageNumber, actorParams.pageSize);
 
-    return getPaginatedResult<Actor[]>(this.baseUrl + 'actors', params, this.http).pipe(
-      map(response => {
-        this.actorCache.set(Object.values(actorParams).join('-'), response);
-        return response;
-      })
-    )
+    return getPaginatedResult<Actor[]>(this.baseUrl + 'actors', params, this.http);
   }
 
   getActor(actorId: string) {
-    const actor = [...this.actorCache.values()]
-      .reduce((arr, elem) => arr.concat(elem.result), [])
-      .find((actor: Actor) => actor.id === actorId);
-
-    if (actor) return of(actor);
-
     return this.http.get<Actor>(this.baseUrl + 'actors/' + actorId);
   }
 

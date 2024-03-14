@@ -10,11 +10,13 @@ namespace MovieDatabaseAPI.Controllers
     public class ActorsController : BaseApiController
     {
         private readonly IActorRepository _actorRepository;
+        private readonly IRatingRepository _ratingRepository;
         private readonly IMapper _mapper;
 
-        public ActorsController(IActorRepository actorRepository, IMapper mapper)
+        public ActorsController(IActorRepository actorRepository, IRatingRepository ratingRepository, IMapper mapper)
         {
             _actorRepository = actorRepository;
+            _ratingRepository = ratingRepository;
             _mapper = mapper;
         }
 
@@ -29,14 +31,19 @@ namespace MovieDatabaseAPI.Controllers
             return Ok(actors);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ActorDto>> GetActor(Guid id)
+        [HttpGet("{actorId}")]
+        public async Task<ActionResult<ActorDto>> GetActor(Guid actorId)
         {
-            var actor = await _actorRepository.GetActor(id);
+            var actor = await _actorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
-            return Ok(_mapper.Map<ActorDto>(actor));
+            var actorDto = _mapper.Map<ActorDto>(actor);
+
+            actorDto.AverageRating = await _ratingRepository.GetAverageRatingForActorAsync(actorId);
+            actorDto.RatingCount = await _ratingRepository.GetRatingCountForActorAsync(actorId);
+
+            return Ok(actorDto);
         }
 
         [HttpGet("movie-actors/{id}")]

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 import { Movie } from 'src/app/_models/movie';
+import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MovieService } from 'src/app/_services/movie.service';
 import { RatingService } from 'src/app/_services/rating.service';
@@ -12,24 +14,30 @@ import { RatingService } from 'src/app/_services/rating.service';
 })
 export class MovieDetailComponent implements OnInit {
   movie: Movie | undefined;
-  rate: number | undefined;
-  max = 5;
-  isReadonly = false;
+  rating: number | undefined;
+  user: User | null = null;
+  max: number = 5;
 
   constructor(private movieService: MovieService, private route: ActivatedRoute,
-    public accountService: AccountService, private ratingService: RatingService) {}
+    public accountService: AccountService, private ratingService: RatingService) {
+      this.accountService.currentUser$.pipe(take(1)).subscribe({
+        next: user => {
+          this.user = user;
+        }
+     })
+    }
   
   ngOnInit(): void {
-    console.log('onInit movie detail')
     const movieId = this.route.snapshot.paramMap.get('id');
     if (movieId) {
       this.loadMovie(movieId);
-      this.loadUserRating(movieId);
+      if (this.user) {
+        this.loadUserRating(movieId);
+      }
     }
   }
 
   loadMovie(movieId: string) {
-    console.log('movie detail - loadMovie')
     this.movieService.getMovie(movieId).subscribe({
       next: movie => {
         this.movie = movie;
@@ -38,18 +46,16 @@ export class MovieDetailComponent implements OnInit {
   }
 
   loadUserRating(movieId: string) {
-    console.log('movie detail - loadUserRating')
-    this.ratingService.getUserRating(movieId).subscribe({
-      next: rate => {
-        this.rate = rate;
+    this.ratingService.getMovieUserRating(movieId).subscribe({
+      next: rating => {
+        this.rating = rating;
       }
     });
   }
 
-  rateMovie(rate: number) {
-    console.log('movie detail - rateMovie')
+  rateMovie(rating: number) {
     if (this.movie) {
-      this.ratingService.rateMovie(this.movie.id, rate).subscribe({
+      this.ratingService.rateMovie(this.movie.id, rating).subscribe({
         next: () => {
           this.loadMovie(this.movie!.id);
           this.loadUserRating(this.movie!.id);

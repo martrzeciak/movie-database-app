@@ -10,11 +10,13 @@ namespace MovieDatabaseAPI.Controllers
     public class MoviesController : BaseApiController
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IRatingRepository _ratingRepository;
         private readonly IMapper _mapper;
 
-        public MoviesController(IMovieRepository movieRepository, IMapper mapper)
+        public MoviesController(IMovieRepository movieRepository, IRatingRepository ratingRepository, IMapper mapper)
         {
             _movieRepository = movieRepository;
+            _ratingRepository = ratingRepository;
             _mapper = mapper;
         }
 
@@ -38,8 +40,8 @@ namespace MovieDatabaseAPI.Controllers
 
             var movieDto = _mapper.Map<MovieDto>(movie);
 
-            movieDto.AverageRating = await _movieRepository.GetAverageRatingForMovieAsync(id);
-            movieDto.RatingCount = await _movieRepository.GetRatingCountForMovieAsync(id);
+            movieDto.AverageRating = await _ratingRepository.GetAverageRatingForMovieAsync(id);
+            movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(id);
 
             return Ok(movieDto);
         }

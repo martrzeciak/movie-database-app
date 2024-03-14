@@ -28,7 +28,7 @@ namespace MovieDatabaseAPI.Data.Repositories
                 actorParams.PageNumber, actorParams.PageSize);
         }
 
-        public async Task<Actor?> GetActor(Guid id)
+        public async Task<Actor?> GetActorAsync(Guid id)
         {
             var actor = await _dataContext.Actors
                 .Include(i => i.ActorImage)
