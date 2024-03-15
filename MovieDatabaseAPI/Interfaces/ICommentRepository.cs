@@ -6,5 +6,9 @@ namespace MovieDatabaseAPI.Interfaces
     {
         Task<IEnumerable<Comment>> GetCommentsForMovieAsync(Guid id);
         Task<Comment?> GetCommentByIdAsync(Guid commentId);
+        void AddComment(Comment comment);
+        void Update(Comment comment);
+        void Delete(Comment comment);
+        Task<bool> SaveAllAsync();
     }
 }

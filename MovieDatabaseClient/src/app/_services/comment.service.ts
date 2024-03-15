@@ -14,4 +14,8 @@ export class CommentService {
   getMovieComments(movieId: string) {
     return this.http.get<CommentInterface[]>('https://localhost:7092/api/comments/movie-comments/' + movieId);
   }
+
+  addComment(movieId: string, comment: Comment) {
+    return this.http.post<Comment>('https://localhost:7092/api/comments/add-comment/' + movieId, comment);
+  }
 }

@@ -7,6 +7,6 @@
         public DateTime CreatedAt { get; set; }
         public int Likes { get; set; }
         public bool IsEdited { get; set; }
-        public MemberDto User { get; set; } = null!;
+        public MemberDto? User { get; set; }
     }
 }

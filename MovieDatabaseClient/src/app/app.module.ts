@@ -44,6 +44,12 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { TimeagoModule } from "ngx-timeago";
 import { FooterComponent } from './footer/footer.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 @NgModule({
   declarations: [
@@ -93,7 +99,11 @@ import { FooterComponent } from './footer/footer.component';
     FileUploadModule,
     RatingModule.forRoot(),
     ButtonsModule.forRoot(),
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    MatSlideToggleModule,
+    MatFormFieldModule, 
+    MatSelectModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
