@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-panel',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AdminPanelComponent {
 
+  constructor(private router: Router) { }
+
+  navigateToAdminMovieList() {
+    this.router.navigate(['/admin/movie-list']);
+  }
+
+  navigateToAdminActorList() {
+    this.router.navigate(['/admin/actor-list']);
+  }
 }

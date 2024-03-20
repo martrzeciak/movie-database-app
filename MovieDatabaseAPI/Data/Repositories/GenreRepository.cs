@@ -18,7 +18,7 @@ namespace MovieDatabaseAPI.Data.Repositories
             return await _dataContext.Genres.ToListAsync();
         }
 
-        public async Task<Genre?> GetGenreAsync(Guid id)
+        public async Task<Genre?> GetGenreByIdAsync(Guid id)
         {
             var genre = await _dataContext.Genres
                 .FirstOrDefaultAsync(x => x.Id == id);

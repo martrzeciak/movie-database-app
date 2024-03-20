@@ -17,7 +17,6 @@ export class MovieListComponent implements OnInit {
   genres: Genre[] = [];
   pagination: Pagination | undefined;
   movieParams: MovieParams | undefined;
-  selected = 'option2';
 
   constructor(private movieService: MovieService, 
     private genreService: GenreService, private router: Router) {
@@ -25,7 +24,6 @@ export class MovieListComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log('onInit movie list')
     this.loadMovies();
     this.loadGenres();
     this.movieService.resetMovieParams();

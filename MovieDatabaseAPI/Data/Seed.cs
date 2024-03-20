@@ -101,7 +101,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Morgan",
                     LastName = "Freeman",
-                    DateOfBirth = new DateTime(1947, 6, 1),
+                    DateOfBirth = new DateOnly(1947, 6, 1),
                     Birthplace = "Memphis, Tennessee, USA",
                     Biography =
                         "Born in Memphis, Tennessee, Freeman was raised " +
@@ -119,7 +119,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Tim",
                     LastName = "Robbins",
-                    DateOfBirth = new DateTime(1958, 10, 16),
+                    DateOfBirth = new DateOnly(1958, 10, 16),
                     Birthplace = "West Covina, Kalifornia, USA",
                     Biography =
                         "Timothy Francis Robbins is an American actor, " +
@@ -136,7 +136,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "James",
                     LastName = "Whitmore",
-                    DateOfBirth = new DateTime(1921, 10, 1),
+                    DateOfBirth = new DateOnly(1921, 10, 1),
                     Birthplace = "White Plains, New York, USA",
                     Biography =
                         "James Allen Whitmore Jr. was an American film, " +
@@ -153,7 +153,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Bob",
                     LastName = "Gunton",
-                    DateOfBirth = new DateTime(1945, 11, 15),
+                    DateOfBirth = new DateOnly(1945, 11, 15),
                     Birthplace = "Santa Monica, California, USA",
                     Biography =
                         "Bob Gunton is an American actor, best known for " +
@@ -170,7 +170,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Clancy",
                     LastName = "Brown",
-                    DateOfBirth = new DateTime(1959, 1, 5),
+                    DateOfBirth = new DateOnly(1959, 1, 5),
                     Birthplace = "Urbana, Ohio, USA",
                     Biography =
                         "Clancy Brown is an American actor and voice actor, " +
@@ -189,7 +189,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Marlon",
                     LastName = "Brando",
-                    DateOfBirth = new DateTime(1924, 4, 3),
+                    DateOfBirth = new DateOnly(1924, 4, 3),
                     Birthplace = "Omaha, Nebraska, USA",
                     Biography =
                         "Marlon Brando was an American actor and film director. " +
@@ -204,7 +204,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Al",
                     LastName = "Pacino",
-                    DateOfBirth = new DateTime(1940, 4, 25),
+                    DateOfBirth = new DateOnly(1940, 4, 25),
                     Birthplace = "New York City, New York, USA",
                     Biography =
                         "Al Pacino is an American actor and filmmaker. He has " +
@@ -220,7 +220,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "James",
                     LastName = "Caan",
-                    DateOfBirth = new DateTime(1940, 3, 26),
+                    DateOfBirth = new DateOnly(1940, 3, 26),
                     Birthplace = "The Bronx, New York City, New York, USA",
                     Biography =
                         "James Caan is an American actor. He has appeared in more " +
@@ -235,7 +235,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Robert",
                     LastName = "Duvall",
-                    DateOfBirth = new DateTime(1931, 1, 5),
+                    DateOfBirth = new DateOnly(1931, 1, 5),
                     Birthplace = "San Diego, California, USA",
                     Biography =
                         "Robert Duvall is an American actor and filmmaker. He has " +
@@ -251,7 +251,7 @@ namespace MovieDatabaseAPI.Data
                 {
                     FirstName = "Diane",
                     LastName = "Keaton",
-                    DateOfBirth = new DateTime(1946, 1, 5),
+                    DateOfBirth = new DateOnly(1946, 1, 5),
                     Birthplace = "Los Angeles, California, USA",
                     Biography =
                         "Diane Keaton is an American actress and filmmaker. She is " +

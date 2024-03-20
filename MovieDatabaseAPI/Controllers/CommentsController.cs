@@ -49,7 +49,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var movie = await _movieRepository.GetMovieAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exists");
 

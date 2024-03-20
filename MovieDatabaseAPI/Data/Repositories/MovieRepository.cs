@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
 using MovieDatabaseAPI.Helpers;
@@ -45,7 +44,7 @@ namespace MovieDatabaseAPI.Data.Repositories
                 movieParams.PageNumber, movieParams.PageSize);
         }
 
-        public async Task<Movie?> GetMovieAsync(Guid id)
+        public async Task<Movie?> GetMovieByIdAsync(Guid id)
         {
             var movie = await _dataContext.Movies
                 .Include(g => g.Genres)
@@ -59,21 +58,63 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             var query = _dataContext.Movies.AsQueryable();
 
-            query.Where(movie => movie.Actors.Any(actor => actor.Id == id));
+            query = query.Where(movie => movie.Actors.Any(actor => actor.Id == id));
 
             return await PagedList<MovieDto>.CreateAsync(
                 query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
                 paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<IEnumerable<string>> GetSearchSuggestionsAsync(string query)
+        //public async Task<IEnumerable<string>> GetSearchSuggestionsAsync(string query)
+        //{
+        //    return await _dataContext.Movies
+        //        .Where(m => m.Title.Contains(query))
+        //        .Select(m => m.Title)
+        //        .Distinct()
+        //        .Take(5)
+        //        .ToListAsync();
+        //}
+
+        public async Task<Movie?> GetMovieForUpdateAsync(Guid id)
         {
-            return await _dataContext.Movies
-                .Where(m => m.Title.Contains(query))
-                .Select(m => m.Title)
-                .Distinct()
-                .Take(5)
+            var movie = await _dataContext.Movies
+                .Include(g => g.Genres)
+                .Include(p => p.Poster)
+                .Include(a => a.Actors)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return movie;
+        }
+
+        public async Task<IEnumerable<Movie>> GetMovieNameListAsync()
+        {
+            var movies = await _dataContext.Movies.ToListAsync();
+
+            return movies;
+        }
+
+        public async Task<IEnumerable<Movie>> GetMovieNameListForActorAsync(Guid actorId)
+        {
+            var movies = await _dataContext.Movies
+                .Where(movie => movie.Actors.Any(actor => actor.Id == actorId))
                 .ToListAsync();
+
+            return movies;
+        }
+
+        public void Add(Movie movie)
+        {
+            _dataContext.Movies.Add(movie);
+        }
+
+        public void Update(Movie movie)
+        {
+            _dataContext.Entry(movie).State = EntityState.Modified;
+        }
+
+        public void Delete(Movie movie)
+        {
+            _dataContext.Movies.Remove(movie);
         }
 
         public async Task<bool> SaveAllAsync()

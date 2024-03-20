@@ -35,12 +35,32 @@ export class ActorService {
     return this.http.get<Actor>(this.baseUrl + 'actors/' + actorId);
   }
 
+  addActor(actor: any) {
+    return this.http.post(this.baseUrl + 'actors', actor);
+  }
+
+  updateActor(actorId: string, actor: any) {
+    return this.http.put(this.baseUrl + 'actors/' + actorId, actor);
+  }
+
+  deleteActor(actorId: string) {
+    return this.http.delete(this.baseUrl + 'actors/' + actorId);
+  }
+
   getMovieActors(movieId: string, movieActorParams: MovieActorParams) {
     let params = getPaginationHeaders(movieActorParams.pageNumber, movieActorParams.pageSize);
 
     return getPaginatedResult<Actor[]>(
       this.baseUrl + 'actors/movie-actors/' + movieId, params, this.http
     );
+  }
+
+  getActorNameList() {
+    return this.http.get<any[]>(this.baseUrl + 'actors/actor-name');
+  }
+
+  getActorNameListForMovie(movieId: string) {
+    return this.http.get<any[]>(this.baseUrl + 'actors/actor-name/' + movieId);
   }
 
   getActorParams() {

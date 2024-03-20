@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +37,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UserPhotoUploaderComponent } from './users/user-photo-uploader/user-photo-uploader.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CommentComponent } from './comments/comment/comment.component';
@@ -44,10 +44,19 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { CommentFormComponent } from './comments/comment-form/comment-form.component';
 import { TimeagoModule } from "ngx-timeago";
 import { FooterComponent } from './footer/footer.component';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
+import { AdminMovieListComponent } from './admin/admin-movie-list/admin-movie-list.component';
+import { AdminActorListComponent } from './admin/admin-actor-list/admin-actor-list.component';
+import { AdminGenreListComponent } from './admin/admin-genre-list/admin-genre-list.component';
+import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
+import { AdminAddMovieComponent } from './admin/admin-add-movie/admin-add-movie.component';
+import { AdminEditMovieComponent } from './admin/admin-edit-movie/admin-edit-movie.component';
+import { AdminAddActorComponent } from './admin/admin-add-actor/admin-add-actor.component';
+import { AdminEditActorComponent } from './admin/admin-edit-actor/admin-edit-actor.component';
+import { AdminMoviePosterUploaderComponent } from './admin/admin-movie-poster-uploader/admin-movie-poster-uploader.component';
+import { AdminActorImageUploaderComponent } from './admin/admin-actor-image-uploader/admin-actor-image-uploader.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+
 
 
 
@@ -76,11 +85,22 @@ import {MatButtonModule} from '@angular/material/button';
     UserPhotoUploaderComponent,
     HasRoleDirective,
     AdminPanelComponent,
-    UserManagmentComponent,
     CommentComponent,
     CommentListComponent,
     CommentFormComponent,
     FooterComponent,
+    AdminMovieListComponent,
+    AdminActorListComponent,
+    AdminGenreListComponent,
+    AdminUserListComponent,
+    AdminAddMovieComponent,
+    AdminEditMovieComponent,
+    AdminAddActorComponent,
+    AdminEditActorComponent,
+    AdminMoviePosterUploaderComponent,
+    AdminActorImageUploaderComponent,
+    UserManagementComponent,
+    RolesModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,10 +120,8 @@ import {MatButtonModule} from '@angular/material/button';
     RatingModule.forRoot(),
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
-    MatSlideToggleModule,
-    MatFormFieldModule, 
-    MatSelectModule,
-    MatButtonModule
+    NgSelectModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

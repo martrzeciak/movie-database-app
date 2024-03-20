@@ -35,8 +35,19 @@ export class MovieService {
   }
 
   getMovie(movieId: string) {
-
     return this.http.get<Movie>(this.baseUrl + 'movies/' + movieId);
+  }
+
+  addMovie(movie: any) {
+    return this.http.post(this.baseUrl + 'movies', movie);
+  }
+
+  updateMovie(movieId: string, movie: any) {
+    return this.http.put(this.baseUrl + 'movies/' + movieId, movie);
+  }
+
+  deleteMovie(movieId: string) {
+    return this.http.delete(this.baseUrl + 'movies/' + movieId);
   }
 
   getActorMovies(actorId: string, actorMovieParamys: ActorMovieParams) {
@@ -47,6 +58,14 @@ export class MovieService {
     );
   }
 
+  getMovieNameList() {
+    return this.http.get<any[]>(this.baseUrl + 'movies/movie-name');
+  }
+
+  getMovieNameListForActor(actorId: string) {
+    return this.http.get<any[]>(this.baseUrl + 'movies/movie-name/' + actorId);
+  }
+  
   getMovieParams() {
     return this.movieParams;
   }

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommentInterface } from 'src/app/_models/commentInterface';
+import { User } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-comment',
@@ -8,4 +9,5 @@ import { CommentInterface } from 'src/app/_models/commentInterface';
 })
 export class CommentComponent {
   @Input() comment: CommentInterface | undefined;
+  @Input() user: User | null = null;
 }

@@ -5,6 +5,6 @@ namespace MovieDatabaseAPI.Interfaces
     public interface IGenreRepository
     {
         Task<IEnumerable<Genre>> GetGenresAsync();
-        Task<Genre?> GetGenreAsync(Guid id);
+        Task<Genre?> GetGenreByIdAsync(Guid id);
     }
 }

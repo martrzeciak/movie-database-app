@@ -1,7 +1,9 @@
 ﻿using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
+using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
@@ -12,13 +14,15 @@ namespace MovieDatabaseAPI.Controllers
         private readonly IRatingRepository _ratingRepository;
         private readonly IMovieRepository _movieRepository;
         private readonly IActorRepository _actorRepository;
+        private readonly IUserRepository _userRepository;
 
         public RatingController(IRatingRepository ratingRepository, IMovieRepository movieRepository, 
-            IActorRepository actorRepository)
+            IActorRepository actorRepository, IUserRepository userRepository)
         {
             _ratingRepository = ratingRepository;
             _movieRepository = movieRepository;
             _actorRepository = actorRepository;
+            _userRepository = userRepository;
         }
 
         [HttpPost("rate-movie/{movieId}")]
@@ -26,7 +30,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var movie = await _movieRepository.GetMovieAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exists.");
 
@@ -63,6 +67,18 @@ namespace MovieDatabaseAPI.Controllers
             var ratingValue = await _ratingRepository.GetUserRatingForMovieAsync(movieId, userId);
 
             return Ok(ratingValue);
+        }
+
+        [HttpGet("rated-movies")]
+        public async Task<ActionResult<PagedList<MovieDto>>> GetRatedMoviesForUser()
+        {
+            var userId = User.GetUserId();
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null) NotFound();
+
+            return Ok();
         }
 
         [HttpPost("rate-actor/{actorId}")]

@@ -3,34 +3,32 @@
     <div class="container my-2 py-1 text-dark">
       <div class="row d-flex justify-content-start">
         <div class="col-md-12">
-
-          <div class="d-flex flex-start">
-            <img class="rounded-circle me-3 shadow"
-              src="{{ user?.imageUrl || './assets/user.png'}}" alt="avatar" width="65"
-              height="65" />
-            <div class="card w-100 shadow">
-              <div class="card-body p-4">
-                <div class="d-inline-block mb-2 ms-2">
-                    <h5 class="d-inline">{{user?.userName || 'Your comment'}}</h5>
-                 </div>
-                <textarea [disabled]="!(accountService.currentUser$ | async)" class="form-control mb-3" name="commentContent" rows="8"></textarea>
-                <div class="d-flex justify-content-between align-items-center">
-                    <ng-container *ngIf="accountService.currentUser$ | async; else anonymousUser">
-                        <div class="ms-auto">
-                            <a href="#!" class="btn btn-secondary me-2">Cancel</a>
-                            <a href="#!" class="btn btn-primary me-2"><i class="fa fa-solid fa-circle-plus"></i>Add</a>
-                        </div>
+          <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+            <div class="d-flex flex-start">
+              <img class="rounded-circle me-3 shadow" [src]="user?.imageUrl || './assets/user.png'" alt="avatar" width="65" height="65" />
+              <div class="card w-100 shadow">
+                <div class="card-body p-4">
+                  <div class="d-inline-block mb-2 ms-2">
+                    <h5 class="d-inline">{{ user?.userName || 'Your comment' }}</h5>
+                  </div>
+                  <textarea formControlName="commentContent" class="form-control mb-3"  rows="8"></textarea>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <ng-container *ngIf="user; else anonymousUser">
+                      <div class="ms-auto">
+                        <button type="button" class="btn btn-secondary me-2">Cancel</button>
+                        <button type="submit" class="btn btn-primary me-2"><i class="fa fa-solid fa-circle-plus"></i>Add</button>
+                      </div>
                     </ng-container>
                     <ng-template #anonymousUser>
-                        <div class="ms-3">
-                            Please log in to add comment!
-                        </div>
+                      <div class="ms-3">
+                        Please log in to add comment.
+                      </div>
                     </ng-template>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
+          </form>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ using MovieDatabaseAPI.Data;
 namespace MovieDatabaseAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240314144337_UpdateActorEntity")]
+    [Migration("20240318191752_UpdateActorEntity")]
     partial class UpdateActorEntity
     {
         /// <inheritdoc />
@@ -157,8 +157,8 @@ namespace MovieDatabaseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
 
                     b.Property<string>("FirstName")
                         .IsRequired()

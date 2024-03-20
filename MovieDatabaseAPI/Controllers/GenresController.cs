@@ -21,15 +21,13 @@ namespace MovieDatabaseAPI.Controllers
         {
             var genres = await _genreRepository.GetGenresAsync();
 
-            if (!genres.Any()) return NotFound();
-
             return Ok(_mapper.Map<IEnumerable<GenreDto>>(genres));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<GenreDto>> GetGenre(Guid id)
         {
-            var genre = await _genreRepository.GetGenreAsync(id);
+            var genre = await _genreRepository.GetGenreByIdAsync(id);
 
             if (genre == null) return NotFound();
 

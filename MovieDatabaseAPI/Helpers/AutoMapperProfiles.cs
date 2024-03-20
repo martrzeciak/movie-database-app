@@ -8,16 +8,18 @@ namespace MovieDatabaseAPI.Helpers
     {
         public AutoMapperProfiles()
         {
-            // CreateMap<User, UserDto>();
-            
             CreateMap<RegisterDto, User>();
             CreateMap<Genre, GenreDto>();
             CreateMap<Comment, CommentDto>();
             CreateMap<MemberUpdateDto, User>();
             CreateMap<UserImage, UserImageDto>();
+            CreateMap<MovieForCreationDto, Movie>();
+            CreateMap<ActorForCreationDto, Actor>();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             CreateMap<User, MemberDto>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.UserImages.FirstOrDefault(p => p.IsMain).ImageUrl));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             CreateMap<Movie, MovieDto>()
                 .ForMember(dest => dest.PosterUrl,
                     opt => opt.MapFrom(src => src.Poster.PosterUrl))
@@ -40,6 +42,9 @@ namespace MovieDatabaseAPI.Helpers
                 .ForMember(
                     dest => dest.RatingCount,
                     opt => opt.MapFrom(src => src.ActorRatings.Count()));
+            CreateMap<Actor, ActorNameDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+            CreateMap<Movie, MovieNameDto>();
         }
     }
 }

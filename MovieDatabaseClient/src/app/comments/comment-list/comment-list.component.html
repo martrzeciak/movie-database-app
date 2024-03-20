@@ -1,3 +1,5 @@
+<app-comment-form [movieId]="movieId" [user]="user"></app-comment-form>
+<h3 class="mt-4">Comments:</h3>
 <div class="container mt-3" >
     <form #form="ngForm" class="d-flex mb-1" autocomplete="off">
         <div class="col d-flex justify-content-end">
@@ -29,7 +31,7 @@
 <div *ngIf="comments.length > 0; else noComments">
     <div class="row">
         <div *ngFor="let comment of comments" class="col-12">
-            <app-comment [comment]="comment"></app-comment>
+            <app-comment [comment]="comment" [user]="user"></app-comment>
         </div>
     </div>
 </div>

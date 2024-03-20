@@ -1,0 +1,47 @@
+<a class="btn btn-dark mb-3 px-4 py-2" [routerLink]="'/admin/actor-list/add-actor'"><i class="fa fa-solid fa-plus me-1"></i>Add actor</a>
+<div class="row">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 20%;">Name</th>
+                <th style="width: 20%;">Date of Birth</th>
+                <th style="width: 20%;">Birth Place</th>
+                <th style="width: 20%;">Average Rating</th>
+                <th style="width: 20%;">Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let actor of actors">
+                <td><strong>{{ actor.firstName }} {{ actor.lastName }}</strong></td>
+                <td>{{ actor.dateOfBirth | date }}</td>
+                <td>{{ actor.birthplace }}</td>
+                <td>{{ actor.averageRating }}/5 ({{ actor.ratingCount }} votes)</td>
+                <td>
+                    <a [routerLink]="'/admin/actor-list/edit-actor/' + actor.id" 
+                        class="text-dark text-decoration-none btn btn-warning me-2">
+                            <i class="fa fas fa-edit me-1"></i>Edit
+                    </a>    
+                    <button (click)="deleteActor(actor.id)" class="btn btn-danger"><i class="fa fa-solid fa-trash me-1"></i>Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination" >
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [maxSize]="10"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;"
+    >
+    </pagination>
+  </div>
+
+

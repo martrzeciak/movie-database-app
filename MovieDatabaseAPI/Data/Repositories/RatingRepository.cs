@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
+using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Data.Repositories
@@ -7,10 +11,12 @@ namespace MovieDatabaseAPI.Data.Repositories
     public class RatingRepository : IRatingRepository
     {
         private readonly DataContext _dataContext;
+        private readonly IMapper _mapper;
 
-        public RatingRepository(DataContext dataContext)
+        public RatingRepository(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
+            _mapper = mapper;
         }
 
         public async Task<MovieRating?> GetMovieRatingAsync(Guid userId, Guid movieId)
@@ -77,6 +83,17 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .AverageAsync();
 
             return Math.Round(averageRating, 1);
+        }
+
+        public async Task<PagedList<MovieDto>> GetRatedMoviesForUserAsync(Guid id, PaginationParams paginationParams)
+        {
+            var query = _dataContext.Movies.AsQueryable();
+
+            query = query.Where(movie => movie.MovieRatings.Any(rating => rating.UserId == id));
+
+            return await PagedList<MovieDto>.CreateAsync(
+                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
+                paginationParams.PageNumber, paginationParams.PageSize);
         }
 
         public async Task<bool> SaveAllAsync()

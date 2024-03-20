@@ -1,0 +1,91 @@
+<div class="container col-9 mt-5 border rounded shadow p-4" *ngIf="actor">
+    <h2 class="ms-2">Edit actor</h2>
+    <hr>
+    <form [formGroup]="editForm" (ngSubmit)="editForm.valid && updateActor()">
+
+        <div class="row">
+            <div class="col-6">
+                <app-text-input 
+                    [formControl]="$any(editForm.controls['firstName'])" 
+                    [label]="'First Name'"
+                    [type]="'text'"
+                ></app-text-input>
+            </div>
+            <div class="col-6">
+                <app-text-input 
+                    [formControl]="$any(editForm.controls['lastName'])" 
+                    [label]="'Last Name'"
+                    [type]="'text'"
+                ></app-text-input>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <app-text-input 
+                    [formControl]="$any(editForm.controls['dateOfBirth'])"
+                    [label]="'Date Of Birth'"
+                    [type]="'Date'"
+                ></app-text-input>
+            </div>
+            <div class="col-4">
+                <app-text-input 
+                    [formControl]="$any(editForm.controls['birthplace'])" 
+                    [label]="'Birthplace'"
+                    [type]="'text'"
+                ></app-text-input>
+            </div>
+            <div class="col-4">
+                <app-text-input 
+                    [formControl]="$any(editForm.controls['heightInCentimeters'])" 
+                    [label]="'Height (cm)'"
+                    [type]="'number'"
+                ></app-text-input>
+            </div>
+        </div>
+       
+        <app-text-input  
+            [formControl]="$any(editForm.controls['biography'])" 
+            [label]="'Biography'"
+            [type]="'textarea'"
+        ></app-text-input>
+        
+        <div class="mb-3">
+            <label for="" style="margin-right: 10px;">Gender:</label>
+            <label for="" class="form-check-label">
+                <input 
+                    type="radio" 
+                    class="form-check-input" 
+                    value="male" 
+                    formControlName="gender"
+                >
+                Male
+            </label>
+            <label for="" class="form-check-label ms-3">
+                <input 
+                    type="radio" 
+                    class="form-check-input" 
+                    value="female" 
+                    formControlName="gender"
+                >
+                Female
+            </label>
+        </div>   
+        <ng-select [items]="movieList"
+            [searchable]="true"
+            bindLabel="title"
+            bindValue="id"
+            placeholder="Select movie"
+            [multiple]="true"
+            formControlName="movieIds"
+            class="mb-3">
+        </ng-select>
+
+        <hr>
+        <div class="text-end me-2">
+            <a class="btn btn-dark me-2" routerLink="/admin/actor-list" >Cancel</a>
+            <button [disabled]="!editForm.valid" class="btn btn-primary" type="submit">Update</button>
+            
+        </div>
+    </form>
+</div>
