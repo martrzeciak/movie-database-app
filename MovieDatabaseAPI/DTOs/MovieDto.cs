@@ -11,6 +11,8 @@
         public string PosterUrl { get; set; } = String.Empty;
         public double AverageRating { get; set; }
         public int RatingCount { get; set; }
+        public int MoviePosition { get; set; }
         public ICollection<GenreDto> Genres { get; set; } = null!;
+        public ICollection<PosterDto> Posters { get; set; } = new List<PosterDto>();
     }
 }

@@ -85,15 +85,13 @@ namespace MovieDatabaseAPI.Data.Repositories
             return Math.Round(averageRating, 1);
         }
 
-        public async Task<PagedList<MovieDto>> GetRatedMoviesForUserAsync(Guid id, PaginationParams paginationParams)
+        public async Task<IEnumerable<Movie?>> GetRatedMoviesForUserAsync(Guid id)
         {
-            var query = _dataContext.Movies.AsQueryable();
+            var ratedMovies = await _dataContext.Movies
+                .Where(movie => movie.MovieRatings.Any(rating => rating.UserId == id))
+                .ToListAsync();
 
-            query = query.Where(movie => movie.MovieRatings.Any(rating => rating.UserId == id));
-
-            return await PagedList<MovieDto>.CreateAsync(
-                query.ProjectTo<MovieDto>(_mapper.ConfigurationProvider),
-                paginationParams.PageNumber, paginationParams.PageSize);
+            return ratedMovies;
         }
 
         public async Task<bool> SaveAllAsync()

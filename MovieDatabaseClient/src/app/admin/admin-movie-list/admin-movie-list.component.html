@@ -14,7 +14,7 @@
             <tr *ngFor="let movie of movies">
                 <td><strong>{{ movie.title }}</strong></td>
                 <td>{{ movie.releaseDate }}</td>
-                <td>{{ movie.durationInMinutes }} minutes</td>
+                <td>{{ movie.director }}</td>
                 <td>{{ movie.averageRating }}/5 ({{ movie.ratingCount }} votes)</td>
                 <td>
                     <a [routerLink]="'/admin/movie-list/edit-movie/' + movie.id" 

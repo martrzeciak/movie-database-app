@@ -46,7 +46,6 @@ import { TimeagoModule } from "ngx-timeago";
 import { FooterComponent } from './footer/footer.component';
 import { AdminMovieListComponent } from './admin/admin-movie-list/admin-movie-list.component';
 import { AdminActorListComponent } from './admin/admin-actor-list/admin-actor-list.component';
-import { AdminGenreListComponent } from './admin/admin-genre-list/admin-genre-list.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AdminAddMovieComponent } from './admin/admin-add-movie/admin-add-movie.component';
 import { AdminEditMovieComponent } from './admin/admin-edit-movie/admin-edit-movie.component';
@@ -56,6 +55,7 @@ import { AdminMoviePosterUploaderComponent } from './admin/admin-movie-poster-up
 import { AdminActorImageUploaderComponent } from './admin/admin-actor-image-uploader/admin-actor-image-uploader.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-movies.component';
 
 
 
@@ -91,7 +91,6 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     FooterComponent,
     AdminMovieListComponent,
     AdminActorListComponent,
-    AdminGenreListComponent,
     AdminUserListComponent,
     AdminAddMovieComponent,
     AdminEditMovieComponent,
@@ -101,6 +100,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     AdminActorImageUploaderComponent,
     UserManagementComponent,
     RolesModalComponent,
+    UserRatedMoviesComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,7 +121,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
     NgSelectModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

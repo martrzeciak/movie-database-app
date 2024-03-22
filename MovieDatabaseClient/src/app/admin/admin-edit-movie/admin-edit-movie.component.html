@@ -47,7 +47,8 @@
         <div class="text-end me-2">
             <a class="btn btn-dark me-2" routerLink="/admin/movie-list">Cancel</a>
             <button [disabled]="!editForm.valid" class="btn btn-primary" type="submit">Update</button>
-            
         </div>
     </form>
+    <app-admin-movie-poster-uploader [movie]="movie"></app-admin-movie-poster-uploader>
 </div>
+

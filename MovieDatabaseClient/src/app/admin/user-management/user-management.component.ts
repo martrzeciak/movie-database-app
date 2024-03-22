@@ -28,7 +28,6 @@ export class UserManagementComponent {
       next: users => {
         this.users = users;
       }
-      
     })
   }
 

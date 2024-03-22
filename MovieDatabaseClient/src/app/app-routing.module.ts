@@ -21,6 +21,7 @@ import { AdminEditMovieComponent } from './admin/admin-edit-movie/admin-edit-mov
 import { AdminAddActorComponent } from './admin/admin-add-actor/admin-add-actor.component';
 import { AdminEditActorComponent } from './admin/admin-edit-actor/admin-edit-actor.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-movies.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,7 +45,9 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterComponent },
   { path: 'movies', component: MovieListComponent },
+  { path: 'movies/user-rated-movies', component: UserRatedMoviesComponent },
   { path: 'movies/:id', component: MovieDetailComponent },
+
   { path: 'actors', component: ActorListComponent },
   { path: 'actors/:id', component: ActorDetailComponent },
   { path: 'not-found', component: NotFoundComponent },

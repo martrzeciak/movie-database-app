@@ -54,8 +54,7 @@ export class MovieService {
     let params = getPaginationHeaders(actorMovieParamys.pageNumber, actorMovieParamys.pageSize);
 
     return getPaginatedResult<Movie[]>(
-      this.baseUrl + 'movies/actor-movies/' + actorId, params, this.http
-    );
+      this.baseUrl + 'movies/actor-movies/' + actorId, params, this.http);
   }
 
   getMovieNameList() {
@@ -64,6 +63,18 @@ export class MovieService {
 
   getMovieNameListForActor(actorId: string) {
     return this.http.get<any[]>(this.baseUrl + 'movies/movie-name/' + actorId);
+  }
+
+  getRatedMoviesForUser() {
+    return this.http.get<Movie[]>(this.baseUrl + 'movies/user-rated-movies');
+  }
+
+  setMainPoster(movieId: string, posterId: string) {
+    return this.http.put(this.baseUrl + 'movies/set-main-poster/' + movieId + '/' + posterId, {});
+  }
+
+  deletePoster(movieId: string, posterId: string) {
+    return this.http.delete(this.baseUrl + 'movies/delete-movie-poster/' + movieId + '/' + posterId);
   }
   
   getMovieParams() {

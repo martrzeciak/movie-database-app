@@ -1,0 +1,22 @@
+<div class="row">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 10%;">#</th>
+                <th style="width: 20%;">Title</th>
+                <th style="width: 20%;">Release Date</th>
+                <th style="width: 20%;">Director</th>
+                <th style="width: 20%;">Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movie of movies; let i = index" [routerLink]="'/movies/' + movie.id">
+                <td>{{ i + 1 }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.releaseDate }}</td>
+                <td>{{ movie.director }}</td>
+                <td>{{ movie.durationInMinutes }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

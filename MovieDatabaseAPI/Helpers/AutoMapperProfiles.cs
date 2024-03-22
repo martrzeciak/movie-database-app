@@ -15,14 +15,15 @@ namespace MovieDatabaseAPI.Helpers
             CreateMap<UserImage, UserImageDto>();
             CreateMap<MovieForCreationDto, Movie>();
             CreateMap<ActorForCreationDto, Actor>();
+            CreateMap<Poster, PosterDto>();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             CreateMap<User, MemberDto>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.UserImages.FirstOrDefault(p => p.IsMain).ImageUrl));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             CreateMap<Movie, MovieDto>()
                 .ForMember(dest => dest.PosterUrl,
-                    opt => opt.MapFrom(src => src.Poster.PosterUrl))
+                    opt => opt.MapFrom(src => src.Posters.FirstOrDefault(p => p.IsMain).PosterUrl))
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 .ForMember(
                     dest => dest.AverageRating,
                     opt => opt.MapFrom(src => src.MovieRatings.Any() 

@@ -1,17 +1,22 @@
 <div class="container mt-3" *ngIf="movieParams">
-    <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
-        <!-- <div class="d-flex px-2 align-items-center">
-            <div class="d-flex mx-2">
-              <label class="col-form-label"><strong>Search:</strong></label>
-              <div class="input-group ms-1">
-                <input type="text" class="form-control" name="searchQuery">
-                <button class="btn btn-primary" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-        </div> -->
+    <form
+      [formGroup]="searchForm"
+      class="searchBar"
+      (ngSubmit)="onSearchSubmit()"
+    >
+      <input
+        type="text"
+        placeholder="Search..."
+        formControlName="searchValue"
+      />
+    </form>
+    <div>
+      <div *ngFor="let movie of movieNameList">
+        {{ movie.title }}
+      </div>
+    </div>
 
+    <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
         <div class="d-flex px-2">
             <label class="col-form-label me-2"><strong>Genre: </strong></label>
             <select 

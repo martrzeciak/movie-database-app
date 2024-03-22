@@ -12,6 +12,7 @@ namespace MovieDatabaseAPI.Interfaces
         Task<double> GetAverageRatingForMovieAsync(Guid movieId);
         Task<int> GetRatingCountForActorAsync(Guid actorId);
         Task<double> GetAverageRatingForActorAsync(Guid actorId);
+        Task<IEnumerable<Movie?>> GetRatedMoviesForUserAsync(Guid id);
         Task<bool> SaveAllAsync();
     }
 }

@@ -1,22 +1,16 @@
 
 <div class="container">
-    <h1 class="ms-2">Admin panel</h1>
+    <h2 class="ms-2">Admin panel</h2>
+    <hr>
     <div class="row">
-        <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
-            <a routerLink="movie-list" class="btn btn-secondary w-100 p-3 shadow"><h4 class="m-0">Movies</h4></a>
+        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+            <a routerLink="movie-list" class="btn btn-dark w-100 p-3 shadow"><h4 class="m-0">Movie</h4></a>
         </div>
-        <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
-            <a (click)="navigateToAdminActorList()" class="btn btn-secondary w-100 p-3"><h4 class="m-0">Actor</h4></a>
+        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+            <a (click)="navigateToAdminActorList()" class="btn btn-dark w-100 p-3"><h4 class="m-0">Actor</h4></a>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
-            <a routerLink="user-management" class="btn btn-secondary w-100 p-3"><h4 class="m-0">Users</h4></a>
-        </div>
-        <div class="col-md-6 mb-3 d-flex justify-content-center align-items-center">
-            <button class="btn btn-secondary w-100 p-3"><h4 class="m-0">Movies</h4></button>
+        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+            <a routerLink="user-management" class="btn btn-dark w-100 p-3"><h4 class="m-0">User</h4></a>
         </div>
     </div>
 </div>
-
-

@@ -9,8 +9,7 @@
         public string Director { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
 
-        public Poster Poster { get; set; } = null!;
-
+        public ICollection<Poster> Posters { get; set; } = new List<Poster>();
         public ICollection<Genre> Genres { get; set; } = new List<Genre>();
         public ICollection<Actor> Actors { get; set; } = new List<Actor>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();

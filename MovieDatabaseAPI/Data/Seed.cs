@@ -281,7 +281,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -296,7 +295,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -311,7 +309,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
                 new Movie // 0
@@ -326,7 +323,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -341,7 +337,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -356,7 +351,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
                 new Movie // 0
@@ -371,7 +365,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -386,7 +379,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -401,7 +393,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
                 new Movie // 0
@@ -416,7 +407,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -431,7 +421,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -446,7 +435,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
                 new Movie // 0
@@ -461,7 +449,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -476,7 +463,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -491,7 +477,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
                 new Movie // 0
@@ -506,7 +491,6 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[1] },
 
                 },
@@ -521,7 +505,6 @@ namespace MovieDatabaseAPI.Data
                         "The aging patriarch of an organized crime " +
                         "dynasty transfers control of his clandestine " +
                         "empire to his reluctant son.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[0], actors[3] },
                 },
                 new Movie // 2
@@ -536,7 +519,6 @@ namespace MovieDatabaseAPI.Data
                         "chaos on the people of Gotham, Batman must accept one " +
                         "of the greatest psychological and physical tests of " +
                         "his ability to fight injustice.",
-                    Poster = new Poster() { PosterUrl = "Image Placeholder" },
                     Actors = new List<Actor> { actors[5], actors[6] },
                 },
 

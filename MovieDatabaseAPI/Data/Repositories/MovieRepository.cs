@@ -48,7 +48,7 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             var movie = await _dataContext.Movies
                 .Include(g => g.Genres)
-                .Include(p => p.Poster)
+                .Include(p => p.Posters)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return movie;
@@ -65,21 +65,20 @@ namespace MovieDatabaseAPI.Data.Repositories
                 paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        //public async Task<IEnumerable<string>> GetSearchSuggestionsAsync(string query)
-        //{
-        //    return await _dataContext.Movies
-        //        .Where(m => m.Title.Contains(query))
-        //        .Select(m => m.Title)
-        //        .Distinct()
-        //        .Take(5)
-        //        .ToListAsync();
-        //}
+        public async Task<IEnumerable<Movie>> GetSearchSuggestionsAsync(string query)
+        {
+            return await _dataContext.Movies
+                .Where(m => m.Title.Contains(query))
+                .Distinct()
+                .Take(5)
+                .ToListAsync();
+        }
 
         public async Task<Movie?> GetMovieForUpdateAsync(Guid id)
         {
             var movie = await _dataContext.Movies
                 .Include(g => g.Genres)
-                .Include(p => p.Poster)
+                .Include(p => p.Posters)
                 .Include(a => a.Actors)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -100,6 +99,19 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .ToListAsync();
 
             return movies;
+        }
+
+        public async Task<int> GetMoviePositionAsync(Guid movieId)
+        {
+            var query = _dataContext.Movies.AsQueryable();
+
+            query = query.OrderByDescending(m => m.MovieRatings.Count());
+
+            var movieIds = await query.Select(m => m.Id).ToListAsync();
+
+            var moviePosition = movieIds.IndexOf(movieId) + 1;
+
+            return moviePosition;
         }
 
         public void Add(Movie movie)

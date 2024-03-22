@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-4">
       <img src="{{'./assets/default-movie.jpg'}}" class="img-fluid rounded-3 shadow" alt="movie poster"
-            style="width: 100%; max-width: 370px; height: auto;"
+            style="width: 100%; max-width: 400px; height: auto;"
       >
     </div>
     <div class="col-5 border border-2 rounded shadow me-3 p-3">
@@ -25,7 +25,7 @@
     <div class="col">
       <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
         <h2><strong>Popularity:</strong></h2>
-        <h4> 1 in ranking</h4>
+        <h4> {{ movie.moviePosition }} in ranking</h4>
         <h4><strong>Rating:</strong></h4> 
         <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
         <ng-container *ngIf="!(accountService.currentUser$ | async)">
@@ -44,15 +44,6 @@
             </ng-template>
           </div>
         </ng-container>
-      </div>
-      <div class="row border border-2 rounded shadow p-2">
-        <h2><strong>{{ movie.title }} </strong></h2>
-        <h4><strong>Release year:</strong></h4> 
-        <h5>{{ movie.releaseDate }}</h5>
-        <h4><strong>Duration:</strong></h4> 
-        <h5>{{ movie.durationInMinutes }} minutes</h5>
-        <h4><strong>Director:</strong></h4> 
-        <h5>{{ movie.director }}</h5>
       </div>
     </div>
   </div>

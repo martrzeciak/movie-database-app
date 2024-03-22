@@ -1,4 +1,5 @@
 import { Genre } from "./genre";
+import { Poster } from "./poster";
 
 export interface Movie {
     id: string,
@@ -10,5 +11,7 @@ export interface Movie {
     posterUrl: string,
     averageRating: number,
     ratingCount: number,
-    genres: Genre[]
+    moviePosition: number,
+    genres: Genre[],
+    posters: Poster[]
 }

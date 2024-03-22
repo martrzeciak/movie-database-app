@@ -11,7 +11,7 @@
       <i class="fa fa-solid fa-plus"></i>
     </button>
     <div class="card-img-wrapper">
-      <img src="./assets/default-movie.jpg" class="card-img-top" alt="Movie Image">
+      <img src="{{ movie.posterUrl || './assets/default-movie.jpg' }}" class="card-img-top" alt="Movie poster">
     </div>
     <div class="card-body p-2">
       <h6 class="card-title text-center mb-2">

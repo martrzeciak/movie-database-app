@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
 import { MovieParams } from 'src/app/_models/movieParams';
@@ -17,15 +17,23 @@ export class MovieListComponent implements OnInit {
   genres: Genre[] = [];
   pagination: Pagination | undefined;
   movieParams: MovieParams | undefined;
+  movieNameList: any[] = [];
+  searchValue = '';
+  searchForm = this.formBuilder.nonNullable.group({
+    searchValue: '',
+  });
 
-  constructor(private movieService: MovieService, 
-    private genreService: GenreService, private router: Router) {
+  constructor(
+    private movieService: MovieService, 
+    private genreService: GenreService, 
+    private formBuilder: FormBuilder) {
       this.movieParams = this.movieService.getMovieParams();
     }
 
   ngOnInit(): void {
     this.loadMovies();
     this.loadGenres();
+    this.getMovieNameList();
     this.movieService.resetMovieParams();
   }
 
@@ -62,5 +70,19 @@ export class MovieListComponent implements OnInit {
   resetFiliters() {
     this.movieParams = this.movieService.resetMovieParams();
     this.loadMovies();
+  }
+
+  getMovieNameList() {
+    this.movieService.getSearchSuggestions(this.searchValue).subscribe({
+      next: movieNameList => {
+        this.movieNameList = movieNameList;
+        console.log(this.movieNameList)
+      }
+    })
+  }
+
+  onSearchSubmit(): void {
+    this.searchValue = this.searchForm.value.searchValue ?? '';
+    this.getMovieNameList();
   }
 }
