@@ -1,4 +1,7 @@
-<div class="container mt-3" *ngIf="movieParams">
+<div 
+  class="container mt-3" 
+  style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;" 
+  *ngIf="movieParams">
     <form
       [formGroup]="searchForm"
       class="searchBar"
@@ -8,13 +11,15 @@
         type="text"
         placeholder="Search..."
         formControlName="searchValue"
+        class=" form-control"
       />
-    </form>
-    <div>
-      <div *ngFor="let movie of movieNameList">
-        {{ movie.title }}
+      <div>
+        <div *ngFor="let movie of movieNameList">
+          {{ movie.title }}
+        </div>
       </div>
-    </div>
+    </form>
+    
 
     <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
         <div class="d-flex px-2">
