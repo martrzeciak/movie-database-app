@@ -323,7 +323,9 @@ namespace MovieDatabaseAPI.Data
                         "two convicts form a friendship, seeking " +
                         "consolation and, eventually, redemption " +
                         "through basic compassion.",
-                    Actors = new List<Actor> { actors[0], actors[1] },
+                    Actors = new List<Actor> { actors[0], actors[1], actors[2], 
+                        actors[3], actors[4], actors[5], actors[6], actors[7], actors[8], 
+                        actors[9] },
 
                 },
                 new Movie // 1

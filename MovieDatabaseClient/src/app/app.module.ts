@@ -56,6 +56,9 @@ import { AdminActorImageUploaderComponent } from './admin/admin-actor-image-uplo
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-movies.component';
+import { SuggestedMoviesComponent } from './movies/suggested-movies/suggested-movies.component';
+import { MovieFullActorListComponent } from './movies/movie-full-actor-list/movie-full-actor-list.component';
+import { AddMovieFormComponent } from './admin/add-movie-form/add-movie-form.component';
 
 
 
@@ -101,6 +104,9 @@ import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-m
     UserManagementComponent,
     RolesModalComponent,
     UserRatedMoviesComponent,
+    SuggestedMoviesComponent,
+    MovieFullActorListComponent,
+    AddMovieFormComponent,
   ],
   imports: [
     BrowserModule,

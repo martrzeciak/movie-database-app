@@ -6,9 +6,9 @@ import { ConfirmService } from '../_services/confirm.service';
 export const preventUnsavedAddMovieChangesGuard: CanDeactivateFn<AdminAddMovieComponent> = (component) => {
   const confirmService = inject(ConfirmService);
 
-  if (component.addForm?.dirty) {
-    return confirmService.confirm();
-  }
+  // if (component.addForm?.dirty) {
+  //   return confirmService.confirm();
+  // }
 
   return true;
 };

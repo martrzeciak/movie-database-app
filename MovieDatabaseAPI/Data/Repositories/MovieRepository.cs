@@ -114,6 +114,38 @@ namespace MovieDatabaseAPI.Data.Repositories
             return moviePosition;
         }
 
+        public async Task<Guid?> GetRandomMovieIdAsync()
+        {
+            var offset = new Random().Next(0, await _dataContext.Movies.CountAsync());
+
+            var randomMovieId = await _dataContext.Movies
+                .OrderBy(m => Guid.NewGuid())
+                .Skip(offset)
+                .Take(1)
+                .Select(m => m.Id)
+                .FirstOrDefaultAsync();
+
+            return randomMovieId;
+        }
+
+        public async Task<IEnumerable<Movie>> GetRandomSuggestionsByGenresAsync(Guid movieId, int count)
+        {
+            var movieGenres = await _dataContext.Movies
+                .Where(m => m.Id == movieId)
+                .SelectMany(m => m.Genres.Select(a => a.Name))
+                .ToListAsync();
+
+            var suggestedMovies = await _dataContext.Movies
+                .Where(m => m.Genres.Any(g => movieGenres.Contains(g.Name)) && m.Id != movieId)
+                .ToListAsync();
+
+            suggestedMovies = suggestedMovies.OrderBy(m => Guid.NewGuid()).ToList();
+
+            var randomMovies = suggestedMovies.Take(count);
+
+            return randomMovies;
+        }
+
         public void Add(Movie movie)
         {
             _dataContext.Movies.Add(movie);

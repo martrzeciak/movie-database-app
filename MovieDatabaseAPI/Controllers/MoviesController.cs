@@ -53,7 +53,7 @@ namespace MovieDatabaseAPI.Controllers
 
             movieDto.AverageRating = await _ratingRepository.GetAverageRatingForMovieAsync(id);
             movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(id);
-            movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(movie.Id);
+            movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(id);
 
             return Ok(movieDto);
         }
@@ -285,6 +285,24 @@ namespace MovieDatabaseAPI.Controllers
             var ratedMovies = await _ratingRepository.GetRatedMoviesForUserAsync(userId);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(ratedMovies));
+        }
+
+        [HttpGet("random-movie")]
+        public async Task<ActionResult<Guid>> GetRandomMovie()
+        {
+            var movieId = await _movieRepository.GetRandomMovieIdAsync();
+
+            if (movieId == null) return NotFound();
+
+            return Ok(movieId);
+        }
+
+        [HttpGet("suggested-movies/{movieId}")]
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetRandomSuggestionsByGenres(Guid movieId)
+        {
+            var suggestedMovies = await _movieRepository.GetRandomSuggestionsByGenresAsync(movieId, 3);
+
+            return Ok(_mapper.Map<IEnumerable<MovieDto>>(suggestedMovies));
         }
     }
 }

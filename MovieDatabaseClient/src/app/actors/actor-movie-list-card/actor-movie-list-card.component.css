@@ -5,3 +5,11 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.fancy-card {
+    transition: box-shadow 0.3s ease;
+}
+
+.fancy-card:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}

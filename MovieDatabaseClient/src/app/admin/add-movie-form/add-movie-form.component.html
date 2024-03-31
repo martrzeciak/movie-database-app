@@ -1,0 +1,50 @@
+<h2 class="ms-2">Add movie</h2>
+    <hr>
+    <form [formGroup]="addForm" (ngSubmit)="addForm.valid && addMovie()">
+        <app-text-input 
+            [formControl]="$any(addForm.controls['title'])" 
+            [label]="'Title'"
+        ></app-text-input>
+        <app-text-input 
+            [formControl]="$any(addForm.controls['releaseDate'])"
+            [label]="'Release Date'"
+            [type]="'number'"
+        ></app-text-input>
+        <app-text-input 
+            [formControl]="$any(addForm.controls['durationInMinutes'])" 
+            [label]="'Duration In Minutes'"
+            [type]="'number'"
+        ></app-text-input>
+        <app-text-input 
+            [formControl]="$any(addForm.controls['director'])" 
+            [label]="'Director'"
+            [type]="'text'"
+        ></app-text-input>
+        <app-text-input 
+            [formControl]="$any(addForm.controls['description'])" 
+            [label]="'Description'"
+            [type]="'textarea'"
+        ></app-text-input>
+        <ng-select [items]="genreList"
+            [searchable]="true"
+            bindLabel="name"
+            bindValue="id"
+            placeholder="Select genre"
+            [multiple]="true"
+            formControlName="genreIds"
+            class="mb-3">
+        </ng-select>
+        <ng-select [items]="actorList"
+            [searchable]="true"
+            bindLabel="name"
+            bindValue="id"
+            placeholder="Select actors"
+            [multiple]="true"
+            formControlName="actorIds">
+        </ng-select>
+        <hr>
+        <div class="text-end me-2">
+            <a class="btn btn-dark me-2" routerLink="/admin/movie-list" >Cancel</a>
+            <button [disabled]="!addForm.valid" class="btn btn-primary" type="submit">Add</button>
+        </div>
+    </form>

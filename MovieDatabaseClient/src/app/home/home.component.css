@@ -1,25 +1,62 @@
-body {
-    background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
-}
-
 .jumbotron {
-    background-color: #343a40;
+    background: linear-gradient(135deg, #343a40, #1d1f20);
     color: white;
     padding: 100px 0;
     margin-bottom: 0;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.jumbotron:before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, #ffffff33 20%, transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.jumbotron h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    font-weight:500;
+}
+
+.jumbotron p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight:500;
 }
 
 .slogan {
     font-size: 1.5rem;
 }
 
-.footer {
-    background-color: #343a40;
+.fancy-btn {
+    background: #003c78;
+    border: none;
+    border-radius: 10px;
     color: white;
-    padding: 20px 0;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    padding: 15px 30px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
+
+.fancy-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fancy-btn:last-child {
+    margin-right: 0;
+}
+

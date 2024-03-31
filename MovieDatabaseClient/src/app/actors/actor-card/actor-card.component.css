@@ -1,0 +1,19 @@
+.fancy-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fancy-card:hover {
+    transform: translateY(-5px);
+}
+
+.fancy-badge {
+    transform: rotate(-10deg);
+}
+  
+.badge {
+  font-size: 1.4rem;
+  padding: 10px 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #003c78;
+}

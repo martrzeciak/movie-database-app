@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { Movie } from 'src/app/_models/movie';
 import { User } from 'src/app/_models/user';
@@ -19,12 +19,16 @@ export class MovieDetailComponent implements OnInit {
   max: number = 5;
 
   constructor(private movieService: MovieService, private route: ActivatedRoute,
-    public accountService: AccountService, private ratingService: RatingService) {
+    public accountService: AccountService, private ratingService: RatingService,
+    private router: Router) {
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
           this.user = user;
         }
-     })
+      })
+      this.router.routeReuseStrategy.shouldReuseRoute = function() {
+        return false;
+      };
     }
   
   ngOnInit(): void {

@@ -1,16 +1,13 @@
 <div class="container" *ngIf="movie">
-  <a class="card mb-3 position-relative" [routerLink]="'/movies/' + movie.id"
-    style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;
-           text-decoration: none; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <div class="position-absolute top-0 start-0 m-2" style="z-index: 1;">
-      <span class="badge bg-secondary" style="font-size: 1.5rem;">{{ movie.averageRating }}</span>
+  <a class="card mb-3 position-relative fancy-card rounded shadow" [routerLink]="'/movies/' + movie.id"
+    style="max-width: 300px; text-decoration: none;">
+    <div class="position-absolute top-0 start-0 m-2 fancy-badge" style="z-index: 1;">
+      <span class="badge">{{ movie.averageRating }}</span>
     </div>
-    <button class="btn btn-primary position-absolute top-0 end-0 m-2" 
-            [routerLink]="'/'" 
-            style="font-size: 1.2rem;">
+    <button class="btn btn-primary position-absolute top-0 end-0 m-2 add-button" [routerLink]="'/'">
       <i class="fa fa-solid fa-plus"></i>
     </button>
-    <div class="card-img-wrapper">
+    <div class="card-img-wrapper border-bottom">
       <img src="{{ movie.posterUrl || './assets/default-movie.jpg' }}" class="card-img-top" alt="Movie poster">
     </div>
     <div class="card-body p-2">

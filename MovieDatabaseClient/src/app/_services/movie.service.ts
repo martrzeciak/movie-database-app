@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../_models/movie';
 import { environment } from 'src/environments/environment';
-import { map, of } from 'rxjs';
 import { MovieParams } from '../_models/movieParams';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 import { ActorMovieParams } from '../_models/actorMovieParams';
@@ -39,7 +38,7 @@ export class MovieService {
   }
 
   addMovie(movie: any) {
-    return this.http.post(this.baseUrl + 'movies', movie);
+    return this.http.post<Movie>(this.baseUrl + 'movies', movie);
   }
 
   updateMovie(movieId: string, movie: any) {
@@ -105,5 +104,13 @@ export class MovieService {
 
   getSearchSuggestions(query: string) {
     return this.http.get<string[]>(`${this.baseUrl}movies/search-suggestions?query=${query}`);
+  }
+
+  getRandomMovie() {
+    return this.http.get<string>(this.baseUrl + 'movies/random-movie');
+  }
+
+  getSuggestedMovies(movieId: string) {
+    return this.http.get<Movie[]>(this.baseUrl + 'movies/suggested-movies/' + movieId);
   }
 }

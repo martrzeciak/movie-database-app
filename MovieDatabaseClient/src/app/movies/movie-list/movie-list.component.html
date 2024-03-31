@@ -2,77 +2,82 @@
   class="container mt-3" 
   style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;" 
   *ngIf="movieParams">
-    <form
-      [formGroup]="searchForm"
-      class="searchBar"
-      (ngSubmit)="onSearchSubmit()"
-    >
-      <input
-        type="text"
-        placeholder="Search..."
-        formControlName="searchValue"
-        class=" form-control"
-      />
+
+    <form [formGroup]="searchForm" class="searchBar">
+      <div class="input-group">
+        <input
+          type="text"
+          placeholder="Search..."
+          formControlName="searchValue"
+          class="form-control"
+        />
+        <div class="input-group-append">
+          <button type="button" class="search-button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
       <div>
         <div *ngFor="let movie of movieNameList">
           {{ movie.title }}
         </div>
       </div>
     </form>
-    
 
     <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
-        <div class="d-flex px-2">
-            <label class="col-form-label me-2"><strong>Genre: </strong></label>
-            <select 
-              name="genre" 
-              style="width: 150px;" 
-              class="form-select ms-1" 
-              [(ngModel)]="movieParams.genre">
-                <option *ngFor="let genre of genres">{{ genre.name }}</option>
-            </select>
+        <div class="d-flex align-items-center px-2">
+          <label class="col-form-label me-2"><strong>Genre: </strong></label>
+          <select 
+            name="genre" 
+            style="width: 150px;" 
+            class="form-select ms-1" 
+            [(ngModel)]="movieParams.genre">
+            <option *ngFor="let genre of genres">{{ genre.name }}</option>
+          </select>
         </div>
-
-        <div class="d-flex mx-2">
-            <label class="col-form-label"><strong>Release Year: </strong></label>
-            <input 
-                type="number" 
-                class="form-control ms-1" 
-                style="width: 80px;" 
-                name="releaseDate" 
-                [(ngModel)]="movieParams.releaseDate"
-            >
+        
+        <div class="d-flex align-items-center mx-2">
+          <label class="col-form-label"><strong>Release Year: </strong></label>
+          <input 
+            type="number" 
+            class="form-control ms-1" 
+            style="width: 80px;" 
+            name="releaseDate" 
+            [(ngModel)]="movieParams.releaseDate"
+          >
         </div>
+      
 
-        <button class="btn btn-primary ms-1" type="submit">
+        <button class="apply-button" type="submit">
             Apply
         </button>
 
-        <button (click)="resetFiliters()" class="btn btn-secondary ms-1" type="submit">
+        <button class="reset-button" type="submit" (click)="resetFiliters()">
             Reset
         </button>
 
         <div class="col d-flex justify-content-end">
-            <label class="col-form-label me-2"><strong>Order: </strong></label>
             <div class="btn-group">
               <button 
                 type="button" 
-                class="btn btn-secondary" 
+                class="fancy-btn" 
                 name="orderBy"
                 [(ngModel)]="movieParams.orderBy"
                 btnRadio="popularity"
                 (click)="loadMovies()"
+                [class.active]="movieParams.orderBy === 'popularity'"
               >
                 Popularity
               </button>
 
               <button 
                 type="button" 
-                class="btn btn-secondary ms-1" 
+                class="fancy-btn" 
                 name="orderBy" 
                 [(ngModel)]="movieParams.orderBy"
                 btnRadio="alphabetical"
                 (click)="loadMovies()"
+                [class.active]="movieParams.orderBy === 'alphabetical'"
               >
                 Alphabetical
               </button>

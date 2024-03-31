@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actor } from 'src/app/_models/actor';
 import { MovieActorParams } from 'src/app/_models/movieActorParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -15,7 +16,7 @@ export class MovieActorListComponent implements OnInit {
   movieActorParams: MovieActorParams | undefined;
   pagination: Pagination | undefined;
 
-  constructor(private actorService: ActorService) {
+  constructor(private actorService: ActorService, private router: Router) {
     this.movieActorParams = actorService.getMovieActorParams();
   }
 
@@ -38,6 +39,10 @@ export class MovieActorListComponent implements OnInit {
         }
       })
     }
+  }
+
+  navigateToFullActorList() {
+    this.router.navigate(['/movies/actor-list/' + this.movieId]);
   }
 
   pageChanged(event: any) {

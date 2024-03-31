@@ -1,57 +1,77 @@
-<div class="container mt-3" *ngIf="actorParams">
-  <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadActors()" autocomplete="off">
-    <!-- <div class="d-flex px-2 align-items-center"> -->
-      <!-- <div class="d-flex mx-2">
-        <label class="col-form-label"><strong>Search:</strong></label>
-        <div class="input-group ms-1">
-          <input type="text" class="form-control" name="searchQuery">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div> -->
+<div 
+  class="container mt-3" 
+  style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;"
+  *ngIf="actorParams">
 
-      <div class="d-flex px-2">
-        <label class="col-form-label me-2"><strong>Gender:</strong></label>
-        <select 
-          name="genre" 
-          style="width: 120px;" 
-          class="form-select ms-1"
-          [(ngModel)]="actorParams.gender"
-          >
-          <option *ngFor="let genre of genderList">{{ genre }}</option>
-        </select>
+  <form class="searchBar">
+    <div class="input-group">
+      <input
+        type="text"
+        placeholder="Search..."
+        formControlName="searchValue"
+        class="form-control"
+      />
+      <div class="input-group-append">
+        <button type="button" class="search-button">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
+    </div>
+    <div>
+      <div>
+     
+      </div>
+    </div>
+  </form>
 
-      <button class="btn btn-primary ms-1" type="submit">Apply</button>
-      <button class="btn btn-secondary ms-1" type="submit" (click)="resetFiliters()">Reset</button>
+  <form #form="ngForm" class="d-flex mb-3" (ngSubmit)="loadActors()" autocomplete="off">
+    <div class="d-flex align-items-center px-2">
+      <label class="col-form-label me-2"><strong>Gender:</strong></label>
+      <select 
+        name="genre" 
+        style="width: 120px;" 
+        class="form-select ms-1"
+        [(ngModel)]="actorParams.gender"
+        >
+        <option *ngFor="let genre of genderList">{{ genre }}</option>
+      </select>
+    </div>
 
-      <div class="col d-flex justify-content-end">
-        <label class="col-form-label me-2"><strong>Order:</strong></label>
-        <div class="btn-group">
-          <button 
+    <button class="apply-button" type="submit">
+      Apply
+    </button>
+    
+    <button class="reset-button" type="submit" (click)="resetFiliters()">
+      Reset
+    </button>
+
+    <div class="col d-flex justify-content-end">
+      <div class="btn-group">
+        <button 
             type="button" 
-            class="btn btn-secondary" 
+            class="fancy-btn" 
             name="orderBy" 
             [(ngModel)]="actorParams.orderBy"
             btnRadio="popularity"
             (click)="loadActors()"
-            >
-            Popularity
+            [class.active]="actorParams.orderBy === 'popularity'"
+          >
+          Popularity
           </button>
 
-          <button 
+        <button 
           type="button" 
-          class="btn btn-secondary ms-1" 
+          class="fancy-btn" 
           name="orderBy" 
           [(ngModel)]="actorParams.orderBy"
           btnRadio="alphabetical"
           (click)="loadActors()"
+          [class.active]="actorParams.orderBy === 'alphabetical'"
         >
-          Alphabetical
+        Alphabetical
         </button>
-        </div>
       </div>
+    </div>
   </form>
 </div>
 

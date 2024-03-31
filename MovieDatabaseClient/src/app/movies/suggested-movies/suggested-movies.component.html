@@ -1,0 +1,8 @@
+<div class="col">
+    <div class="row border border-2 rounded shadow p-2 pb-1 mb-3">
+      <h4><strong>You may also like</strong></h4>
+        <div *ngFor="let movie of suggestedMovies">
+            <a class="text-decoration-none text-reset" [routerLink]="'/movies/' + movie.id"><h5>{{ movie.title }} ({{ movie.releaseDate }})</h5></a>
+        </div>
+    </div>
+</div>

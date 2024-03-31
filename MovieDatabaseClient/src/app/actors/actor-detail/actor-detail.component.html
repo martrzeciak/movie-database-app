@@ -1,42 +1,44 @@
 <div class="container" *ngIf="actor">
   <div class="row">
     <div class="col-md-4">
-      <img src="{{ './assets/user.png' }}" class="img-fluid" alt="actor photo" style="width: 100%; max-width: 370px; height: auto;">
+      <img src="{{ './assets/actor.png' }}" class="img-fluid rounded-3 shadow" alt="actor photo" style="width: 100%; max-width: 400px; height: auto;">
     </div>
-    <div class="col-md-5">
+    <div class="col-5 border border-2 rounded shadow me-3 p-3 actor-details">
       <h2><strong>{{ actor.firstName }} {{ actor.lastName }}</strong></h2>
       <h4><strong>Date of Birth:</strong></h4>
       <h5>{{ actor.dateOfBirth | date:'fullDate' }}</h5>
       <h4><strong>Birthplace:</strong></h4>
       <h5>{{ actor.birthplace }}</h5>
-      <h4><strong>Biography:</strong></h4>
-      <h5>{{ actor.biography }}</h5>
       <h4><strong>Height:</strong></h4>
       <h5>{{ actor.heightInCentimeters }} cm</h5>
+      <h4><strong>Biography:</strong></h4>
+      <h5>{{ actor.biography }}</h5>
     </div>
-    <div class="col-md-3 ">
-      <h2><strong>Popularity:</strong></h2>
-      <h4> 1 in ranking</h4>
-      <h4><strong>Rating:</strong></h4> 
-      <h5>{{ actor.averageRating }} ({{ actor.ratingCount }} votes)</h5>
-      <ng-container *ngIf="!(accountService.currentUser$ | async)">
-          <h4><strong>Your rating:</strong></h4> 
-          <h5>Please log in</h5>
-      </ng-container>
-      <ng-container  *ngIf="(accountService.currentUser$ | async)">
-        <h4><strong>Your rating: {{rating}}/5</strong></h4>
-        <div>
-          <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
-          <ng-template #tt let-i="index" let-v="value">
-            <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateActor(i + 1)">
-              <span *ngIf="i < v"><i class="fa fa-star"></i></span>
-              <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
-            </button>
-          </ng-template>
-        </div>
-      </ng-container>
+    <div class="col">
+      <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
+        <h2><strong>Popularity:</strong></h2>
+        <h4> 1 in ranking</h4>
+        <h4><strong>Rating:</strong></h4> 
+        <h5>{{ actor.averageRating }} ({{ actor.ratingCount }} votes)</h5>
+        <ng-container *ngIf="!(accountService.currentUser$ | async)">
+            <h4><strong>Your rating:</strong></h4> 
+            <h5>Please log in</h5>
+        </ng-container>
+        <ng-container  *ngIf="(accountService.currentUser$ | async)">
+          <h4><strong>Your rating: {{rating}}/5</strong></h4>
+          <div>
+            <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
+            <ng-template #tt let-i="index" let-v="value">
+              <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateActor(i + 1)">
+                <span *ngIf="i < v"><i class="fa fa-star"></i></span>
+                <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
+              </button>
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
-  <h3>Known from:</h3>
+  <h3 class="mt-4">Known from:</h3>
   <app-actor-movie-list [actorId]="actor.id"></app-actor-movie-list>
 </div>

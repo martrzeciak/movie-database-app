@@ -31,15 +31,15 @@ export class MovieListComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.movieParams = this.movieService.resetMovieParams();
     this.loadMovies();
     this.loadGenres();
-    this.getMovieNameList();
-    this.movieService.resetMovieParams();
+    //this.getMovieNameList();
+    console.log(this.movieParams);
   }
 
   loadMovies(): void {
     if (this.movieParams) {
-      console.log(this.movieParams.orderBy)
       this.movieService.setMovieParams(this.movieParams);
       this.movieService.getMovies(this.movieParams).subscribe({
         next: response => {
@@ -61,6 +61,7 @@ export class MovieListComponent implements OnInit {
 
   pageChanged(event: any) {
     if (this.movieParams && this.movieParams?.pageNumber !== event.page) {
+      this.scrollToTheTop();
       this.movieParams.pageNumber = event.page;
       this.movieService.setMovieParams(this.movieParams);
       this.loadMovies();
@@ -81,8 +82,16 @@ export class MovieListComponent implements OnInit {
     })
   }
 
-  onSearchSubmit(): void {
-    this.searchValue = this.searchForm.value.searchValue ?? '';
-    this.getMovieNameList();
+  // onSearchSubmit(): void {
+  //   this.searchValue = this.searchForm.value.searchValue ?? '';
+  //   this.getMovieNameList();
+  // }
+
+  scrollToTheTop() {
+    window.scroll({ 
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth' 
+    });
   }
 }

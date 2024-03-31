@@ -5,45 +5,53 @@
             style="width: 100%; max-width: 400px; height: auto;"
       >
     </div>
-    <div class="col-5 border border-2 rounded shadow me-3 p-3">
-      <h2><strong>{{ movie.title }} </strong></h2>
-      <h4><strong>Release year:</strong></h4> 
+    <div class="col-5 border border-2 rounded shadow me-3 p-3 movie-details">
+      <h2><strong>{{ movie.title }}</strong></h2>
+      <h4><strong>Release year:</strong></h4>
       <h5>{{ movie.releaseDate }}</h5>
-      <h4><strong>Duration:</strong></h4> 
+      <h4><strong>Duration:</strong></h4>
       <h5>{{ movie.durationInMinutes }} minutes</h5>
-      <h4><strong>Director:</strong></h4> 
+      <h4><strong>Director:</strong></h4>
       <h5>{{ movie.director }}</h5>
-      <h4><strong>Genres:</strong></h4> 
+      <h4><strong>Genres:</strong></h4>
       <h5>
-          <span *ngFor="let genre of movie.genres; let last = last">
-              {{ genre.name }}{{ !last ? ', ' : '' }}
-          </span>
+        <span *ngFor="let genre of movie.genres; let last = last">
+          {{ genre.name }}{{ !last ? ', ' : '' }}
+        </span>
       </h5>
-      <h4><strong>Description:</strong></h4> 
+      <h4><strong>Description:</strong></h4>
       <h5>{{ movie.description }}</h5>
     </div>
     <div class="col">
-      <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
-        <h2><strong>Popularity:</strong></h2>
-        <h4> {{ movie.moviePosition }} in ranking</h4>
-        <h4><strong>Rating:</strong></h4> 
-        <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
-        <ng-container *ngIf="!(accountService.currentUser$ | async)">
-            <h4><strong>Your rating:</strong></h4> 
-            <h5>Please log in.</h5>
-        </ng-container>
-        <ng-container  *ngIf="(accountService.currentUser$ | async)">
-          <h4><strong>Your rating: {{rating}}/5</strong></h4>
-          <div>
-            <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
-            <ng-template #tt let-i="index" let-v="value">
-              <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
-                <span *ngIf="i < v"><i class="fa fa-star"></i></span>
-                <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
-              </button>
-            </ng-template>
-          </div>
-        </ng-container>
+      <div class="row-6">
+        <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
+          <h4><strong>Popularity:</strong></h4>
+          <h4>#{{ movie.moviePosition }} in ranking</h4>
+          <h4><strong>Rating:</strong></h4> 
+          <h5>{{ movie.averageRating }} ({{ movie.ratingCount }} votes)</h5>
+          <ng-container *ngIf="!(accountService.currentUser$ | async)">
+              <h4><strong>Your rating:</strong></h4> 
+              <h5>Please log in.</h5>
+          </ng-container>
+          <ng-container  *ngIf="(accountService.currentUser$ | async)">
+            <h4 class="d-flex align-items-center">
+              <strong class="me-2">Your rating: {{rating}}/5</strong>
+              <button class="btn btn-secondary"><i class="fa fa-solid fa-ban"></i></button>
+            </h4>
+            <div>
+              <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
+              <ng-template #tt let-i="index" let-v="value">
+                <button class="ms-1 btn btn-{{i < v ? 'warning' : 'secondary'}}" (click)="rateMovie(i + 1)">
+                  <span *ngIf="i < v"><i class="fa fa-star"></i></span>
+                  <span *ngIf="i >= v"><i class="fa fa-star"></i></span>
+                </button>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="row-6">
+        <app-suggested-movies [movieId]="movie.id"></app-suggested-movies>
       </div>
     </div>
   </div>
@@ -53,4 +61,3 @@
   <app-comment-list [movieId]="movie.id"></app-comment-list>
   <hr>
 </div>
-

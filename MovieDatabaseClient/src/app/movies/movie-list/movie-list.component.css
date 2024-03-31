@@ -1,0 +1,52 @@
+.fancy-btn {
+    background: #5c636a;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.fancy-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fancy-btn.active {
+    background: #003c78;
+}
+
+.apply-button {
+    background: #003c78;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+.reset-button {
+    background: #5c636a;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+.search-button {
+    background: #003c78;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
+    color: white;
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+::ng-deep .page-item.active .page-link {
+    z-index: 1;
+    color: #FFFFFF;
+    background-color:#003c78 !important;
+    border: none;
+}
