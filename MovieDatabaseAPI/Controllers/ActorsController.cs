@@ -14,14 +14,16 @@ namespace MovieDatabaseAPI.Controllers
         private readonly IActorRepository _actorRepository;
         private readonly IRatingRepository _ratingRepository;
         private readonly IMovieRepository _movieRepository;
+        private readonly IImageService _imageService;
         private readonly IMapper _mapper;
 
         public ActorsController(IActorRepository actorRepository, IRatingRepository ratingRepository,
-            IMovieRepository movieRepository, IMapper mapper)
+            IMovieRepository movieRepository, IImageService imageService, IMapper mapper)
         {
             _actorRepository = actorRepository;
             _ratingRepository = ratingRepository;
             _movieRepository = movieRepository;
+            _imageService = imageService;
             _mapper = mapper;
         }
 
@@ -47,6 +49,7 @@ namespace MovieDatabaseAPI.Controllers
 
             actorDto.AverageRating = await _ratingRepository.GetAverageRatingForActorAsync(actorId);
             actorDto.RatingCount = await _ratingRepository.GetRatingCountForActorAsync(actorId);
+            actorDto.ActorPosition = await _actorRepository.GetActorPositionAsync(actorId);
 
             return Ok(actorDto);
         }
@@ -109,10 +112,10 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteActor(Guid id)
+        [HttpDelete("{actorId}")]
+        public async Task<ActionResult> DeleteActor(Guid actorId)
         {
-            var actor = await _actorRepository.GetActorAsync(id);
+            var actor = await _actorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
@@ -126,19 +129,12 @@ namespace MovieDatabaseAPI.Controllers
             return BadRequest("Failed to delete actor");
         }
 
-        [HttpGet("movie-actors/{id}")]
-        public async Task<ActionResult<PagedList<ActorDto>>> GetActorsForMovie(Guid id,
-            [FromQuery] PaginationParams paginationParams)
+        [HttpGet("movie-actors/{movieId}")]
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActorsForMovie(Guid movieId)
         {
-            var actorsForMovie = await _actorRepository.GetActorsForMovieAsync(id, paginationParams);
+            var actorsForMovie = await _actorRepository.GetActorsForMovieAsync(movieId);
 
-            Response.AddPaginationHeader(new PaginationHeader(
-                actorsForMovie.CurrentPage,
-                actorsForMovie.PageSize,
-                actorsForMovie.TotalCount,
-                actorsForMovie.TotalPages));
-
-            return Ok(actorsForMovie);
+            return Ok(_mapper.Map<IEnumerable<ActorDto>>(actorsForMovie));
         }
 
         [HttpGet("actor-name")]
@@ -155,6 +151,88 @@ namespace MovieDatabaseAPI.Controllers
             var actors = await _actorRepository.GetActorNameListForMovieAsync(movieId);
 
             return Ok(_mapper.Map<IEnumerable<ActorNameDto>>(actors));
+        }
+
+        [Authorize]
+        [HttpPost("add-actor-image/{actorId}")]
+        public async Task<ActionResult<UserImageDto>> AddActorImage(Guid actorId, IFormFile file)
+        {
+            var actor = await _actorRepository.GetActorAsync(actorId);
+
+            if (actor == null) return NotFound();
+
+            var results = await _imageService.AddImageAsync(file, "actor");
+
+            if (results.Error != null) return BadRequest(results.Error.Message);
+
+            var image = new ActorImage
+            {
+                ImageUrl = results.SecureUrl.AbsoluteUri,
+                PublicId = results.PublicId
+            };
+
+            if (actor.Images.Count == 0) image.IsMain = true;
+
+            actor.Images.Add(image);
+
+            if (await _actorRepository.SaveAllAsync())
+            {
+                return CreatedAtAction(nameof(GetActor),
+                    new { actorId = actor.Id },
+                    _mapper.Map<ActorImageDto>(image));
+            }
+
+            return BadRequest("Problem adding photo");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("set-main-image/{actorId}/{imageId}")]
+        public async Task<ActionResult> SetMainImage(Guid actorId, Guid imageId)
+        {
+            var actor = await _actorRepository.GetActorAsync(actorId);
+
+            if (actor == null) return NotFound();
+
+            var image = actor.Images.FirstOrDefault(p => p.Id == imageId);
+
+            if (image == null) return NotFound();
+
+            if (image.IsMain) return BadRequest("This image is already main image");
+
+            var currentMain = actor.Images.FirstOrDefault(p => p.IsMain);
+            if (currentMain != null) currentMain.IsMain = false;
+            image.IsMain = true;
+
+            if (await _actorRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to set main image");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete-actor-image/{actorId}/{imageId}")]
+        public async Task<ActionResult> DeleteImage(Guid actorId, Guid imageId)
+        {
+            var actor = await _actorRepository.GetActorAsync(actorId);
+
+            if (actor == null) return NotFound();
+
+            var image = actor.Images.FirstOrDefault(p => p.Id == imageId);
+
+            if (image == null) return NotFound();
+
+            if (image.IsMain) return BadRequest("You cannot delete main image");
+
+            if (image.PublicId != null)
+            {
+                var results = await _imageService.DeleteImageAsync(image.PublicId);
+                if (results.Error != null) return BadRequest(results.Error.Message);
+            }
+
+            actor.Images.Remove(image);
+
+            if (await _actorRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to delete image");
         }
     }
 }

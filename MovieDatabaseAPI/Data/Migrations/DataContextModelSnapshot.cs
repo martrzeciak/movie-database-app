@@ -190,10 +190,16 @@ namespace MovieDatabaseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ActorId")
-                        .IsUnique();
+                    b.HasIndex("ActorId");
 
                     b.ToTable("ActorImages");
                 });
@@ -259,9 +265,6 @@ namespace MovieDatabaseAPI.Migrations
 
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
@@ -559,8 +562,8 @@ namespace MovieDatabaseAPI.Migrations
             modelBuilder.Entity("MovieDatabaseAPI.Entities.ActorImage", b =>
                 {
                     b.HasOne("MovieDatabaseAPI.Entities.Actor", "Actor")
-                        .WithOne("ActorImage")
-                        .HasForeignKey("MovieDatabaseAPI.Entities.ActorImage", "ActorId")
+                        .WithMany("Images")
+                        .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -667,10 +670,9 @@ namespace MovieDatabaseAPI.Migrations
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.Actor", b =>
                 {
-                    b.Navigation("ActorImage")
-                        .IsRequired();
-
                     b.Navigation("ActorRatings");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.AppRole", b =>

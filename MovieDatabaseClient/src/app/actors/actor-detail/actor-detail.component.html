@@ -1,7 +1,11 @@
 <div class="container" *ngIf="actor">
   <div class="row">
     <div class="col-md-4">
-      <img src="{{ './assets/actor.png' }}" class="img-fluid rounded-3 shadow" alt="actor photo" style="width: 100%; max-width: 400px; height: auto;">
+      <img 
+        src="{{ actor.imageUrl || './assets/actor-placeholder.jpg' }}" 
+        class="img-fluid rounded-3 shadow" 
+        alt="actor photo" 
+        style="width: 100%; max-width: 400px; height: auto;">
     </div>
     <div class="col-5 border border-2 rounded shadow me-3 p-3 actor-details">
       <h2><strong>{{ actor.firstName }} {{ actor.lastName }}</strong></h2>
@@ -17,7 +21,7 @@
     <div class="col">
       <div class="row border border-2 rounded shadow p-2 pb-3 mb-3">
         <h2><strong>Popularity:</strong></h2>
-        <h4> 1 in ranking</h4>
+        <h4> #{{ actor.actorPosition }} in ranking</h4>
         <h4><strong>Rating:</strong></h4> 
         <h5>{{ actor.averageRating }} ({{ actor.ratingCount }} votes)</h5>
         <ng-container *ngIf="!(accountService.currentUser$ | async)">
@@ -25,7 +29,10 @@
             <h5>Please log in</h5>
         </ng-container>
         <ng-container  *ngIf="(accountService.currentUser$ | async)">
-          <h4><strong>Your rating: {{rating}}/5</strong></h4>
+          <h4 class="d-flex align-items-center">
+            <strong class="me-2">Your rating: {{rating}}/5</strong>
+            <button (click)="deleteRating()" class="btn btn-secondary"><i class="fa fa-solid fa-ban"></i></button>
+          </h4>
           <div>
             <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>
             <ng-template #tt let-i="index" let-v="value">

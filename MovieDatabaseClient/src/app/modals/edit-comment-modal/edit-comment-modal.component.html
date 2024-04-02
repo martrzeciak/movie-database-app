@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Edit Comment</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="comment">
+  <div *ngIf="comment" class="container my-2 py-1 text-dark">
+    <div class="row d-flex justify-content-start">
+      <div class="col-md-12">
+        <div class="d-flex flex-start">
+          <img
+            class="rounded-circle shadow me-3"
+            src="{{ comment.user.imageUrl || './assets/user.png' }}"
+            alt="avatar"
+            width="65"
+            height="65"
+          />
+          <div class="card w-100">
+            <div class="card-body p-4">
+              <div class="d-inline-block">
+                <h5 class="d-inline">{{ comment.user.userName }}</h5>
+                <p *ngIf="comment.isEdited" class="medium d-inline ms-2">
+                  [Edited]
+                </p>
+              </div>
+              <p class="medium">{{ comment.createdAt | timeago }}</p>
+              <div>
+                <form>
+                  <div class="form-group">
+                    <label for="editedContent">Comment:</label>
+                    <textarea
+                      class="form-control"
+                      id="editedContent"
+                      name="editedContent"
+                      [(ngModel)]="comment.commentContent"
+                      rows="5"
+                    ></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="save()">
+    Save Changes
+  </button>
+  <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">
+    Cancel
+  </button>
+</div>

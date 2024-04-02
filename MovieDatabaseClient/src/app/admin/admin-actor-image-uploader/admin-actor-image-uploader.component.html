@@ -1,1 +1,84 @@
-<p>admin-actor-image-uploader works!</p>
+<h4>Change actor image</h4>
+<div class="row mt-3 mb-1" *ngIf="actor">
+    <div class="col-3">
+        <img src="{{ actor.imageUrl || './assets/actor-placeholder.jpg'}}" class="img-fluid rounded-3 shadow" alt="movie poster"
+              style="width: 100%; height: auto;"
+        >
+    </div>
+
+    <div class="col-3">
+        <div ng2FileDrop
+            [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="card bg-faded text-center mb-3 my-drop-zone d-flex align-items-center justify-content-center"
+            style="height: 185px;">
+            <i class="fa fa-upload fa-3x"></i>
+            <span class="ml-2">Drop image here</span>
+        </div>
+    </div>
+
+    <div class="col-6" style="margin-bottom: 40px">
+        <input class="form-control mb-1" type="file" id="formFile" ng2FileSelect [uploader]="uploader">  
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50%">Name</th>
+                <th>Size</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader?.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td *ngIf="uploader?.options?.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div>
+                Progress:
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader?.progress + '%' }"></div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <button type="button" class="btn btn-success btn-s me-2"
+                (click)="uploader?.uploadAll()" [disabled]="!uploader?.getNotUploadedItems()?.length">
+                <span class="fa fa-upload"></span> Upload
+                </button>
+                <button type="button" class="btn btn-warning btn-s me-2"
+                        (click)="uploader?.cancelAll()" [disabled]="!uploader?.isUploading">
+                    <span class="fa fa-ban"></span> Cancel
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader?.clearQueue()" [disabled]="!uploader?.queue?.length">
+                    <span class="fa fa-trash"></span> Remove
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3" *ngIf="actor && actor.images.length > 0">
+    <hr>
+    <h4>Poster list</h4>
+    <div class="col-3 mb-3" *ngFor="let image of actor.images">
+        <img src="{{ image.imageUrl }}" alt="movie poster" class="img-thumbnail mb-1">
+        <div class="text-center">
+            <button 
+                class="btn btn-sm"
+                [disabled]="image.isMain"
+                [ngClass]="image.isMain ? 'btn-success active' : 'btn-outline-success'"
+                (click)="setMainImage(actor.id, image)"
+            >Main</button>
+            <button 
+                class="btn btn-sm btn-danger ms-1"
+                [disabled]="image.isMain"
+                (click)="deleteImage(actor.id, image)"
+            ><i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+</div>
+
+

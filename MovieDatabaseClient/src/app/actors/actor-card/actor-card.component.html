@@ -4,7 +4,7 @@
       <span class="badge">{{ actor.averageRating }}</span>
     </div>
     <div class="card-img-wrapper border-bottom">
-      <img src="{{'./assets/actor.png' }}" class="card-img-top" alt="Actor Image">
+      <img src="{{ actor.imageUrl || './assets/actor-placeholder.jpg' }}" class="card-img-top" alt="Actor Image">
     </div>
     <div class="card-body p-2">
       <h6 class="card-title text-center mb-2 mt-2">

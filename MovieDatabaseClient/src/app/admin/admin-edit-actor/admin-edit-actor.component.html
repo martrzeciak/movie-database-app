@@ -85,7 +85,7 @@
         <div class="text-end me-2">
             <a class="btn btn-dark me-2" routerLink="/admin/actor-list" >Cancel</a>
             <button [disabled]="!editForm.valid" class="btn btn-primary" type="submit">Update</button>
-            
         </div>
     </form>
+    <app-admin-actor-image-uploader [actor]="actor"></app-admin-actor-image-uploader>
 </div>

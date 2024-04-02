@@ -4,11 +4,11 @@
     <div class="position-absolute top-0 start-0 m-2 fancy-badge" style="z-index: 1;">
       <span class="badge">{{ movie.averageRating }}</span>
     </div>
-    <button class="btn btn-primary position-absolute top-0 end-0 m-2 add-button" [routerLink]="'/'">
+    <button (click)="handleClick($event)" class="btn btn-primary position-absolute top-0 end-0 m-2 add-button" [routerLink]="'/'">
       <i class="fa fa-solid fa-plus"></i>
     </button>
     <div class="card-img-wrapper border-bottom">
-      <img src="{{ movie.posterUrl || './assets/default-movie.jpg' }}" class="card-img-top" alt="Movie poster">
+      <img src="{{ movie.posterUrl || './assets/movie-placeholder.jpg' }}" class="card-img-top" alt="Movie poster">
     </div>
     <div class="card-body p-2">
       <h6 class="card-title text-center mb-2">

@@ -1,4 +1,4 @@
-<app-comment-form [movieId]="movieId" [user]="user"></app-comment-form>
+<app-comment-form (createdComment)="handleCommentCreation($event)" [movieId]="movieId" [user]="user"></app-comment-form>
 <h3 class="mt-4">Comments:</h3>
 <div class="container mt-3" >
     <form #form="ngForm" class="d-flex mb-1" autocomplete="off">
@@ -31,11 +31,17 @@
 <div *ngIf="comments.length > 0; else noComments">
     <div class="row">
         <div *ngFor="let comment of comments" class="col-12">
-            <app-comment [comment]="comment" [user]="user"></app-comment>
+            <app-comment 
+              [comment]="comment" 
+              [user]="user" 
+              [currentUserId]="currentMember?.id" 
+              (editedComment)="openEditModal($event)"
+              (deleteCommentId)="deleteComment($event)">
+            </app-comment>
         </div>
     </div>
 </div>
 
 <ng-template #noComments>
-    <p class="text-center">No movies available.</p>
+    <p class="text-center">No comments available.</p>
 </ng-template>

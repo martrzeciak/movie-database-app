@@ -1,10 +1,10 @@
-<a *ngIf="actor" [routerLink]="'/actors/' + actor.id" class="card fancy-card" 
+<a *ngIf="actor" [routerLink]="'/actors/' + actor.id" class="card fancy-card mb-4" 
   style=" text-decoration: none;">
   <div class="card-img-wrapper">
-    <img src="{{'./assets/user.png' }}" class="card-img-top" alt="Actor Image">
+    <img src="{{ actor.imageUrl || './assets/actor-placeholder.jpg' }}" class="card-img-top" alt="Actor Image">
   </div>
   <div class="card-body p-2">
-    <h6 class="card-title text-center mb-2">
+    <h6 class="card-title text-center mb-2 mt-2">
       {{ actor.firstName }} {{ actor.lastName }}
     </h6>
   </div>

@@ -3,7 +3,8 @@
 }
 
 img {
-    max-height: 50px;
-    /* border: 2px solid grey;
-    display: inline; */
+    max-height: 45px;
+    /* border: 2px solid grey; */
+    display: inline;
+    margin: 5px;
 }

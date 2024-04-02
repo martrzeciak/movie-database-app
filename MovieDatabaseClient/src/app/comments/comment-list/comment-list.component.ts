@@ -4,6 +4,12 @@ import { CommentInterface } from 'src/app/_models/commentInterface';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs';
 import { User } from 'src/app/_models/user';
+import { Member } from 'src/app/_models/member';
+import { MemberService } from 'src/app/_services/member.service';
+import { ConfirmService } from 'src/app/_services/confirm.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EditCommentModalComponent } from 'src/app/modals/edit-comment-modal/edit-comment-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-comment-list',
@@ -14,8 +20,12 @@ export class CommentListComponent implements OnInit {
   @Input() movieId: string | undefined;
   comments: CommentInterface[] = [];
   user: User | null = null;
+  currentMember: Member | undefined;
+  bsModalRef: BsModalRef<EditCommentModalComponent> = new BsModalRef<EditCommentModalComponent>();
 
-  constructor(private commentService: CommentService, public accountService: AccountService) {
+  constructor(private commentService: CommentService, public accountService: AccountService,
+    private memberService: MemberService, private confirmService: ConfirmService,
+    private modalService: BsModalService, private toastr: ToastrService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         this.user = user;
@@ -24,8 +34,11 @@ export class CommentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.movieId) {
+    if (this.movieId) {
       this.loadComments(this.movieId);
+    }
+    if (this.user) {
+      this.loadCurrentMember(this.user.userName);
     }
   }
 
@@ -33,6 +46,47 @@ export class CommentListComponent implements OnInit {
     this.commentService.getMovieComments(movieId).subscribe({
       next: comments => {
         this.comments = comments;
+      }
+    })
+  }
+
+  handleCommentCreation(comment: CommentInterface) {
+    this.comments.unshift(comment);
+  }
+
+  loadCurrentMember(username: string) {
+    this.memberService.getMember(username).subscribe((member) => {
+      this.currentMember = member;
+    })
+  }
+
+  deleteComment(commentId: string) {
+    this.confirmService.confirm('Confirmation', 'Are you sure you want to delete comment?', 'Yes', 'No')
+      .subscribe(result => {
+        if (result) {
+          this.commentService.deleteComment(commentId).subscribe(() => {
+            if (this.movieId) {
+              this.loadComments(this.movieId);
+            }
+          });
+        }
+      });
+  }
+
+  openEditModal(editedComment: CommentInterface) {
+    var editedCommentCopy = { ...editedComment };
+    const config = {
+      class: 'modal-dialog-centered modal-lg',
+      initialState: {
+        comment: editedCommentCopy
+      }
+    }
+    this.bsModalRef = this.modalService.show(EditCommentModalComponent, config);
+    this.bsModalRef.onHide?.subscribe({
+      next: () => {
+        if (this.movieId) {
+          this.loadComments(this.movieId);
+        }
       }
     })
   }

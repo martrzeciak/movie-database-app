@@ -36,7 +36,7 @@ export class ActorService {
   }
 
   addActor(actor: any) {
-    return this.http.post(this.baseUrl + 'actors', actor);
+    return this.http.post<Actor>(this.baseUrl + 'actors', actor);
   }
 
   updateActor(actorId: string, actor: any) {
@@ -47,12 +47,8 @@ export class ActorService {
     return this.http.delete(this.baseUrl + 'actors/' + actorId);
   }
 
-  getMovieActors(movieId: string, movieActorParams: MovieActorParams) {
-    let params = getPaginationHeaders(movieActorParams.pageNumber, movieActorParams.pageSize);
-
-    return getPaginatedResult<Actor[]>(
-      this.baseUrl + 'actors/movie-actors/' + movieId, params, this.http
-    );
+  getMovieActors(movieId: string) {
+    return this.http.get<Actor[]>(this.baseUrl + 'actors/movie-actors/' + movieId);
   }
 
   getActorNameList() {
@@ -61,6 +57,14 @@ export class ActorService {
 
   getActorNameListForMovie(movieId: string) {
     return this.http.get<any[]>(this.baseUrl + 'actors/actor-name/' + movieId);
+  }
+
+  setMainImage(actorId: string, imageId: string) {
+    return this.http.put(this.baseUrl + 'actors/set-main-image/' + actorId + '/' + imageId, {});
+  }
+
+  deleteImage(actorId: string, imageId: string) {
+    return this.http.delete(this.baseUrl + 'actors/delete-actor-image/' + actorId + '/' + imageId);
   }
 
   getActorParams() {

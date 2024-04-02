@@ -1,6 +1,5 @@
 import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';

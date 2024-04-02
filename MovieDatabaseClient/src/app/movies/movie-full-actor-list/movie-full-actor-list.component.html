@@ -1,1 +1,34 @@
-<p>movie-full-actor-list works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>List of actors</h3>
+        </div>
+        <div class="col-auto">
+            <button class="fancy-btn" (click)="navigateBack()"><i class="fa fa-arrow-left me-2"></i>Take me back</button>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 10%;"></th>
+                <th style="width: 25%;">Name</th>
+                <th style="width: 25%;">Date of Birth</th>
+                <th style="width: 25%;">Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let actor of actorList" [routerLink]="'/actors/' + actor.id">
+                <td><img
+                    src="{{ actor.imageUrl || './assets/actor-placeholder.jpg' }}" 
+                    alt="Actor image" 
+                    style="max-width: 100px; border-radius: 5px;"></td>
+                <td><strong>{{ actor.firstName }} {{ actor.lastName }}</strong></td>
+                <td>{{ actor.dateOfBirth }}</td>
+                <td>{{ actor.averageRating }}/5</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

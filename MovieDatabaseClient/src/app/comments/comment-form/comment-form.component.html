@@ -11,12 +11,12 @@
                   <div class="d-inline-block mb-2 ms-2">
                     <h5 class="d-inline">{{ user?.userName || 'Your comment' }}</h5>
                   </div>
-                  <textarea formControlName="commentContent" class="form-control mb-3"  rows="8"></textarea>
+                  <textarea formControlName="commentContent" class="form-control mb-3" rows="8"></textarea>
                   <div class="d-flex justify-content-between align-items-center">
                     <ng-container *ngIf="user; else anonymousUser">
                       <div class="ms-auto">
-                        <button type="button" class="btn btn-secondary me-2">Cancel</button>
-                        <button type="submit" class="btn btn-primary me-2"><i class="fa fa-solid fa-circle-plus"></i>Add</button>
+                        <button type="button" (click)="cancel()" class="cancel-btn me-2">Cancel</button>
+                        <button type="submit" class="add-btn me-2"><i class="fa fa-solid fa-circle-plus"></i>Add</button>
                       </div>
                     </ng-container>
                     <ng-template #anonymousUser>

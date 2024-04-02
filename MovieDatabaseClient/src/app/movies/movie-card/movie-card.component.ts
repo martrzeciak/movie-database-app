@@ -8,4 +8,8 @@ import { Movie } from 'src/app/_models/movie';
 })
 export class MovieCardComponent {
   @Input() movie: Movie | undefined;
+
+  handleClick(event: Event) {
+    event.preventDefault();
+  }
 }

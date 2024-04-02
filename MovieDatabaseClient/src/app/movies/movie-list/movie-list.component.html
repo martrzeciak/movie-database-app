@@ -3,13 +3,15 @@
   style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;" 
   *ngIf="movieParams">
 
-    <form [formGroup]="searchForm" class="searchBar">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="searchBar">
       <div class="input-group">
         <input
+          style="height: 44px;"
           type="text"
           placeholder="Search..."
           formControlName="searchValue"
           class="form-control"
+          [ngClass]="isSubmitted  ? 'is-submitted' : 'btn-outline-success'"
         />
         <div class="input-group-append">
           <button type="button" class="search-button">
@@ -17,9 +19,9 @@
           </button>
         </div>
       </div>
-      <div>
-        <div *ngFor="let movie of movieNameList">
-          {{ movie.title }}
+      <div class="search-suggestions">
+        <div *ngFor="let movie of movieNameList" class="search-item">
+          <a style="text-decoration: none;" [routerLink]="'/movies/' + movie.id">{{ movie.title }}</a>
         </div>
       </div>
     </form>
@@ -29,7 +31,7 @@
           <label class="col-form-label me-2"><strong>Genre: </strong></label>
           <select 
             name="genre" 
-            style="width: 150px;" 
+            style="width: 150px; height: 44px;" 
             class="form-select ms-1" 
             [(ngModel)]="movieParams.genre">
             <option *ngFor="let genre of genres">{{ genre.name }}</option>
@@ -41,7 +43,7 @@
           <input 
             type="number" 
             class="form-control ms-1" 
-            style="width: 80px;" 
+            style="width: 80px; height: 44px;" 
             name="releaseDate" 
             [(ngModel)]="movieParams.releaseDate"
           >

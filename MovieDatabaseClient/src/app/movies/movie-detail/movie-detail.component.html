@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="movie">
   <div class="row">
     <div class="col-4">
-      <img src="{{'./assets/default-movie.jpg'}}" class="img-fluid rounded-3 shadow" alt="movie poster"
+      <img src="{{ movie.posterUrl || './assets/movie-placeholder.jpg' }}" class="img-fluid rounded-3 shadow" alt="movie poster"
             style="width: 100%; max-width: 400px; height: auto;"
       >
     </div>
@@ -36,7 +36,7 @@
           <ng-container  *ngIf="(accountService.currentUser$ | async)">
             <h4 class="d-flex align-items-center">
               <strong class="me-2">Your rating: {{rating}}/5</strong>
-              <button class="btn btn-secondary"><i class="fa fa-solid fa-ban"></i></button>
+              <button (click)="deleteRating()" class="btn btn-secondary"><i class="fa fa-solid fa-ban"></i></button>
             </h4>
             <div>
               <rating [max]="max" [(ngModel)]="rating" [customTemplate]="tt"></rating>

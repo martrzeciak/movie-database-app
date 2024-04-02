@@ -15,7 +15,15 @@ export class CommentService {
     return this.http.get<CommentInterface[]>('https://localhost:7092/api/comments/movie-comments/' + movieId);
   }
 
-  addComment(movieId: string, comment: CommentInterface) {
-    return this.http.post<CommentInterface>('https://localhost:7092/api/comments/' + movieId, comment);
+  addComment(movieId: string, comment: any) {
+    return this.http.post<any>('https://localhost:7092/api/comments/' + movieId, comment);
+  }
+
+  updateComment(commentId: string, comment: any) {
+    return this.http.put(this.baseUrl +  'comments/' + commentId, comment);
+  }
+
+  deleteComment(commentId: string) {
+    return this.http.delete(this.baseUrl + 'comments/' + commentId);
   }
 }

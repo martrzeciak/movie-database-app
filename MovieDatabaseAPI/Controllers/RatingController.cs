@@ -59,6 +59,25 @@ namespace MovieDatabaseAPI.Controllers
             return BadRequest("Failed to rate movie");
         }
 
+        [HttpDelete("remove-movie-rating/{movieId}")]
+        public async Task<ActionResult> RemoveMovieRating(Guid movieId)
+        {
+            var userId = User.GetUserId();
+
+            var movieRating = await _ratingRepository.GetMovieRatingAsync(userId, movieId);
+
+            if (movieRating == null)
+            {
+                return NotFound("Movie rating not found.");
+            }
+
+            _ratingRepository.RemoveMovieRating(movieRating);
+
+            if (await _ratingRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to remove movie rating.");
+        }
+
         [HttpGet("movie-user-rating/{movieId}")]
         public async Task<ActionResult<int>> GetMovieUserRating(Guid movieId)
         {
@@ -113,6 +132,25 @@ namespace MovieDatabaseAPI.Controllers
             if (await _ratingRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to rate actor");
+        }
+
+        [HttpDelete("remove-actor-rating/{actorId}")]
+        public async Task<ActionResult> RemoveActorRating(Guid actorId)
+        {
+            var userId = User.GetUserId();
+
+            var actorRating = await _ratingRepository.GetActorRatingAsync(userId, actorId);
+
+            if (actorRating == null)
+            {
+                return NotFound("Actor rating not found.");
+            }
+
+            _ratingRepository.RemoveActorRating(actorRating);
+
+            if (await _ratingRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to remove actor rating.");
         }
 
         [HttpGet("actor-user-rating/{actorId}")]

@@ -1,10 +1,11 @@
-﻿using MovieDatabaseAPI.Entities;
+﻿using MovieDatabaseAPI.Data;
+using MovieDatabaseAPI.Entities;
 
 namespace MovieDatabaseAPI.Interfaces
 {
     public interface IRatingRepository
     {
-        Task<MovieRating?> GetMovieRatingAsync(Guid movieId, Guid userId);
+        Task<MovieRating?> GetMovieRatingAsync(Guid userId, Guid movieId);
         Task<ActorRating?> GetActorRatingAsync(Guid userId, Guid movieId);
         Task<int> GetUserRatingForMovieAsync(Guid movieId, Guid userId);
         Task<int> GetUserRatingForActorAsync(Guid actorId, Guid userId);
@@ -13,6 +14,8 @@ namespace MovieDatabaseAPI.Interfaces
         Task<int> GetRatingCountForActorAsync(Guid actorId);
         Task<double> GetAverageRatingForActorAsync(Guid actorId);
         Task<IEnumerable<Movie?>> GetRatedMoviesForUserAsync(Guid id);
+        void RemoveMovieRating(MovieRating movieRating);
+        void RemoveActorRating(ActorRating actorRating);
         Task<bool> SaveAllAsync();
     }
 }

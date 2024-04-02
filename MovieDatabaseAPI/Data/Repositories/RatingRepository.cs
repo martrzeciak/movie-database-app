@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using MovieDatabaseAPI.DTOs;
 using MovieDatabaseAPI.Entities;
-using MovieDatabaseAPI.Helpers;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Data.Repositories
@@ -92,6 +89,16 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .ToListAsync();
 
             return ratedMovies;
+        }
+
+        public void RemoveMovieRating(MovieRating movieRating)
+        {
+            _dataContext.MovieRatings.Remove(movieRating);
+        }
+
+        public void RemoveActorRating(ActorRating actorRating)
+        {
+            _dataContext.ActorRatings.Remove(actorRating);
         }
 
         public async Task<bool> SaveAllAsync()

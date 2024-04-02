@@ -5,7 +5,7 @@
 
           <div class="d-flex flex-start">
             <img class="rounded-circle shadow me-3"
-              src="{{ comment.user.imageUrl }}" alt="avatar" width="65"
+              src="{{ comment.user.imageUrl || './assets/user.png' }}" alt="avatar" width="65"
               height="65" />
             <div class="card w-100">
               <div class="card-body p-4">
@@ -21,7 +21,12 @@
                   <div class="d-flex align-items-center">
                     <a href="#!" class="link-muted me-2"><i class="fa fas fa-thumbs-up me-2"></i>{{ comment.likes }}</a>
                   </div>
-                  <a *ngIf="user" href="#!" class="btn btn-secondary"><i class="fa fas fa-edit me-1"></i>Edit</a>
+                  <div class="d-flex align-items-center">
+                    <ng-container *ngIf="comment.user.id === currentUserId">
+                      <a class="edit-btn me-2" (click)="editComment()"><i class="fa fas fa-edit me-1"></i>Edit</a>
+                      <a class="btn btn-link" style="text-decoration: none;" (click)="deleteComment()"><i class="fa fas fa-trash me-1"></i>Delete</a>
+                    </ng-container>
+                  </div>
                 </div>
               </div>
             </div>

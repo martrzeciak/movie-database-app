@@ -1,1 +1,15 @@
-.link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
+.link-muted { color: #aaa; } 
+
+.link-muted:hover { color: #1266f1; }
+
+.edit-btn {
+    background: #5c636a;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 6px 14px;
+    margin-right: 10px;
+    font-size: 19px;
+    text-decoration: none;
+    cursor: pointer;
+}

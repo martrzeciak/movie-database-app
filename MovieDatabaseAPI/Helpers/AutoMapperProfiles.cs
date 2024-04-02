@@ -16,14 +16,16 @@ namespace MovieDatabaseAPI.Helpers
             CreateMap<MovieForCreationDto, Movie>();
             CreateMap<ActorForCreationDto, Actor>();
             CreateMap<Poster, PosterDto>();
+            CreateMap<ActorImage, ActorImageDto>();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
+
             CreateMap<User, MemberDto>()
                 .ForMember(dest => dest.ImageUrl,
                     opt => opt.MapFrom(src => src.UserImages.FirstOrDefault(p => p.IsMain).ImageUrl));
+
             CreateMap<Movie, MovieDto>()
                 .ForMember(dest => dest.PosterUrl,
                     opt => opt.MapFrom(src => src.Posters.FirstOrDefault(p => p.IsMain).PosterUrl))
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 .ForMember(
                     dest => dest.AverageRating,
                     opt => opt.MapFrom(src => src.MovieRatings.Any() 
@@ -32,9 +34,10 @@ namespace MovieDatabaseAPI.Helpers
                 .ForMember(
                     dest => dest.RatingCount,
                     opt => opt.MapFrom(src => src.MovieRatings.Count()));
+
             CreateMap<Actor, ActorDto>()
                 .ForMember(dest => dest.ImageUrl,
-                    opt => opt.MapFrom(src => src.ActorImage.ImageUrl))
+                    opt => opt.MapFrom(src => src.Images.FirstOrDefault(p => p.IsMain).ImageUrl))
                 .ForMember(
                     dest => dest.AverageRating,
                     opt => opt.MapFrom(src => src.ActorRatings.Any() 
@@ -43,9 +46,12 @@ namespace MovieDatabaseAPI.Helpers
                 .ForMember(
                     dest => dest.RatingCount,
                     opt => opt.MapFrom(src => src.ActorRatings.Count()));
+
             CreateMap<Actor, ActorNameDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
             CreateMap<Movie, MovieNameDto>();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
 }

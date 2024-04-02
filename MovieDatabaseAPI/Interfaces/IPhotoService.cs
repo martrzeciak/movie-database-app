@@ -2,9 +2,9 @@
 
 namespace MovieDatabaseAPI.Interfaces
 {
-    public interface IPhotoService
+    public interface IImageService
     {
-        Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
-        Task<DeletionResult> DeletePhotoAsync(string publicId);
+        Task<ImageUploadResult> AddImageAsync(IFormFile file, string option);
+        Task<DeletionResult> DeleteImageAsync(string publicId);
     }
 }

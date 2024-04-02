@@ -38,10 +38,26 @@
 .search-button {
     background: #003c78;
     border: none;
-    border-radius: 0px 5px 5px 0px;
     color: white;
     padding: 10px 20px;
     margin-right: 10px;
+}
+
+.search-suggestions {
+    position: absolute;
+    z-index: 99;
+    background: red;
+    width: 236px;
+}
+
+.search-item {
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+    background-color: #e2e2e2;
+}
+
+.is-submitted {
+    border-radius: 0px 5px 5px 0px;
 }
 
 ::ng-deep .page-item.active .page-link {
@@ -50,3 +66,4 @@
     background-color:#003c78 !important;
     border: none;
 }
+

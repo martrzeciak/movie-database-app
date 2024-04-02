@@ -13,6 +13,8 @@
         public double AverageRating { get; set; }
         public int RatingCount { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
+        public int ActorPosition { get; set; }
+        public List<ActorImageDto> Images { get; set; } = new List<ActorImageDto>();
     }
 }
 

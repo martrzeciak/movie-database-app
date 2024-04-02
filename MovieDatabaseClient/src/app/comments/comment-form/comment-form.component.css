@@ -1,0 +1,20 @@
+.add-btn {
+    background: #003c78;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 7px 17px;
+    margin-right: 10px;
+    font-size: 19px;
+}
+
+.cancel-btn {
+    background: #5c636a;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 7px 17px;
+    margin-right: 10px;
+    font-size: 19px;
+}
+

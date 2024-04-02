@@ -19,6 +19,7 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .Include(u => u.User)
                     .ThenInclude(i => i.UserImages)
                 .Where(comment => comment.Movie.Id == movieId)
+                .OrderByDescending(comment => comment.CreatedAt)
                 .ToListAsync();
 
             return comments;

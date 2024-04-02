@@ -25,4 +25,12 @@ export class RatingService {
   getActorUserRating(actorId: string) {
     return this.http.get<number>(`${this.baseUrl}rating/actor-user-rating/${actorId}`);
   }
+
+  deleteMovieRating(movieId: string) {
+    return this.http.delete(this.baseUrl + 'rating/remove-movie-rating/' + movieId);
+  }
+
+  deleteActorRating(actorId: string) {
+    return this.http.delete(this.baseUrl + 'rating/remove-actor-rating/' + actorId);
+  }
 }

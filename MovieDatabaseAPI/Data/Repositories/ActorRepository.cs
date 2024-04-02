@@ -42,7 +42,7 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<Actor?> GetActorAsync(Guid id)
         {
             var actor = await _dataContext.Actors
-                .Include(i => i.ActorImage)
+                .Include(i => i.Images)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return actor;
@@ -51,22 +51,23 @@ namespace MovieDatabaseAPI.Data.Repositories
         public async Task<Actor?> GetActorForUpdateAsync(Guid id)
         {
             var actor = await _dataContext.Actors
-                .Include(i => i.ActorImage)
+                .Include(i => i.Images)
                 .Include(m => m.Movies)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return actor;
         }
 
-        public async Task<PagedList<ActorDto>> GetActorsForMovieAsync(Guid id, PaginationParams paginationParams)
+        public async Task<IEnumerable<Actor>> GetActorsForMovieAsync(Guid id)
         {
-            var query = _dataContext.Actors.AsQueryable();
+            var actors = await _dataContext.Actors
+                .Include(r => r.ActorRatings)
+                .Include(i => i.Images)
+                .Where(actor => actor.Movies.Any(movie => movie.Id == id))
+                .ToListAsync();
 
-            query = query.Where(actor => actor.Movies.Any(movie => movie.Id == id));
 
-            return await PagedList<ActorDto>.CreateAsync(
-                query.ProjectTo<ActorDto>(_mapper.ConfigurationProvider),
-                paginationParams.PageNumber, paginationParams.PageSize);
+            return actors;
         }
 
         public async Task<IEnumerable<Actor>> GetActorNameListAsync()
@@ -83,6 +84,19 @@ namespace MovieDatabaseAPI.Data.Repositories
                 .ToListAsync();
 
             return actors;
+        }
+
+        public async Task<int> GetActorPositionAsync(Guid actorId)
+        {
+            var query = _dataContext.Actors.AsQueryable();
+
+            query = query.OrderByDescending(m => m.ActorRatings.Count());
+
+            var actorIds = await query.Select(m => m.Id).ToListAsync();
+
+            var actorPosition = actorIds.IndexOf(actorId) + 1;
+
+            return actorPosition;
         }
 
         public void Add(Actor actor)

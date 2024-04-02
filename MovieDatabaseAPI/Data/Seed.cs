@@ -113,7 +113,6 @@ namespace MovieDatabaseAPI.Data
                         "Electric Company.",
                     HeightInCentimeters = 188,
                     Gender = "male",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" },
                 },
                 new Actor // 1
                 {
@@ -130,7 +129,6 @@ namespace MovieDatabaseAPI.Data
                         "Los Angeles County and raised in New York City.",
                     HeightInCentimeters = 196,
                     Gender = "male",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 2
                 {
@@ -147,7 +145,6 @@ namespace MovieDatabaseAPI.Data
                         "The Asphalt Jungle, and Give 'em Hell, Harry!",
                     HeightInCentimeters = 183,
                     Gender = "male",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 3
                 {
@@ -163,7 +160,6 @@ namespace MovieDatabaseAPI.Data
                         "established himself as a versatile actor.",
                     HeightInCentimeters = 183,
                     Gender = "female",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
 
                 new Actor // 4
@@ -182,7 +178,6 @@ namespace MovieDatabaseAPI.Data
                         "a wide range of genres.",
                     HeightInCentimeters = 196,
                     Gender = "female",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 // the goodfather
                 new Actor // 5
@@ -198,7 +193,6 @@ namespace MovieDatabaseAPI.Data
                         "Desire, On the Waterfront, and, of course, The Godfather.",
                     HeightInCentimeters = 175,
                     Gender = "female",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 6
                 {
@@ -214,7 +208,6 @@ namespace MovieDatabaseAPI.Data
                         "Scent of a Woman.",
                     HeightInCentimeters = 170,
                     Gender = "female",
-                    ActorImage = new ActorImage() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 7
                 {
@@ -229,7 +222,6 @@ namespace MovieDatabaseAPI.Data
                         "in The Godfather.",
                     HeightInCentimeters = 175,
                     Gender = "female",
-                    //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 8
                 {
@@ -245,7 +237,6 @@ namespace MovieDatabaseAPI.Data
                         "and Tender Mercies.",
                     HeightInCentimeters = 174,
                     Gender = "male",
-                    //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
                 new Actor // 9
                 {
@@ -260,7 +251,6 @@ namespace MovieDatabaseAPI.Data
                         "awards, including an Academy Award and a BAFTA Award.",
                     HeightInCentimeters = 170,
                     Gender = "male",
-                    //Image = new Image() { ImageUrl = "Image Placeholder" }
                 },
             };
             await dataContext.Actors.AddRangeAsync(actors);
@@ -633,7 +623,6 @@ namespace MovieDatabaseAPI.Data
                         "sit amet auctor risus nunc scelerisque diam. In hac habitasse platea dictumst. " +
                         "Suspendisse porttitor nisi quis lorem fermentum elementum. Sed et justo finibus,",
                     CreatedAt = DateTime.Now,
-                    Likes = 24,
                     IsEdited = false,
                     UserId = usersToSeed[0].Id,
                     MovieId = movies[0].Id,
@@ -648,7 +637,6 @@ namespace MovieDatabaseAPI.Data
                         "sit amet auctor risus nunc scelerisque diam. In hac habitasse platea dictumst. " +
                         "Suspendisse porttitor nisi quis lorem fermentum elementum. Sed et justo finibus,",
                     CreatedAt = DateTime.Now,
-                    Likes = 24,
                     IsEdited = false,
                     UserId = usersToSeed[1].Id,
                     MovieId = movies[0].Id,
@@ -662,7 +650,6 @@ namespace MovieDatabaseAPI.Data
                         "Etiam imperdiet tincidunt dolor vel fermentum. Pellentesque habitant morbi tristique " +
                         "senectus et netus et malesuada fames ac turpis egestas.",
                     CreatedAt = DateTime.Now,
-                    Likes = 24,
                     IsEdited = false,
                     UserId = usersToSeed[1].Id,
                     MovieId = movies[0].Id,
@@ -676,7 +663,6 @@ namespace MovieDatabaseAPI.Data
                         " id neque commodo, vitae tincidunt enim pellentesque. Vivamus tempus aliquam nulla, eget tincidunt " +
                         "diam semper quis. Maecenas placerat et libero quis interdum. ",
                     CreatedAt = DateTime.Now,
-                    Likes = 24,
                     IsEdited = false,
                     UserId = usersToSeed[1].Id,
                     MovieId = movies[0].Id,
@@ -690,7 +676,6 @@ namespace MovieDatabaseAPI.Data
                         "lacus. Morbi consequat, ex sit amet scelerisque pharetra, lectus nisi mattis ante, eu aliquam lectus metus" +
                         " id quam. Proin venenatis risus ipsum",
                     CreatedAt = DateTime.Now,
-                    Likes = 24,
                     IsEdited = false,
                     UserId = usersToSeed[1].Id,
                     MovieId = movies[0].Id,

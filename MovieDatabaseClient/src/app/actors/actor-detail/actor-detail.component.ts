@@ -63,4 +63,15 @@ export class ActorDetailComponent implements OnInit {
       });
     }
   }
+  
+  deleteRating() {
+    if (this.actor) {
+      this.ratingService.deleteActorRating(this.actor.id).subscribe({
+        next: () => {
+          this.loadActor(this.actor!.id);
+          this.loadUserRating(this.actor!.id);
+        }
+      })
+    }
+  }
 }

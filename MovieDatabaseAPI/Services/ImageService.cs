@@ -6,10 +6,10 @@ using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Services
 {
-    public class PhotoService : IPhotoService
+    public class ImageService : IImageService
     {
         private readonly Cloudinary _cloudinary;
-        public PhotoService(IOptions<CloudinarySettings> config)
+        public ImageService(IOptions<CloudinarySettings> config)
         {
             var acc = new Account
             (
@@ -21,9 +21,16 @@ namespace MovieDatabaseAPI.Services
             _cloudinary = new Cloudinary(acc);
         }
 
-        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<ImageUploadResult> AddImageAsync(IFormFile file, string option)
         {
             var uploadResult = new ImageUploadResult();
+
+            var photoOptions = option switch
+            {
+                "user" => new Transformation().Height(500).Width(500).Crop("fill"),
+                "actor" => new Transformation().Height(1000).Width(800).Crop("fill").Gravity("face"),
+                _ => new Transformation().Height(1200).Width(800).Crop("fill")
+            };
 
             if (file.Length > 0)
             {
@@ -32,8 +39,7 @@ namespace MovieDatabaseAPI.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    //Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
-                    Transformation = new Transformation().Height(1200).Width(800).Crop("fill"),
+                    Transformation = photoOptions,
                     Folder = "MovieDatabaseApp"
                 };
 
@@ -43,7 +49,7 @@ namespace MovieDatabaseAPI.Services
             return uploadResult;
         }
 
-        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+        public async Task<DeletionResult> DeleteImageAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
 

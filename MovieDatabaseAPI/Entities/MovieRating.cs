@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace MovieDatabaseAPI.Entities
+﻿namespace MovieDatabaseAPI.Entities
 {
     public class MovieRating
     {

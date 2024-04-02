@@ -28,17 +28,11 @@ export class MovieActorListComponent implements OnInit {
   }
 
   loadActorsForMovie(movieId: string) {
-    if (this.movieActorParams) {
-      this.actorService.setMovieActorParams(this.movieActorParams);
-      this.actorService.getMovieActors(movieId, this.movieActorParams).subscribe({
-        next: response => {
-          if (response.result && response.pagination) {
-            this.actors = response.result;
-            this.pagination = response.pagination;
-          }
+      this.actorService.getMovieActors(movieId).subscribe({
+        next: actors => {
+          this.actors = actors;
         }
-      })
-    }
+      });
   }
 
   navigateToFullActorList() {

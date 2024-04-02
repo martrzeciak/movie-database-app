@@ -6,6 +6,7 @@
   <form class="searchBar">
     <div class="input-group">
       <input
+        style="height: 44px;"
         type="text"
         placeholder="Search..."
         formControlName="searchValue"
@@ -29,7 +30,7 @@
       <label class="col-form-label me-2"><strong>Gender:</strong></label>
       <select 
         name="genre" 
-        style="width: 120px;" 
+        style="width: 120px; height: 44px;" 
         class="form-select ms-1"
         [(ngModel)]="actorParams.gender"
         >

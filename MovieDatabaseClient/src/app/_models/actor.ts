@@ -1,3 +1,5 @@
+import { ActorImage } from "./actorImage"
+
 export interface Actor {
     id: string,
     firstName: string,
@@ -10,5 +12,7 @@ export interface Actor {
     averageRating: number,
     ratingCount: number,
     imageUrl: string
+    actorPosition: number,
+    images: ActorImage[]
 }
 

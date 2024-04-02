@@ -17,17 +17,17 @@ namespace MovieDatabaseAPI.Controllers
         private readonly IGenreRepository _genreRepository;
         private readonly IActorRepository _actorRepository;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
+        private readonly IImageService _imageService;
 
         public MoviesController(IMovieRepository movieRepository, IRatingRepository ratingRepository,
             IGenreRepository genreRepository, IActorRepository actorRepository, IMapper mapper,
-            IPhotoService photoService)
+            IImageService imageService)
         {
             _movieRepository = movieRepository;
             _ratingRepository = ratingRepository;
             _genreRepository = genreRepository;
             _actorRepository = actorRepository;
-            _photoService = photoService;
+            _imageService = imageService;
             _mapper = mapper;
         }
 
@@ -42,18 +42,18 @@ namespace MovieDatabaseAPI.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MovieDto>> GetMovie(Guid id)
+        [HttpGet("{movieId}")]
+        public async Task<ActionResult<MovieDto>> GetMovie(Guid movieId)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
             var movieDto = _mapper.Map<MovieDto>(movie);
 
-            movieDto.AverageRating = await _ratingRepository.GetAverageRatingForMovieAsync(id);
-            movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(id);
-            movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(id);
+            movieDto.AverageRating = await _ratingRepository.GetAverageRatingForMovieAsync(movieId);
+            movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(movieId);
+            movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(movieId);
 
             return Ok(movieDto);
         }
@@ -196,13 +196,13 @@ namespace MovieDatabaseAPI.Controllers
 
         [Authorize]
         [HttpPost("add-movie-poster/{movieId}")]
-        public async Task<ActionResult<UserImageDto>> UpdateUserPhoto(Guid movieId, IFormFile file)
+        public async Task<ActionResult<UserImageDto>> AddMoviePoster(Guid movieId, IFormFile file)
         {
             var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
-            var results = await _photoService.AddPhotoAsync(file);
+            var results = await _imageService.AddImageAsync(file, "movie");
 
             if (results.Error != null) return BadRequest(results.Error.Message);
 
@@ -238,7 +238,7 @@ namespace MovieDatabaseAPI.Controllers
 
             if (poster == null) return NotFound();
 
-            if (poster.IsMain) return BadRequest("This is already main poster");
+            if (poster.IsMain) return BadRequest("This poster is already main poster");
 
             var currentMain = movie.Posters.FirstOrDefault(p => p.IsMain);
             if (currentMain != null) currentMain.IsMain = false;
@@ -251,7 +251,7 @@ namespace MovieDatabaseAPI.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("delete-movie-poster/{movieId}/{posterId}")]
-        public async Task<ActionResult> DeletePhoto(Guid movieId, Guid posterId)
+        public async Task<ActionResult> DeletePoster(Guid movieId, Guid posterId)
         {
             var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
@@ -265,7 +265,7 @@ namespace MovieDatabaseAPI.Controllers
 
             if (poster.PublicId != null)
             {
-                var results = await _photoService.DeletePhotoAsync(poster.PublicId);
+                var results = await _imageService.DeleteImageAsync(poster.PublicId);
                 if (results.Error != null) return BadRequest(results.Error.Message);
             }
 

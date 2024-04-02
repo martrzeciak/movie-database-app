@@ -22,6 +22,7 @@ export class MovieListComponent implements OnInit {
   searchForm = this.formBuilder.nonNullable.group({
     searchValue: '',
   });
+  isSubmitted = false;
 
   constructor(
     private movieService: MovieService, 
@@ -34,7 +35,7 @@ export class MovieListComponent implements OnInit {
     this.movieParams = this.movieService.resetMovieParams();
     this.loadMovies();
     this.loadGenres();
-    //this.getMovieNameList();
+    this.getMovieNameList();
     console.log(this.movieParams);
   }
 
@@ -82,10 +83,11 @@ export class MovieListComponent implements OnInit {
     })
   }
 
-  // onSearchSubmit(): void {
-  //   this.searchValue = this.searchForm.value.searchValue ?? '';
-  //   this.getMovieNameList();
-  // }
+  onSearchSubmit(): void {
+    this.searchValue = this.searchForm.value.searchValue ?? '';
+    this.getMovieNameList();
+    this.isSubmitted = true;
+  }
 
   scrollToTheTop() {
     window.scroll({ 

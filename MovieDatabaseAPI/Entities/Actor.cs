@@ -11,7 +11,7 @@
         public int HeightInCentimeters { get; set; }
         public string Gender { get; set; } = string.Empty;
 
-        public ActorImage ActorImage { get; set; } = null!;
+        public ICollection<ActorImage> Images { get; set; } = new List<ActorImage>();
         public ICollection<Movie> Movies { get; set; } = new List<Movie>();
         public ICollection<ActorRating> ActorRatings { get; set; } = new List<ActorRating>();
     }

@@ -2,7 +2,7 @@
     <a [routerLink]="'/movies/' + movie.id" style="text-decoration: none;" class="fancy-card">
       <div class="row g-0">
         <div class="col-md-4">
-          <img src="{{ './assets/default-movie.jpg' }}" class="img-fluid rounded-start" alt="movie image">
+          <img src="{{ movie.posterUrl || './assets/movie-placeholder.jpg' }}" class="img-fluid rounded-start" alt="movie image">
         </div>
         <div class="col-md-8">
           <div class="card-body">

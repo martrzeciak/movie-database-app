@@ -59,6 +59,8 @@ import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-m
 import { SuggestedMoviesComponent } from './movies/suggested-movies/suggested-movies.component';
 import { MovieFullActorListComponent } from './movies/movie-full-actor-list/movie-full-actor-list.component';
 import { AddMovieFormComponent } from './admin/add-movie-form/add-movie-form.component';
+import { AddActorFormComponent } from './admin/add-actor-form/add-actor-form.component';
+import { EditCommentModalComponent } from './modals/edit-comment-modal/edit-comment-modal.component';
 
 
 
@@ -107,6 +109,8 @@ import { AddMovieFormComponent } from './admin/add-movie-form/add-movie-form.com
     SuggestedMoviesComponent,
     MovieFullActorListComponent,
     AddMovieFormComponent,
+    AddActorFormComponent,
+    EditCommentModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -69,7 +69,7 @@ namespace MovieDatabaseAPI.Controllers
 
                 var commentDto = _mapper.Map<CommentDto>(comment);
 
-                commentDto.User = user != null ? _mapper.Map<MemberDto>(user) : null;
+                commentDto.User = _mapper.Map<MemberDto>(user);
 
                 return CreatedAtAction(nameof(GetComment), new { commentId = comment.Id }, commentDto);
             }
@@ -88,7 +88,7 @@ namespace MovieDatabaseAPI.Controllers
             if (comment == null) return NotFound("Comment not found");
 
             if (comment.UserId != userId)
-                return Unauthorized("You cannot edit this comment");
+                return BadRequest("You cannot edit this comment");
 
             comment.CommentContent = editCommentDto.CommentContent;
 

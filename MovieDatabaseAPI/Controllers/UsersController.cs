@@ -10,19 +10,18 @@ using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
+        private readonly IImageService _imageService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IImageService imageService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
-            _photoService = photoService;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -66,7 +65,7 @@ namespace MovieDatabaseAPI.Controllers
 
         [Authorize]
         [HttpPost("add-user-image")]
-        public async Task<ActionResult<UserImageDto>> UpdateUserPhoto(IFormFile file)
+        public async Task<ActionResult<UserImageDto>> AddeUserImage(IFormFile file)
         {
             var userName = User.GetUsername();
 
@@ -74,7 +73,7 @@ namespace MovieDatabaseAPI.Controllers
 
             if (user == null) return NotFound();
 
-            var results = await _photoService.AddPhotoAsync(file);
+            var results = await _imageService.AddImageAsync(file, "user");
 
             if (results.Error != null) return BadRequest(results.Error.Message);
 
@@ -100,7 +99,7 @@ namespace MovieDatabaseAPI.Controllers
 
         [Authorize]
         [HttpPut("set-main-image/{imageId}")]
-        public async Task<ActionResult> SetMainPhoto(Guid imageId)
+        public async Task<ActionResult> SetMainImage(Guid imageId)
         {
             var userName = User.GetUsername();
 
@@ -125,7 +124,7 @@ namespace MovieDatabaseAPI.Controllers
 
         [Authorize]
         [HttpDelete("delete-user-image/{imageId}")]
-        public async Task<ActionResult> DeletePhoto(Guid imageId)
+        public async Task<ActionResult> DeleteImage(Guid imageId)
         {
             var userName = User.GetUsername();
 
@@ -141,7 +140,7 @@ namespace MovieDatabaseAPI.Controllers
 
             if (userImage.PublicId != null)
             {
-                var results = await _photoService.DeletePhotoAsync(userImage.PublicId);
+                var results = await _imageService.DeleteImageAsync(userImage.PublicId);
                 if (results.Error != null) return BadRequest(results.Error.Message);
             }
 

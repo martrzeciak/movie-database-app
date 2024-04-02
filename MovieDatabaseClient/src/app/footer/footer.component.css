@@ -1,9 +1,13 @@
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #343a40; /* Dark background color */
-    color: white; /* Light text color */
-    padding: 10px 0; /* Adjust padding as needed */
-    text-align: center;
-  }
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+}
+
+  
