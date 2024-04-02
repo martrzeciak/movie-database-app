@@ -61,6 +61,10 @@ import { MovieFullActorListComponent } from './movies/movie-full-actor-list/movi
 import { AddMovieFormComponent } from './admin/add-movie-form/add-movie-form.component';
 import { AddActorFormComponent } from './admin/add-actor-form/add-actor-form.component';
 import { EditCommentModalComponent } from './modals/edit-comment-modal/edit-comment-modal.component';
+import { UserWantToWatchListComponent } from './users/user-want-to-watch-list/user-want-to-watch-list.component';
+import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-actors.component';
+import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
+import { AdminUserCommentListComponent } from './admin/admin-user-comment-list/admin-user-comment-list.component';
 
 
 
@@ -111,6 +115,10 @@ import { EditCommentModalComponent } from './modals/edit-comment-modal/edit-comm
     AddMovieFormComponent,
     AddActorFormComponent,
     EditCommentModalComponent,
+    UserWantToWatchListComponent,
+    UserRatedActorsComponent,
+    AdminMovieCommentListComponent,
+    AdminUserCommentListComponent,
   ],
   imports: [
     BrowserModule,

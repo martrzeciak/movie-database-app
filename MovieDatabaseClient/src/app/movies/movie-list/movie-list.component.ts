@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { take } from 'rxjs';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
 import { MovieParams } from 'src/app/_models/movieParams';
 import { Pagination } from 'src/app/_models/pagination';
+import { User } from 'src/app/_models/user';
+import { AccountService } from 'src/app/_services/account.service';
 import { GenreService } from 'src/app/_services/genre.service';
 import { MovieService } from 'src/app/_services/movie.service';
 
@@ -22,13 +25,19 @@ export class MovieListComponent implements OnInit {
   searchForm = this.formBuilder.nonNullable.group({
     searchValue: '',
   });
-  isSubmitted = false;
+  user: User | null = null;
 
   constructor(
     private movieService: MovieService, 
     private genreService: GenreService, 
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private accountService: AccountService) {
       this.movieParams = this.movieService.getMovieParams();
+      this.accountService.currentUser$.pipe(take(1)).subscribe({
+        next: user => {
+          this.user = user;
+        }
+      })
     }
 
   ngOnInit(): void {
@@ -86,7 +95,6 @@ export class MovieListComponent implements OnInit {
   onSearchSubmit(): void {
     this.searchValue = this.searchForm.value.searchValue ?? '';
     this.getMovieNameList();
-    this.isSubmitted = true;
   }
 
   scrollToTheTop() {

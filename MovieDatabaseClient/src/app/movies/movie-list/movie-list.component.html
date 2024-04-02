@@ -11,7 +11,6 @@
           placeholder="Search..."
           formControlName="searchValue"
           class="form-control"
-          [ngClass]="isSubmitted  ? 'is-submitted' : 'btn-outline-success'"
         />
         <div class="input-group-append">
           <button type="button" class="search-button">
@@ -91,7 +90,7 @@
 <div *ngIf="movies.length > 0; else noMovies">
     <div class="row">
         <div *ngFor="let movie of movies" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-            <app-movie-card [movie]="movie"></app-movie-card>
+            <app-movie-card [movie]="movie" [user]="user"></app-movie-card>
         </div>
     </div>
 </div>

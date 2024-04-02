@@ -18,16 +18,18 @@ namespace MovieDatabaseAPI.Controllers
         private readonly IActorRepository _actorRepository;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
+        private readonly IUserRepository _userRepository;
 
         public MoviesController(IMovieRepository movieRepository, IRatingRepository ratingRepository,
             IGenreRepository genreRepository, IActorRepository actorRepository, IMapper mapper,
-            IImageService imageService)
+            IImageService imageService, IUserRepository userRepository)
         {
             _movieRepository = movieRepository;
             _ratingRepository = ratingRepository;
             _genreRepository = genreRepository;
             _actorRepository = actorRepository;
             _imageService = imageService;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -303,6 +305,40 @@ namespace MovieDatabaseAPI.Controllers
             var suggestedMovies = await _movieRepository.GetRandomSuggestionsByGenresAsync(movieId, 3);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(suggestedMovies));
+        }
+
+        [Authorize]
+        [HttpPost("add-want-to-watch-movie/{movieId}")]
+        public async Task<ActionResult> RateMovie(Guid movieId)
+        {
+            var userId = User.GetUserId();
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+
+            if (movie == null) return NotFound("Movie does not exists.");
+
+            if (user != null && user.Movies.Any(m => m.Id == movieId))
+                return BadRequest($"{ movie.Title } is already on the want-to-watch list.");
+            
+            if (user != null)
+                movie.Users.Add(user);
+            
+            if (await _movieRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to add movie to want to watch list");
+        }
+
+        [Authorize]
+        [HttpGet("user-want-to-watch-list")]
+        public async Task<ActionResult<IEnumerable<MovieDto>>> GetUserWantToWatchList()
+        {
+            var userId = User.GetUserId();
+            
+            var movies = await _movieRepository.GetUserWantToWatchMovieListAsync(userId);
+
+            return Ok(_mapper.Map<IEnumerable<MovieDto>>(movies));
         }
     }
 }

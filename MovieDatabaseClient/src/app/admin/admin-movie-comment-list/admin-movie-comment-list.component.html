@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>List of comments for "{{ movieTitle }}"</h3>
+        </div>
+        <div class="col-auto">
+            <button class="fancy-btn" routerLink="/admin/movie-list"><i class="fa fa-arrow-left me-2"></i>Take me back</button>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" *ngIf="comments.length > 0; else noComments">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th style="width: 40%;">Comment content</th>
+                <th>Created at</th>
+                <th>Edited</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let comment of comments">
+                <td>{{ comment.user.userName }}</td>
+                <td>{{ comment.commentContent }}</td>
+                <td>{{ comment.createdAt | date:'short' }}</td>
+                <td>{{ comment.isEdited }}</td>
+                <td><button (click)="deleteComment(comment.id)" class="btn btn-danger"><i class="fa fa-solid fa-trash me-1"></i>Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #noComments>
+    <p class="text-center">No comments available.</p>
+</ng-template>

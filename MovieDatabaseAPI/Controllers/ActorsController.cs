@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using API.Extensions;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieDatabaseAPI.DTOs;
@@ -233,6 +234,17 @@ namespace MovieDatabaseAPI.Controllers
             if (await _actorRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to delete image");
+        }
+
+        [Authorize]
+        [HttpGet("user-rated-actors")]
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetRatedActorsForUser()
+        {
+            var userId = User.GetUserId();
+
+            var ratedActors = await _ratingRepository.GetRatedActorsForUserAsync(userId);
+
+            return Ok(_mapper.Map<IEnumerable<ActorDto>>(ratedActors));
         }
     }
 }

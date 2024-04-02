@@ -7,6 +7,10 @@
             [label]="'Username'"
         ></app-text-input>
         <app-text-input 
+            [formControl]="$any(registerForm.controls['email'])" 
+            [label]="'Email'"
+        ></app-text-input>
+        <app-text-input 
             [formControl]="$any(registerForm.controls['password'])" 
             [label]="'Password'" 
             [type]="'password'"

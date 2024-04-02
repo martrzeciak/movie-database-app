@@ -14,6 +14,6 @@
         public ICollection<Actor> Actors { get; set; } = new List<Actor>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public ICollection<MovieRating> MovieRatings { get; set; } = new List<MovieRating>();
-
+        public ICollection<User> Users { get; set; } = new List<User>();
     }
 }

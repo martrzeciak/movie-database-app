@@ -59,6 +59,10 @@ export class ActorService {
     return this.http.get<any[]>(this.baseUrl + 'actors/actor-name/' + movieId);
   }
 
+  getRatedActorsForUser() {
+    return this.http.get<Actor[]>(this.baseUrl + 'actors/user-rated-actors');
+  }
+
   setMainImage(actorId: string, imageId: string) {
     return this.http.put(this.baseUrl + 'actors/set-main-image/' + actorId + '/' + imageId, {});
   }

@@ -113,4 +113,12 @@ export class MovieService {
   getSuggestedMovies(movieId: string) {
     return this.http.get<Movie[]>(this.baseUrl + 'movies/suggested-movies/' + movieId);
   }
+
+  addMovieToWantToWachList(movieId: string) {
+    return this.http.post(this.baseUrl + 'movies/add-want-to-watch-movie/' + movieId, {});
+  }
+
+  getUserWantToWatchList() {
+    return this.http.get<Movie[]>(this.baseUrl + 'movies/user-want-to-watch-list');
+  }
 }

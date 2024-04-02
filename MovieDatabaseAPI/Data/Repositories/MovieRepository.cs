@@ -49,6 +49,7 @@ namespace MovieDatabaseAPI.Data.Repositories
             var movie = await _dataContext.Movies
                 .Include(g => g.Genres)
                 .Include(p => p.Posters)
+                .Include(u => u.Users)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return movie;
@@ -145,6 +146,23 @@ namespace MovieDatabaseAPI.Data.Repositories
 
             return randomMovies;
         }
+
+        public async Task<IEnumerable<Movie>> GetUserWantToWatchMovieListAsync(Guid userId)
+        {
+            var movies = await _dataContext.Movies
+                .Include(u => u.Users)
+                .Include(p => p.Posters)
+                .Include(mr => mr.MovieRatings)
+                .Where(movie => movie.Users.Any(u => u.Id == userId))
+                .ToListAsync();
+
+            return movies;
+        }
+
+        //public async Task AddWantsToWatchMovie(Guid movieId)
+        //{
+
+        //}
 
         public void Add(Movie movie)
         {

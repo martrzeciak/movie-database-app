@@ -28,8 +28,8 @@ namespace MovieDatabaseAPI.Helpers
                     opt => opt.MapFrom(src => src.Posters.FirstOrDefault(p => p.IsMain).PosterUrl))
                 .ForMember(
                     dest => dest.AverageRating,
-                    opt => opt.MapFrom(src => src.MovieRatings.Any() 
-                        ? Math.Round(src.MovieRatings.Average(r => r.Rating), 1) 
+                    opt => opt.MapFrom(src => src.MovieRatings.Any()
+                        ? Math.Round(src.MovieRatings.Average(r => r.Rating), 1)
                         : 0.0))
                 .ForMember(
                     dest => dest.RatingCount,
@@ -51,6 +51,7 @@ namespace MovieDatabaseAPI.Helpers
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
             CreateMap<Movie, MovieNameDto>();
+
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }

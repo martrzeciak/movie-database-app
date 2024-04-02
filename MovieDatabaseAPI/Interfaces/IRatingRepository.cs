@@ -1,5 +1,4 @@
-﻿using MovieDatabaseAPI.Data;
-using MovieDatabaseAPI.Entities;
+﻿using MovieDatabaseAPI.Entities;
 
 namespace MovieDatabaseAPI.Interfaces
 {
@@ -13,7 +12,8 @@ namespace MovieDatabaseAPI.Interfaces
         Task<double> GetAverageRatingForMovieAsync(Guid movieId);
         Task<int> GetRatingCountForActorAsync(Guid actorId);
         Task<double> GetAverageRatingForActorAsync(Guid actorId);
-        Task<IEnumerable<Movie?>> GetRatedMoviesForUserAsync(Guid id);
+        Task<IEnumerable<Movie>> GetRatedMoviesForUserAsync(Guid id);
+        Task<IEnumerable<Actor>> GetRatedActorsForUserAsync(Guid id);
         void RemoveMovieRating(MovieRating movieRating);
         void RemoveActorRating(ActorRating actorRating);
         Task<bool> SaveAllAsync();

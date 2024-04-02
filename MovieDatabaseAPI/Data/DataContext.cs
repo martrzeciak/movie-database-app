@@ -69,6 +69,11 @@ namespace MovieDatabaseAPI.Data
                 .WithMany(ar => ar.ActorRatings)
                 .HasForeignKey(ar => ar.ActorId)
                 .IsRequired();
+
+            modelBuilder.Entity<Movie>()
+                .HasMany(u => u.Users)
+                .WithMany(m => m.Movies)
+                .UsingEntity("WantToWatch");
         }
     }
 }

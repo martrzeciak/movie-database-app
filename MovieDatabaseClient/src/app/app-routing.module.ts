@@ -21,6 +21,9 @@ import { AdminEditActorComponent } from './admin/admin-edit-actor/admin-edit-act
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { UserRatedMoviesComponent } from './users/user-rated-movies/user-rated-movies.component';
 import { MovieFullActorListComponent } from './movies/movie-full-actor-list/movie-full-actor-list.component';
+import { UserWantToWatchListComponent } from './users/user-want-to-watch-list/user-want-to-watch-list.component';
+import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-actors.component';
+import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,11 +32,15 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'edit/user', component: EditUserComponent },
+      { path: 'user/want-to-watch', component: UserWantToWatchListComponent },     
+      { path: 'user/user-rated-movies', component: UserRatedMoviesComponent },
+      { path: 'user/user-rated-actors', component: UserRatedActorsComponent },
       { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
       { path: 'admin/movie-list', component: AdminMovieListComponent, canActivate: [adminGuard]},
       { path: 'admin/actor-list', component: AdminActorListComponent, canActivate: [adminGuard]},
       { path: 'admin/movie-list/add-movie', component: AdminAddMovieComponent, canActivate: [adminGuard] },
       { path: 'admin/movie-list/edit-movie/:id', component: AdminEditMovieComponent, canActivate: [adminGuard]},
+      { path: 'admin/movie-list/movie-comments/:id/:title', component: AdminMovieCommentListComponent, canActivate: [adminGuard]},
       { path: 'admin/actor-list/add-actor', component: AdminAddActorComponent, canActivate: [adminGuard]},
       { path: 'admin/actor-list/edit-actor/:id', component: AdminEditActorComponent, canActivate: [adminGuard]},
       { path: 'admin/user-management', component: UserManagementComponent, canActivate: [adminGuard]},
@@ -42,7 +49,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   
   { path: 'movies', component: MovieListComponent },
-  { path: 'movies/user-rated-movies', component: UserRatedMoviesComponent },
   { path: 'movies/:id', component: MovieDetailComponent },
   { path: 'movies/actor-list/:id', component: MovieFullActorListComponent },
 
@@ -55,7 +61,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled" })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

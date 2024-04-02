@@ -82,13 +82,24 @@ namespace MovieDatabaseAPI.Data.Repositories
             return Math.Round(averageRating, 1);
         }
 
-        public async Task<IEnumerable<Movie?>> GetRatedMoviesForUserAsync(Guid id)
+        public async Task<IEnumerable<Movie>> GetRatedMoviesForUserAsync(Guid id)
         {
             var ratedMovies = await _dataContext.Movies
+                .Include(mr => mr.MovieRatings)
                 .Where(movie => movie.MovieRatings.Any(rating => rating.UserId == id))
                 .ToListAsync();
 
             return ratedMovies;
+        }
+
+        public async Task<IEnumerable<Actor>> GetRatedActorsForUserAsync(Guid id)
+        {
+            var ratedActors = await _dataContext.Actors
+                .Include(ar => ar.ActorRatings)
+                .Where(actor => actor.ActorRatings.Any(rating => rating.UserId == id))
+                .ToListAsync();
+
+            return ratedActors;
         }
 
         public void RemoveMovieRating(MovieRating movieRating)

@@ -154,7 +154,7 @@ namespace MovieDatabaseAPI.Controllers
         }
 
         [HttpGet("actor-user-rating/{actorId}")]
-        public async Task<ActionResult<int>> GetActorUserRating(Guid actorId)
+        public async Task<ActionResult<int>> GetUserRatingForActor(Guid actorId)
         {
             var userId = User.GetUserId();
 

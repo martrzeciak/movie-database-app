@@ -1,12 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Rated movies</h3>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
                 <th style="width: 10%;">#</th>
-                <th style="width: 20%;">Title</th>
-                <th style="width: 20%;">Release Date</th>
-                <th style="width: 20%;">Director</th>
-                <th style="width: 20%;">Duration</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Director</th>
+                <th>Duration</th>
+                <th>Rating</th>
             </tr>
         </thead>
         <tbody>
@@ -16,6 +25,7 @@
                 <td>{{ movie.releaseDate }}</td>
                 <td>{{ movie.director }}</td>
                 <td>{{ movie.durationInMinutes }}</td>
+                <td>{{ movie.averageRating }}/5</td>
             </tr>
         </tbody>
     </table>

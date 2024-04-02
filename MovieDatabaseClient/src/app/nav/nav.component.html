@@ -1,50 +1,102 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
-    <div class="container">
-        <a class="navbar-brand" routerLink="/">MovieDatabase</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/movies" routerLinkActive="active">Movies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/actors" routerLinkActive="active">Actors</a>
-                </li>
-                <ng-container *ngIf="accountService.currentUser$ | async">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/movies/user-rated-movies" routerLinkActive="active">Rated movies</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/lists" routerLinkActive="active">Wants to watch</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/messages" routerLinkActive="active">Rated actors</a>
-                    </li>
-                    <li *appHasRole="['Admin']" class="nav-item">
-                        <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin panel</a>
-                    </li>
-                </ng-container>
-            </ul>
-            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-                <img src="{{ user.imageUrl || './assets/user.png' }}" alt="user photo" class="me-2 rounded-circle shadow">
-                <a class="btn btn-secondary dropdown-toggle text-white text-decoration-none" dropdownToggle>Welcome {{user.userName}}</a>
-                <div class="dropdown-menu mt-3 dropdown-menu-end" *dropdownMenu>
-                    <a class="dropdown-item" routerLink="/edit/user">Edit profile</a>
-                    <a class="dropdown-item" (click)="logout()">Logout</a>
-                </div>
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">MovieDatabase</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/movies" routerLinkActive="active"
+            >Movies</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/actors" routerLinkActive="active"
+            >Actors</a
+          >
+        </li>
+        <ng-container *ngIf="accountService.currentUser$ | async">
+          <li class="nav-item dropdown" dropdown>
+            <a class="nav-link dropdown-toggle" dropdownToggle>My MD</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
+              <a class="dropdown-item" routerLink="/user/want-to-watch">Want to watch</a>
+              <a class="dropdown-item" routerLink="/user/user-rated-movies"
+                >Rated movies</a
+              >
+              <a class="dropdown-item" routerLink="/user/user-rated-actors">Rated actors</a>
             </div>
-            <div *ngIf="!(accountService.currentUser$ | async)" class="d-flex align-items-center">
-                <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-                    <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username">
-                    <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password">
-                    <button class="btn btn-dark" type="submit">Login</button>
-                </form>
-                <div class="navbar-text ms-3">
-                    <a class="btn btn-dark" routerLink="/register" routerLinkActive="active">Register</a>
-                </div>
-            </div>
+          </li>
+          <li *appHasRole="['Admin']" class="nav-item">
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+              >Admin panel</a
+            >
+          </li>
+        </ng-container>
+      </ul>
+      <div
+        class="dropdown"
+        *ngIf="accountService.currentUser$ | async as user"
+        dropdown
+      >
+        <img
+          src="{{ user.imageUrl || './assets/user.png' }}"
+          alt="user photo"
+          class="me-2 rounded-circle shadow"
+        />
+        <a
+          class="btn btn-secondary dropdown-toggle text-white text-decoration-none"
+          dropdownToggle
+          >Welcome {{ user.userName }}</a
+        >
+        <div class="dropdown-menu mt-3 dropdown-menu-end" *dropdownMenu>
+          <a class="dropdown-item" routerLink="/edit/user">Edit profile</a>
+          <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
+      </div>
+      <div
+        *ngIf="!(accountService.currentUser$ | async)"
+        class="d-flex align-items-center"
+      >
+        <form
+          #loginForm="ngForm"
+          class="d-flex"
+          (ngSubmit)="login()"
+          autocomplete="off"
+        >
+          <input
+            name="username"
+            [(ngModel)]="model.username"
+            class="form-control me-2"
+            type="text"
+            placeholder="Username"
+          />
+          <input
+            name="password"
+            [(ngModel)]="model.password"
+            class="form-control me-2"
+            type="password"
+            placeholder="Password"
+          />
+          <button class="btn btn-dark" type="submit">Login</button>
+        </form>
+        <div class="navbar-text ms-3">
+          <a
+            class="btn btn-dark"
+            routerLink="/register"
+            routerLinkActive="active"
+            >Register</a
+          >
+        </div>
+      </div>
     </div>
+  </div>
 </nav>

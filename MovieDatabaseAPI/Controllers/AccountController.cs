@@ -25,8 +25,11 @@ namespace MovieDatabaseAPI.Controllers
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName.ToLower())) 
-                    return BadRequest("Username is taken");
-            
+                return BadRequest("Username is taken");
+
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email.ToLower()))
+                return BadRequest("Email is already registered");
+
             var user = _mapper.Map<User>(registerDto);
             user.UserName = registerDto.UserName.ToLower();
 
@@ -51,9 +54,9 @@ namespace MovieDatabaseAPI.Controllers
         {
             var user = await _userManager.Users
                 .Include(i => i.UserImages)
-                .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+                .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName || x.Email == loginDto.UserName);
 
-            if (user == null) return Unauthorized("Invalid username");
+            if (user == null) return Unauthorized("Invalid username or email");
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
