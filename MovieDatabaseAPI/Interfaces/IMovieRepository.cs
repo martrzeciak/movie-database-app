@@ -18,6 +18,7 @@ namespace MovieDatabaseAPI.Interfaces
         Task<IEnumerable<Movie>> GetRandomSuggestionsByGenresAsync(Guid movieId, int count);
         Task<IEnumerable<Movie>> GetUserWantToWatchMovieListAsync(Guid userId);
         Task<IEnumerable<Movie>> SearchMoviesAsync(string query);
+        Task<bool> IsMovieOnUserWantToWatchListAsync(Guid movieId, Guid userId);
         void Add(Movie movie);
         void Update(Movie movie);
         void Delete(Movie movie);

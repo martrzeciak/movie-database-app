@@ -122,6 +122,10 @@ export class MovieService {
     return this.http.post(this.baseUrl + 'movies/add-want-to-watch-movie/' + movieId, {});
   }
 
+  removeMovieFromWantToWatchList(movieId: string) {
+    return this.http.delete(this.baseUrl + 'movies/remove-want-to-watch-movie/' + movieId);
+  }
+
   getUserWantToWatchList() {
     return this.http.get<Movie[]>(this.baseUrl + 'movies/user-want-to-watch-list');
   }

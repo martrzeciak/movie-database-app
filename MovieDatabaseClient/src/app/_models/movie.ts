@@ -12,6 +12,7 @@ export interface Movie {
     averageRating: number,
     ratingCount: number,
     moviePosition: number,
+    isOnWantToWatchMovie: boolean,
     genres: Genre[],
     posters: Poster[]
 }

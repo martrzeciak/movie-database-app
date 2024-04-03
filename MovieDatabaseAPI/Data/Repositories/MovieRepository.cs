@@ -170,6 +170,15 @@ namespace MovieDatabaseAPI.Data.Repositories
             return searchResults;
         }
 
+        public async Task<bool> IsMovieOnUserWantToWatchListAsync(Guid movieId, Guid userId)
+        {
+            var movie = await _dataContext.Movies
+                .Include(u => u.Users)
+                .FirstOrDefaultAsync(m => m.Id == movieId);
+
+            return movie != null && movie.Users.Any(m => m.Id == userId);
+        }
+
         public void Add(Movie movie)
         {
             _dataContext.Movies.Add(movie);

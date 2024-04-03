@@ -35,9 +35,9 @@ namespace MovieDatabaseAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<PagedList<MovieDto>>> GetMovies([FromQuery] MovieParams movieParams)
-        {
+        {        
             var movies = await _movieRepository.GetMoviesAsync(movieParams);
-
+     
             Response.AddPaginationHeader(new PaginationHeader(
                 movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages));
 
@@ -57,6 +57,12 @@ namespace MovieDatabaseAPI.Controllers
             movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(movieId);
             movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(movieId);
 
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                var userId = User.GetUserId();
+                movieDto.IsOnWantToWatchMovie = await _movieRepository.IsMovieOnUserWantToWatchListAsync(movie.Id, userId);
+            }
+            
             return Ok(movieDto);
         }
 
@@ -328,7 +334,7 @@ namespace MovieDatabaseAPI.Controllers
             if (movie == null) return NotFound("Movie does not exists.");
 
             if (user != null && user.Movies.Any(m => m.Id == movieId))
-                return BadRequest($"{ movie.Title } is already on the want-to-watch list.");
+                return BadRequest($"{ movie.Title } is already on the want to watch list.");
             
             if (user != null)
                 movie.Users.Add(user);
@@ -336,6 +342,28 @@ namespace MovieDatabaseAPI.Controllers
             if (await _movieRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to add movie to want to watch list");
+        }
+
+        [Authorize]
+        [HttpDelete("remove-want-to-watch-movie/{movieId}")]
+        public async Task<ActionResult> RemoveFromWantToWatch(Guid movieId)
+        {
+            var userId = User.GetUserId();
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+
+            if (movie == null) return NotFound("Movie does not exist.");
+
+            if (user == null || !user.Movies.Any(m => m.Id == movieId))
+                return BadRequest($"{movie.Title} is not on the want-to-watch list.");
+
+            movie.Users.Remove(user);
+
+            if (await _movieRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to remove movie from want to watch list");
         }
 
         [Authorize]

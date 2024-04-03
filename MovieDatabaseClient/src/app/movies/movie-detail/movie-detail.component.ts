@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
-import { CommentInterface } from 'src/app/_models/commentInterface';
 import { Movie } from 'src/app/_models/movie';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
@@ -21,7 +21,7 @@ export class MovieDetailComponent implements OnInit {
   
   constructor(private movieService: MovieService, private route: ActivatedRoute,
     public accountService: AccountService, private ratingService: RatingService,
-    private router: Router) {
+    private router: Router, private toastr: ToastrService) {
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
           this.user = user;
@@ -75,6 +75,28 @@ export class MovieDetailComponent implements OnInit {
         next: () => {
           this.loadMovie(this.movie!.id);
           this.loadUserRating(this.movie!.id);
+        }
+      })
+    }
+  }
+
+  addToWantToWatchList() {
+    if (this.movie) {
+      this.movieService.addMovieToWantToWachList(this.movie.id).subscribe({
+        next: () => {
+          this.toastr.success("Movie addedd successfully");
+          this.loadMovie(this.movie!.id);
+        }
+      })
+    }
+  }
+
+  removeFromWantToWatchList() {
+    if (this.movie) {
+      this.movieService.removeMovieFromWantToWatchList(this.movie.id).subscribe({
+        next: () => {
+          this.toastr.success("Movie removed successfully");
+          this.loadMovie(this.movie!.id);
         }
       })
     }

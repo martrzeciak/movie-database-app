@@ -4,11 +4,6 @@
     <div class="position-absolute top-0 start-0 m-2 fancy-badge" style="z-index: 1;">
       <span class="badge">{{ movie.averageRating }}</span>
     </div>
-    <ng-container *ngIf="user !== null">
-      <button (click)="addMovieToWantToWatchList($event)" class="btn btn-primary position-absolute top-0 end-0 m-2 add-button">
-        <i class="fa fa-solid fa-plus"></i>
-      </button>
-    </ng-container>
     <div class="card-img-wrapper border-bottom">
       <img src="{{ movie.posterUrl || './assets/movie-placeholder.jpg' }}" class="card-img-top" alt="Movie poster">
     </div>
