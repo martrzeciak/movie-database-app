@@ -110,6 +110,10 @@ export class MovieService {
     return this.http.get<string>(this.baseUrl + 'movies/random-movie');
   }
 
+  searchMovies(query: string) {
+    return this.http.get<Movie[]>(`${this.baseUrl}movies/search?query=${query}`);
+  }
+
   getSuggestedMovies(movieId: string) {
     return this.http.get<Movie[]>(this.baseUrl + 'movies/suggested-movies/' + movieId);
   }

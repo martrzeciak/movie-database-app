@@ -3,9 +3,9 @@
         <h1>Your profile</h1>
     </div>
     <div class="col-8">
-        <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
+        <!-- <div class="alert alert-info pb-0" *ngIf="editForm.dirty">
             <p><strong>Information:</strong> You have made changes, Any unsaved changes will be lost</p>
-        </div>
+        </div> -->
     </div>
     <div class="col-4">
         <div class="card">
@@ -25,18 +25,18 @@
                     <p>{{ member.gender | titlecase }}</p>
                 </div>
             </div>
-            <div class="card-footer">
+            <!-- <div class="card-footer">
                 <button type="submit" [disabled]="!editForm.dirty" form="editForm" class="btn btn-success col-12">Save changes</button>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-8">
-        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+        <!-- <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
             <h4 class="mt-2">Description</h4>
             <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="5"></textarea>
             <h4 class="mt-2">Location</h4>
             <input type="text" class="form-control" [(ngModel)]="member.localization" name="localization">             
-        </form>
+        </form> -->
          <app-user-photo-uploader [member]="member"></app-user-photo-uploader>
     </div>
 </div>

@@ -3,22 +3,23 @@
   style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;" 
   *ngIf="movieParams">
 
-    <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="searchBar">
+    <form [formGroup]="searchForm" (ngSubmit)="searchMovies()" class="searchBar">
       <div class="input-group">
         <input
-          style="height: 44px;"
+          style="height: 44px; width: 230px; border-radius: 5px 0px 0px 0px;"
           type="text"
           placeholder="Search..."
           formControlName="searchValue"
           class="form-control"
+          (input)="onSearchInput()"
         />
         <div class="input-group-append">
-          <button type="button" class="search-button">
+          <button type="button" class="search-button" (click)="searchMovies()">
             <i class="fa fa-search"></i>
           </button>
         </div>
       </div>
-      <div class="search-suggestions">
+      <div class="search-suggestions" *ngIf="movieNameList.length > 0">
         <div *ngFor="let movie of movieNameList" class="search-item">
           <a style="text-decoration: none;" [routerLink]="'/movies/' + movie.id">{{ movie.title }}</a>
         </div>

@@ -3,24 +3,25 @@
   style="display: grid; grid-template-columns: 300px auto; column-gap: 20px;"
   *ngIf="actorParams">
 
-  <form class="searchBar">
+  <form [formGroup]="searchForm" (ngSubmit)="searchActors()" class="searchBar">
     <div class="input-group">
       <input
-        style="height: 44px;"
+        style="height: 44px; width: 230px; border-radius: 5px 0px 0px 0px;"
         type="text"
         placeholder="Search..."
         formControlName="searchValue"
         class="form-control"
+        (input)="onSearchInput()"
       />
       <div class="input-group-append">
-        <button type="button" class="search-button">
+        <button type="button" class="search-button" (click)="searchActors()">
           <i class="fa fa-search"></i>
         </button>
       </div>
     </div>
-    <div>
-      <div>
-     
+    <div class="search-suggestions" *ngIf="actorNameList.length > 0">
+      <div *ngFor="let actor of actorNameList" class="search-item">
+        <a style="text-decoration: none;" [routerLink]="'/actors/' + actor.id">{{ actor.name }}</a>
       </div>
     </div>
   </form>

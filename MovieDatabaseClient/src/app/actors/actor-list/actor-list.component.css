@@ -44,6 +44,33 @@
     margin-right: 10px;
 }
 
+.search-suggestions {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    width: 236px;
+    z-index: 99;
+  }
+  
+  .search-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .search-item:last-child {
+    border-bottom: none;
+    border-radius: 0px 0px 5px 5px;
+  }
+  
+  .search-item:hover {
+      background-color: #e2e2e2;
+  }
+  
+  .search-item a {
+    color: #333;
+  }
+
 ::ng-deep .page-item.active .page-link {
     z-index: 1;
     color: #FFFFFF;

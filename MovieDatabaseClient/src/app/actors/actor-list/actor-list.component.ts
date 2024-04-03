@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Actor } from 'src/app/_models/actor';
 import { ActorParams } from 'src/app/_models/actorParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -14,8 +16,14 @@ export class ActorListComponent implements OnInit {
   pagination: Pagination | undefined;
   actorParams: ActorParams | undefined;
   genderList = [null , 'male', 'female'];
+  actorNameList: any[] = [];
+  searchValue = '';
+  searchForm = this.formBuilder.nonNullable.group({
+    searchValue: '',
+  });
 
-  constructor(private actorService: ActorService) {
+  constructor(private actorService: ActorService, private formBuilder: FormBuilder,
+    private router: Router) {
     this.actorParams = this.actorService.getActorParams();
   }
 
@@ -49,5 +57,29 @@ export class ActorListComponent implements OnInit {
   resetFiliters() {
     this.actorParams = this.actorService.resetActorParams();
     this.loadActors();
+  }
+
+  getActorNameList(query: string) {
+    this.actorService.getSearchSuggestions(query).subscribe({
+      next: actorNameList => {
+        this.actorNameList = actorNameList;
+      }
+    });
+  }
+
+  onSearchInput() {
+    const searchValue = this.searchForm.get('searchValue')?.value;
+    if (searchValue && searchValue.length >= 3) {
+      this.getActorNameList(searchValue);
+    } else {
+      this.actorNameList = [];
+    }
+  }
+
+  searchActors() {
+    const searchValue = this.searchForm.get('searchValue')?.value;
+    if (searchValue && searchValue.length >= 3) {
+      this.router.navigate(['actors/search-results'], { queryParams: { query: searchValue } });
+    }
   }
 }

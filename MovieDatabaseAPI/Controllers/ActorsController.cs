@@ -246,5 +246,21 @@ namespace MovieDatabaseAPI.Controllers
 
             return Ok(_mapper.Map<IEnumerable<ActorDto>>(ratedActors));
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<ActorDto>>> SearchActors([FromQuery] string query)
+        {
+            var searchResults = await _actorRepository.SearchActorsAsync(query);
+
+            return Ok(_mapper.Map<IEnumerable<ActorDto>>(searchResults));
+        }
+
+        [HttpGet("search-suggestions")]
+        public async Task<ActionResult<IEnumerable<ActorNameDto>>> GetSearchSuggestions([FromQuery] string query)
+        {
+            var suggestions = await _actorRepository.GetSearchSuggestionsAsync(query);
+
+            return Ok(_mapper.Map<IEnumerable<ActorNameDto>>(suggestions));
+        }
     }
 }

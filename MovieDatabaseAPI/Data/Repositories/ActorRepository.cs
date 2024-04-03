@@ -86,6 +86,14 @@ namespace MovieDatabaseAPI.Data.Repositories
             return actors;
         }
 
+        public async Task<IEnumerable<Actor>> GetSearchSuggestionsAsync(string query)
+        {
+            return await _dataContext.Actors
+                .Where(m => m.LastName.Contains(query) || m.FirstName.Contains(query))
+                .Take(5)
+                .ToListAsync();
+        }
+
         public async Task<int> GetActorPositionAsync(Guid actorId)
         {
             var query = _dataContext.Actors.AsQueryable();
@@ -97,6 +105,17 @@ namespace MovieDatabaseAPI.Data.Repositories
             var actorPosition = actorIds.IndexOf(actorId) + 1;
 
             return actorPosition;
+        }
+
+        public async Task<IEnumerable<Actor>> SearchActorsAsync(string query)
+        {
+            var searchResults = await _dataContext.Actors
+                .Include(p => p.Images)
+                .Include(mr => mr.ActorRatings)
+                .Where(movie => movie.LastName.Contains(query) || movie.FirstName.Contains(query))
+                .ToListAsync();
+
+            return searchResults;
         }
 
         public void Add(Actor actor)

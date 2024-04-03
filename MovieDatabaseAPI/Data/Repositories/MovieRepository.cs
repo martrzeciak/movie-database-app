@@ -159,10 +159,16 @@ namespace MovieDatabaseAPI.Data.Repositories
             return movies;
         }
 
-        //public async Task AddWantsToWatchMovie(Guid movieId)
-        //{
+        public async Task<IEnumerable<Movie>> SearchMoviesAsync(string query)
+        {
+            var searchResults = await _dataContext.Movies
+                .Include(p => p.Posters)
+                .Include(mr => mr.MovieRatings)
+                .Where(movie => movie.Title.Contains(query))
+                .ToListAsync();
 
-        //}
+            return searchResults;
+        }
 
         public void Add(Movie movie)
         {

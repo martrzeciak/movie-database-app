@@ -41,13 +41,15 @@
     color: white;
     padding: 10px 20px;
     margin-right: 10px;
+    border-radius: 0px 5px 5px 0px;
 }
 
-.search-suggestions {
+/* .search-suggestions {
     position: absolute;
     z-index: 99;
     background: red;
     width: 236px;
+    border-width: 5px;
 }
 
 .search-item {
@@ -56,8 +58,35 @@
     background-color: #e2e2e2;
 }
 
-.is-submitted {
-    border-radius: 0px 5px 5px 0px;
+.show-suggestions {
+    border-radius: 5px 0px 0px 0px;
+  } */
+
+.search-suggestions {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  width: 236px;
+  z-index: 99;
+}
+
+.search-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.search-item:last-child {
+  border-bottom: none;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.search-item:hover {
+    background-color: #e2e2e2;
+}
+
+.search-item a {
+  color: #333;
 }
 
 ::ng-deep .page-item.active .page-link {

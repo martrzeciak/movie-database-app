@@ -65,6 +65,8 @@ import { UserWantToWatchListComponent } from './users/user-want-to-watch-list/us
 import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-actors.component';
 import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
 import { AdminUserCommentListComponent } from './admin/admin-user-comment-list/admin-user-comment-list.component';
+import { MovieSearchResultsComponent } from './movies/movie-search-results/movie-search-results.component';
+import { ActorSearchResultsComponent } from './actors/actor-search-results/actor-search-results.component';
 
 
 
@@ -119,6 +121,8 @@ import { AdminUserCommentListComponent } from './admin/admin-user-comment-list/a
     UserRatedActorsComponent,
     AdminMovieCommentListComponent,
     AdminUserCommentListComponent,
+    MovieSearchResultsComponent,
+    ActorSearchResultsComponent,
   ],
   imports: [
     BrowserModule,

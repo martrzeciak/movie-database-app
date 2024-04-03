@@ -63,6 +63,14 @@ export class ActorService {
     return this.http.get<Actor[]>(this.baseUrl + 'actors/user-rated-actors');
   }
 
+  searchActors(query: string) {
+    return this.http.get<Actor[]>(`${this.baseUrl}actors/search?query=${query}`);
+  }
+
+  getSearchSuggestions(query: string) {
+    return this.http.get<string[]>(`${this.baseUrl}actors/search-suggestions?query=${query}`);
+  }
+
   setMainImage(actorId: string, imageId: string) {
     return this.http.put(this.baseUrl + 'actors/set-main-image/' + actorId + '/' + imageId, {});
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { Genre } from 'src/app/_models/genre';
 import { Movie } from 'src/app/_models/movie';
@@ -31,7 +32,8 @@ export class MovieListComponent implements OnInit {
     private movieService: MovieService, 
     private genreService: GenreService, 
     private formBuilder: FormBuilder,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private router: Router) {
       this.movieParams = this.movieService.getMovieParams();
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
@@ -44,8 +46,6 @@ export class MovieListComponent implements OnInit {
     this.movieParams = this.movieService.resetMovieParams();
     this.loadMovies();
     this.loadGenres();
-    this.getMovieNameList();
-    console.log(this.movieParams);
   }
 
   loadMovies(): void {
@@ -83,18 +83,28 @@ export class MovieListComponent implements OnInit {
     this.loadMovies();
   }
 
-  getMovieNameList() {
-    this.movieService.getSearchSuggestions(this.searchValue).subscribe({
+  getMovieNameList(query: string) {
+    this.movieService.getSearchSuggestions(query).subscribe({
       next: movieNameList => {
         this.movieNameList = movieNameList;
-        console.log(this.movieNameList)
       }
-    })
+    });
   }
 
-  onSearchSubmit(): void {
-    this.searchValue = this.searchForm.value.searchValue ?? '';
-    this.getMovieNameList();
+  onSearchInput() {
+    const searchValue = this.searchForm.get('searchValue')?.value;
+    if (searchValue && searchValue.length >= 3) {
+      this.getMovieNameList(searchValue);
+    } else {
+      this.movieNameList = [];
+    }
+  }
+
+  searchMovies() {
+    const searchValue = this.searchForm.get('searchValue')?.value;
+    if (searchValue && searchValue.length >= 3) {
+      this.router.navigate(['movies/search-results'], { queryParams: { query: searchValue } });
+    }
   }
 
   scrollToTheTop() {

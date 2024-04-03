@@ -1,0 +1,33 @@
+<h2>Search Results for "{{ searchQuery }}"</h2>
+
+<div class="row mt-4">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 10%;"></th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Duration</th>
+                <th>Director</th>
+                <th>Average Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let movie of searchResults" [routerLink]="'/movies/' + movie.id">
+                <td><img
+                    src="{{ movie.posterUrl || './assets/movie-placeholder.jpg' }}" 
+                    alt="Movie poster" 
+                    style="max-width: 100px; border-radius: 5px;"></td>
+                <td><strong>{{ movie.title }}</strong></td>
+                <td>{{ movie.releaseDate }}</td>
+                <td>{{ movie.durationInMinutes }}</td>
+                <td>{{ movie.director }}</td>
+                <td>{{ movie.averageRating }}/5</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="searchResults.length === 0">
+  <p>No search results found.</p>
+</div>

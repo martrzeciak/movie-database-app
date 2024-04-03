@@ -299,6 +299,14 @@ namespace MovieDatabaseAPI.Controllers
             return Ok(movieId);
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<MovieDto>>> SearchMovies([FromQuery] string query)
+        {
+            var searchResults = await _movieRepository.SearchMoviesAsync(query);
+
+            return Ok(_mapper.Map<IEnumerable<MovieDto>>(searchResults));
+        }
+
         [HttpGet("suggested-movies/{movieId}")]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetRandomSuggestionsByGenres(Guid movieId)
         {

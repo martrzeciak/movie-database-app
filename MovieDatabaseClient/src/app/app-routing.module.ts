@@ -24,6 +24,8 @@ import { MovieFullActorListComponent } from './movies/movie-full-actor-list/movi
 import { UserWantToWatchListComponent } from './users/user-want-to-watch-list/user-want-to-watch-list.component';
 import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-actors.component';
 import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
+import { MovieSearchResultsComponent } from './movies/movie-search-results/movie-search-results.component';
+import { ActorSearchResultsComponent } from './actors/actor-search-results/actor-search-results.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,10 +51,12 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   
   { path: 'movies', component: MovieListComponent },
-  { path: 'movies/:id', component: MovieDetailComponent },
   { path: 'movies/actor-list/:id', component: MovieFullActorListComponent },
+  { path: 'movies/search-results', component: MovieSearchResultsComponent },
+  { path: 'movies/:id', component: MovieDetailComponent },
 
   { path: 'actors', component: ActorListComponent },
+  { path: 'actors/search-results', component: ActorSearchResultsComponent },
   { path: 'actors/:id', component: ActorDetailComponent },
 
   { path: 'not-found', component: NotFoundComponent },

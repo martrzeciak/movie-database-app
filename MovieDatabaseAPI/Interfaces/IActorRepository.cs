@@ -12,6 +12,8 @@ namespace MovieDatabaseAPI.Interfaces
         Task<IEnumerable<Actor>> GetActorsForMovieAsync(Guid id);
         Task<IEnumerable<Actor>> GetActorNameListAsync();
         Task<IEnumerable<Actor>> GetActorNameListForMovieAsync(Guid movieId);
+        Task<IEnumerable<Actor>> GetSearchSuggestionsAsync(string query);
+        Task<IEnumerable<Actor>> SearchActorsAsync(string query);
         Task<int> GetActorPositionAsync(Guid actorId);
         void Add(Actor actor);
         void Update(Actor actor);
