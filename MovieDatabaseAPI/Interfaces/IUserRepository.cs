@@ -11,6 +11,5 @@ namespace MovieDatabaseAPI.Interfaces
         Task<User?> GetUserByIdAsync(Guid id);
         Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams);
         void Update(User user);
-        Task<bool> SaveAllAsync();
     }
 }

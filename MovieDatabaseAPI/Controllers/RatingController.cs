@@ -11,18 +11,11 @@ namespace MovieDatabaseAPI.Controllers
     [Authorize]
     public class RatingController : BaseApiController
     {
-        private readonly IRatingRepository _ratingRepository;
-        private readonly IMovieRepository _movieRepository;
-        private readonly IActorRepository _actorRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RatingController(IRatingRepository ratingRepository, IMovieRepository movieRepository, 
-            IActorRepository actorRepository, IUserRepository userRepository)
+        public RatingController(IUnitOfWork unitOfWork)
         {
-            _ratingRepository = ratingRepository;
-            _movieRepository = movieRepository;
-            _actorRepository = actorRepository;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("rate-movie/{movieId}")]
@@ -30,11 +23,11 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exists.");
 
-            var movieRating = await _ratingRepository.GetMovieRatingAsync(userId, movieId);
+            var movieRating = await _unitOfWork.RatingRepository.GetMovieRatingAsync(userId, movieId);
 
             if (movieRating != null)
             {
@@ -54,7 +47,7 @@ namespace MovieDatabaseAPI.Controllers
                 movie.MovieRatings.Add(movieRating);
             }
 
-            if (await _ratingRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to rate movie");
         }
@@ -64,16 +57,16 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var movieRating = await _ratingRepository.GetMovieRatingAsync(userId, movieId);
+            var movieRating = await _unitOfWork.RatingRepository.GetMovieRatingAsync(userId, movieId);
 
             if (movieRating == null)
             {
                 return NotFound("Movie rating not found.");
             }
 
-            _ratingRepository.RemoveMovieRating(movieRating);
+            _unitOfWork.RatingRepository.RemoveMovieRating(movieRating);
 
-            if (await _ratingRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to remove movie rating.");
         }
@@ -83,7 +76,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var ratingValue = await _ratingRepository.GetUserRatingForMovieAsync(movieId, userId);
+            var ratingValue = await _unitOfWork.RatingRepository.GetUserRatingForMovieAsync(movieId, userId);
 
             return Ok(ratingValue);
         }
@@ -93,7 +86,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
 
             if (user == null) NotFound();
 
@@ -105,11 +98,11 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound("Actor does not exists.");
 
-            var actorRating = await _ratingRepository.GetActorRatingAsync(userId, actorId);
+            var actorRating = await _unitOfWork.RatingRepository.GetActorRatingAsync(userId, actorId);
 
             if (actorRating != null)
             {
@@ -129,7 +122,7 @@ namespace MovieDatabaseAPI.Controllers
                 actor.ActorRatings.Add(actorRating);
             }
 
-            if (await _ratingRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to rate actor");
         }
@@ -139,16 +132,16 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var actorRating = await _ratingRepository.GetActorRatingAsync(userId, actorId);
+            var actorRating = await _unitOfWork.RatingRepository.GetActorRatingAsync(userId, actorId);
 
             if (actorRating == null)
             {
                 return NotFound("Actor rating not found.");
             }
 
-            _ratingRepository.RemoveActorRating(actorRating);
+            _unitOfWork.RatingRepository.RemoveActorRating(actorRating);
 
-            if (await _ratingRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to remove actor rating.");
         }
@@ -158,7 +151,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var ratingValue = await _ratingRepository.GetUserRatingForActorAsync(actorId, userId);
+            var ratingValue = await _unitOfWork.RatingRepository.GetUserRatingForActorAsync(actorId, userId);
 
             return Ok(ratingValue);
         }

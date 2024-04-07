@@ -12,31 +12,21 @@ namespace MovieDatabaseAPI.Controllers
 {
     public class MoviesController : BaseApiController
     {
-        private readonly IMovieRepository _movieRepository;
-        private readonly IRatingRepository _ratingRepository;
-        private readonly IGenreRepository _genreRepository;
-        private readonly IActorRepository _actorRepository;
-        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
-        private readonly IUserRepository _userRepository;
-
-        public MoviesController(IMovieRepository movieRepository, IRatingRepository ratingRepository,
-            IGenreRepository genreRepository, IActorRepository actorRepository, IMapper mapper,
-            IImageService imageService, IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        
+        public MoviesController(IUnitOfWork unitOfWork, IImageService imageService, IMapper mapper)
         {
-            _movieRepository = movieRepository;
-            _ratingRepository = ratingRepository;
-            _genreRepository = genreRepository;
-            _actorRepository = actorRepository;
+            _unitOfWork = unitOfWork;
             _imageService = imageService;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<PagedList<MovieDto>>> GetMovies([FromQuery] MovieParams movieParams)
         {        
-            var movies = await _movieRepository.GetMoviesAsync(movieParams);
+            var movies = await _unitOfWork.MovieRepository.GetMoviesAsync(movieParams);
      
             Response.AddPaginationHeader(new PaginationHeader(
                 movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages));
@@ -47,20 +37,22 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{movieId}")]
         public async Task<ActionResult<MovieDto>> GetMovie(Guid movieId)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
             var movieDto = _mapper.Map<MovieDto>(movie);
 
-            movieDto.AverageRating = await _ratingRepository.GetAverageRatingForMovieAsync(movieId);
-            movieDto.RatingCount = await _ratingRepository.GetRatingCountForMovieAsync(movieId);
-            movieDto.MoviePosition = await _movieRepository.GetMoviePositionAsync(movieId);
+            movieDto.AverageRating = await _unitOfWork.RatingRepository.GetAverageRatingForMovieAsync(movieId);
+            movieDto.RatingCount = await _unitOfWork.RatingRepository.GetRatingCountForMovieAsync(movieId);
+            movieDto.MoviePosition = await _unitOfWork.MovieRepository.GetMoviePositionAsync(movieId);
 
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 var userId = User.GetUserId();
-                movieDto.IsOnWantToWatchMovie = await _movieRepository.IsMovieOnUserWantToWatchListAsync(movie.Id, userId);
+                movieDto.IsOnWantToWatchMovie = 
+                    await _unitOfWork.MovieRepository
+                        .CheckIsMovieOnUserWantToWatchListAsync(movie.Id, userId);
             }
             
             return Ok(movieDto);
@@ -76,7 +68,7 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var genreId in movieForCreationDto.GenreIds)
                 {
-                    var genre = await _genreRepository.GetGenreByIdAsync(genreId);
+                    var genre = await _unitOfWork.GenreRepository.GetGenreByIdAsync(genreId);
                     if (genre != null)
                         movie.Genres.Add(genre);
                 }
@@ -87,17 +79,17 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var actorId in movieForCreationDto.ActorIds)
                 {
-                    var actor = await _actorRepository.GetActorAsync(actorId);
+                    var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
                     if (actor != null)
                         movie.Actors.Add(actor);
                 }
             }
 
-            _movieRepository.Add(movie);
+            _unitOfWork.MovieRepository.Add(movie);
             var movieDto = _mapper.Map<MovieDto>(movie);
 
-            if (await _movieRepository.SaveAllAsync())
-                return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movieDto);
+            if (await _unitOfWork.Complete())
+                return CreatedAtAction(nameof(GetMovie), new { movieId = movie.Id }, movieDto);
 
             return BadRequest("Failed to add movie");
         }
@@ -106,7 +98,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<MovieDto>> UpdateMovie(Guid id, MovieForCreationDto movieForUpdateDto)
         {
-            var movie = await _movieRepository.GetMovieForUpdateAsync(id);
+            var movie = await _unitOfWork.MovieRepository.GetMovieForUpdateAsync(id);
 
             if (movie == null) return NotFound();
 
@@ -117,7 +109,7 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var genreId in movieForUpdateDto.GenreIds)
                 {
-                    var genre = await _genreRepository.GetGenreByIdAsync(genreId);
+                    var genre = await _unitOfWork.GenreRepository.GetGenreByIdAsync(genreId);
                     if (genre != null)
                         movie.Genres.Add(genre);
                 }
@@ -128,15 +120,15 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var actorId in movieForUpdateDto.ActorIds)
                 {
-                    var actor = await _actorRepository.GetActorAsync(actorId);
+                    var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
                     if (actor != null)
                         movie.Actors.Add(actor);
                 }
             }
 
-            _movieRepository.Update(movie);
+            _unitOfWork.MovieRepository.Update(movie);
 
-            if (await _movieRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
                 var updatedMovieDto = _mapper.Map<MovieDto>(movie);
                 return Ok(updatedMovieDto);
@@ -149,17 +141,15 @@ namespace MovieDatabaseAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMovie(Guid id)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(id);
 
             if (movie == null) return NotFound();
 
-            _movieRepository.Delete(movie);
+            _unitOfWork.MovieRepository.Delete(movie);
 
-            if (await _movieRepository.SaveAllAsync())
-            {
+            if (await _unitOfWork.Complete())
                 return NoContent();
-            }
-
+            
             return BadRequest("Failed to delete movie");
         }
 
@@ -167,7 +157,7 @@ namespace MovieDatabaseAPI.Controllers
         public async Task<ActionResult<PagedList<MovieDto>>> GetMoviesForActor(Guid id,
             [FromQuery] PaginationParams paginationParams)
         {
-            var moviesForActor = await _movieRepository.GetMoviesForActorAsync(id, paginationParams);
+            var moviesForActor = await _unitOfWork.MovieRepository.GetMoviesForActorAsync(id, paginationParams);
 
             Response.AddPaginationHeader(new PaginationHeader(
                 moviesForActor.CurrentPage,
@@ -181,7 +171,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("search-suggestions")]
         public async Task<ActionResult<IEnumerable<MovieNameDto>>> GetSearchSuggestions([FromQuery] string query)
         {
-            var suggestions = await _movieRepository.GetSearchSuggestionsAsync(query);
+            var suggestions = await _unitOfWork.MovieRepository.GetSearchSuggestionsAsync(query);
 
             return Ok(_mapper.Map<IEnumerable<MovieNameDto>>(suggestions));
         }
@@ -189,7 +179,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("movie-name")]
         public async Task<ActionResult<IEnumerable<MovieNameDto>>> GetMovieNameList()
         {
-            var movies = await _movieRepository.GetMovieNameListAsync();
+            var movies = await _unitOfWork.MovieRepository.GetMovieNameListAsync();
 
             return Ok(_mapper.Map<IEnumerable<MovieNameDto>>(movies));
         }
@@ -197,7 +187,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("movie-name/{actorId}")]
         public async Task<ActionResult<IEnumerable<MovieNameDto>>> GetMovieNameListForActor(Guid actorId)
         {
-            var movies = await _movieRepository.GetMovieNameListForActorAsync(actorId);
+            var movies = await _unitOfWork.MovieRepository.GetMovieNameListForActorAsync(actorId);
 
             return Ok(_mapper.Map<IEnumerable<MovieNameDto>>(movies));
         }
@@ -206,7 +196,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPost("add-movie-poster/{movieId}")]
         public async Task<ActionResult<UserImageDto>> AddMoviePoster(Guid movieId, IFormFile file)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
@@ -224,10 +214,10 @@ namespace MovieDatabaseAPI.Controllers
 
             movie.Posters.Add(poster);
 
-            if (await _movieRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
                 return CreatedAtAction(nameof(GetMovie),
-                    new { id = movie.Id },
+                    new { movieId = movie.Id },
                     _mapper.Map<PosterDto>(poster));
             }
 
@@ -238,7 +228,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPut("set-main-poster/{movieId}/{posterId}")]
         public async Task<ActionResult> SetMainPoster(Guid movieId, Guid posterId)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
@@ -252,7 +242,7 @@ namespace MovieDatabaseAPI.Controllers
             if (currentMain != null) currentMain.IsMain = false;
             poster.IsMain = true;
 
-            if (await _movieRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to set main poster");
         }
@@ -261,7 +251,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpDelete("delete-movie-poster/{movieId}/{posterId}")]
         public async Task<ActionResult> DeletePoster(Guid movieId, Guid posterId)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound();
 
@@ -279,7 +269,7 @@ namespace MovieDatabaseAPI.Controllers
 
             movie.Posters.Remove(poster);
 
-            if (await _movieRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to delete poster");
         }
@@ -290,7 +280,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var ratedMovies = await _ratingRepository.GetRatedMoviesForUserAsync(userId);
+            var ratedMovies = await _unitOfWork.RatingRepository.GetRatedMoviesForUserAsync(userId);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(ratedMovies));
         }
@@ -298,7 +288,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("random-movie")]
         public async Task<ActionResult<Guid>> GetRandomMovie()
         {
-            var movieId = await _movieRepository.GetRandomMovieIdAsync();
+            var movieId = await _unitOfWork.MovieRepository.GetRandomMovieIdAsync();
 
             if (movieId == null) return NotFound();
 
@@ -308,7 +298,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<MovieDto>>> SearchMovies([FromQuery] string query)
         {
-            var searchResults = await _movieRepository.SearchMoviesAsync(query);
+            var searchResults = await _unitOfWork.MovieRepository.SearchMoviesAsync(query);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(searchResults));
         }
@@ -316,20 +306,20 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("suggested-movies/{movieId}")]
         public async Task<ActionResult<IEnumerable<MovieDto>>> GetRandomSuggestionsByGenres(Guid movieId)
         {
-            var suggestedMovies = await _movieRepository.GetRandomSuggestionsByGenresAsync(movieId, 3);
+            var suggestedMovies = await _unitOfWork.MovieRepository.GetRandomSuggestionsByGenresAsync(movieId, 3);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(suggestedMovies));
         }
 
         [Authorize]
         [HttpPost("add-want-to-watch-movie/{movieId}")]
-        public async Task<ActionResult> RateMovie(Guid movieId)
+        public async Task<ActionResult> AddToFromWantToWatch(Guid movieId)
         {
             var userId = User.GetUserId();
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
 
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exists.");
 
@@ -339,7 +329,7 @@ namespace MovieDatabaseAPI.Controllers
             if (user != null)
                 movie.Users.Add(user);
             
-            if (await _movieRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add movie to want to watch list");
         }
@@ -350,9 +340,9 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
 
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exist.");
 
@@ -361,7 +351,7 @@ namespace MovieDatabaseAPI.Controllers
 
             movie.Users.Remove(user);
 
-            if (await _movieRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to remove movie from want to watch list");
         }
@@ -372,7 +362,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
             
-            var movies = await _movieRepository.GetUserWantToWatchMovieListAsync(userId);
+            var movies = await _unitOfWork.MovieRepository.GetUserWantToWatchMovieListAsync(userId);
 
             return Ok(_mapper.Map<IEnumerable<MovieDto>>(movies));
         }

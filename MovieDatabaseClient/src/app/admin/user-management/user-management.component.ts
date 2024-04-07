@@ -14,6 +14,7 @@ export class UserManagementComponent {
   bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
   avaliableRoles = [
     'Admin',
+    'Reviewer',
     'User'
   ]
 

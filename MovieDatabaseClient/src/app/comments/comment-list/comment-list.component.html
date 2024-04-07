@@ -9,12 +9,15 @@
               [user]="user" 
               [currentUserId]="currentMember?.id" 
               (editedComment)="openEditModal($event)"
-              (deleteCommentId)="deleteComment($event)">
+              (deleteCommentId)="deleteComment($event)"
+              (likedCommentId)="addLike($event)"
+              (unlikedCommentId)="removeLike($event)"
+              >
             </app-comment>
         </div>
     </div>
 </div>
 
 <ng-template #noComments>
-    <p class="text-center">No comments yet.</p>
+    <p class="alert alert-info">There is no comments yet.</p>
 </ng-template>

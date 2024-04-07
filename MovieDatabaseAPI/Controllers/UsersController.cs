@@ -13,13 +13,13 @@ namespace MovieDatabaseAPI.Controllers
     [ApiController]
     public class UsersController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IImageService imageService)
+        public UsersController(IUnitOfWork unitOfWork, IMapper mapper, IImageService imageService)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _imageService = imageService;
         }
@@ -27,7 +27,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] PaginationParams paginationParams)
         {
-            var users = await _userRepository.GetMembersAsync(paginationParams);
+            var users = await _unitOfWork.UserRepository.GetMembersAsync(paginationParams);
 
             Response.AddPaginationHeader(new PaginationHeader(
                 users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
@@ -38,7 +38,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _userRepository.GetUserByUserNameAsync(username);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
 
             if (user == null) return NotFound();
 
@@ -51,14 +51,14 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userName = User.GetUsername();
 
-            var user = await _userRepository.GetUserByUserNameAsync(userName);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
 
             if (user == null) return NotFound();
 
             _mapper.Map(memberUpdateDto, user);
-            _userRepository.Update(user);
+            _unitOfWork.UserRepository.Update(user);
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to update user");
         }
@@ -69,7 +69,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userName = User.GetUsername();
 
-            var user = await _userRepository.GetUserByUserNameAsync(userName);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
 
             if (user == null) return NotFound();
 
@@ -87,7 +87,7 @@ namespace MovieDatabaseAPI.Controllers
 
             user.UserImages.Add(userImage);
 
-            if (await _userRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
                 return CreatedAtAction(nameof(GetUser),
                     new { username = user.UserName },
@@ -103,7 +103,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userName = User.GetUsername();
 
-            var user = await _userRepository.GetUserByUserNameAsync(userName);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
 
             if (user == null) return NotFound();
 
@@ -117,7 +117,7 @@ namespace MovieDatabaseAPI.Controllers
             if (currentMain != null) currentMain.IsMain = false;
             userImage.IsMain = true;
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to set main photo");
         }
@@ -128,7 +128,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userName = User.GetUsername();
 
-            var user = await _userRepository.GetUserByUserNameAsync(userName);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
 
             if (user == null) return NotFound();
 
@@ -146,7 +146,7 @@ namespace MovieDatabaseAPI.Controllers
 
             user.UserImages.Remove(userImage);
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to delete image");
         }

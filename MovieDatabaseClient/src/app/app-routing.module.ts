@@ -26,6 +26,12 @@ import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-a
 import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
 import { MovieSearchResultsComponent } from './movies/movie-search-results/movie-search-results.component';
 import { ActorSearchResultsComponent } from './actors/actor-search-results/actor-search-results.component';
+import { ReviewAddComponent } from './reviews/review-add/review-add.component';
+import { MovieReviewFullListComponent } from './movies/movie-review-full-list/movie-review-full-list.component';
+import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
+import { ReviewListComponent } from './users/review-list/review-list.component';
+import { EditReviewComponent } from './users/edit-review/edit-review.component';
+import { AdminMovieReviewsComponent } from './admin/admin-movie-reviews/admin-movie-reviews.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,23 +43,36 @@ const routes: Routes = [
       { path: 'user/want-to-watch', component: UserWantToWatchListComponent },     
       { path: 'user/user-rated-movies', component: UserRatedMoviesComponent },
       { path: 'user/user-rated-actors', component: UserRatedActorsComponent },
-      { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
-      { path: 'admin/movie-list', component: AdminMovieListComponent, canActivate: [adminGuard]},
-      { path: 'admin/actor-list', component: AdminActorListComponent, canActivate: [adminGuard]},
-      { path: 'admin/movie-list/add-movie', component: AdminAddMovieComponent, canActivate: [adminGuard] },
-      { path: 'admin/movie-list/edit-movie/:id', component: AdminEditMovieComponent, canActivate: [adminGuard]},
-      { path: 'admin/movie-list/movie-comments/:id/:title', component: AdminMovieCommentListComponent, canActivate: [adminGuard]},
-      { path: 'admin/actor-list/add-actor', component: AdminAddActorComponent, canActivate: [adminGuard]},
-      { path: 'admin/actor-list/edit-actor/:id', component: AdminEditActorComponent, canActivate: [adminGuard]},
-      { path: 'admin/user-management', component: UserManagementComponent, canActivate: [adminGuard]},
-    ]
+      { path: 'review/add-review', component:ReviewAddComponent },
+      { path: 'review/user-list', component:ReviewListComponent },
+      { path: 'review/edit/:id', component:EditReviewComponent },
+      {
+        path: 'admin',
+        component: AdminPanelComponent,
+        canActivate: [adminGuard],
+        children: [
+          { path: 'movie-list', component: AdminMovieListComponent },
+          { path: 'actor-list', component: AdminActorListComponent },
+          { path: 'movie-list/add-movie', component: AdminAddMovieComponent },
+          { path: 'movie-list/edit-movie/:id', component: AdminEditMovieComponent },
+          { path: 'movie-list/movie-reviews/:id', component: AdminMovieReviewsComponent },
+          { path: 'movie-list/movie-comments/:id/:title', component: AdminMovieCommentListComponent },
+          { path: 'actor-list/add-actor', component: AdminAddActorComponent },
+          { path: 'actor-list/edit-actor/:id', component: AdminEditActorComponent },
+          { path: 'user-management', component: UserManagementComponent },
+        ],
+      },
+      ]
   },
   { path: 'register', component: RegisterComponent },
   
   { path: 'movies', component: MovieListComponent },
   { path: 'movies/actor-list/:id', component: MovieFullActorListComponent },
+  { path: 'movies/reviews/:id', component: MovieReviewFullListComponent },
   { path: 'movies/search-results', component: MovieSearchResultsComponent },
   { path: 'movies/:id', component: MovieDetailComponent },
+
+  { path: 'review/:id', component: ReviewDetailComponent },
 
   { path: 'actors', component: ActorListComponent },
   { path: 'actors/search-results', component: ActorSearchResultsComponent },

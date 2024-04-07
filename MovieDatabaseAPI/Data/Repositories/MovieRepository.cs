@@ -170,7 +170,7 @@ namespace MovieDatabaseAPI.Data.Repositories
             return searchResults;
         }
 
-        public async Task<bool> IsMovieOnUserWantToWatchListAsync(Guid movieId, Guid userId)
+        public async Task<bool> CheckIsMovieOnUserWantToWatchListAsync(Guid movieId, Guid userId)
         {
             var movie = await _dataContext.Movies
                 .Include(u => u.Users)
@@ -192,11 +192,6 @@ namespace MovieDatabaseAPI.Data.Repositories
         public void Delete(Movie movie)
         {
             _dataContext.Movies.Remove(movie);
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _dataContext.SaveChangesAsync() > 0;
         }
     }
 }

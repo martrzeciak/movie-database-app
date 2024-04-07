@@ -7,6 +7,7 @@
         IGenreRepository GenreRepository { get; }
         IMovieRepository MovieRepository { get; }
         IRatingRepository RatingRepository { get; }
+        IReviewRepository ReviewRepository { get; }
         IUserRepository UserRepository { get; }
         Task<bool> Complete();
         bool HasChanges();

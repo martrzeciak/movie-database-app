@@ -1,0 +1,21 @@
+<div class="container mb-2">
+    <ng-container *ngIf="reviews && reviews.length > 0; else noReviews">
+        <div class="row">
+            <div *ngFor="let review of reviews.slice(0, 6)" class="col-md-6 mb-2">
+                <app-review-card [review]="review"></app-review-card> 
+            </div>
+        </div>
+        <div class="d-flex justify-content-center" *ngIf="reviews.length > 6">
+            <button [routerLink]="'/movies/reviews/' + movieId" class="fancy-btn">More Reviews</button>
+        </div>
+    </ng-container>
+
+    <ng-template #noReviews>
+        <div class="alert alert-info">There are no reviews yet</div>
+    </ng-template>
+</div>
+
+
+
+  
+  

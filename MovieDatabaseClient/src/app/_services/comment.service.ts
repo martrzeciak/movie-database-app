@@ -26,4 +26,12 @@ export class CommentService {
   deleteComment(commentId: string) {
     return this.http.delete(this.baseUrl + 'comments/' + commentId);
   }
+
+  addLike(commentId: string) {
+    return this.http.post(this.baseUrl + 'comments/add-like/' + commentId, {});
+  }
+
+  removeLike(commentId: string) {
+    return this.http.delete(this.baseUrl + 'comments/remove-like/' + commentId);
+  }
 }

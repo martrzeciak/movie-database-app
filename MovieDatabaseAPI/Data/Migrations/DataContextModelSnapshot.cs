@@ -370,6 +370,37 @@ namespace MovieDatabaseAPI.Migrations
                     b.ToTable("Posters");
                 });
 
+            modelBuilder.Entity("MovieDatabaseAPI.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("MovieDatabaseAPI.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -493,6 +524,21 @@ namespace MovieDatabaseAPI.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("UserCommentLikes", b =>
+                {
+                    b.Property<Guid>("LikedCommentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LikesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LikedCommentsId", "LikesId");
+
+                    b.HasIndex("LikesId");
+
+                    b.ToTable("UserCommentLikes");
+                });
+
             modelBuilder.Entity("WantToWatch", b =>
                 {
                     b.Property<Guid>("MoviesId")
@@ -609,13 +655,13 @@ namespace MovieDatabaseAPI.Migrations
                     b.HasOne("MovieDatabaseAPI.Entities.Movie", "Movie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MovieDatabaseAPI.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Movie");
@@ -653,6 +699,25 @@ namespace MovieDatabaseAPI.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("MovieDatabaseAPI.Entities.Review", b =>
+                {
+                    b.HasOne("MovieDatabaseAPI.Entities.Movie", "Movie")
+                        .WithMany("Reviews")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieDatabaseAPI.Entities.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MovieDatabaseAPI.Entities.UserImage", b =>
                 {
                     b.HasOne("MovieDatabaseAPI.Entities.User", "User")
@@ -681,6 +746,21 @@ namespace MovieDatabaseAPI.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UserCommentLikes", b =>
+                {
+                    b.HasOne("MovieDatabaseAPI.Entities.Comment", null)
+                        .WithMany()
+                        .HasForeignKey("LikedCommentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieDatabaseAPI.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WantToWatch", b =>
@@ -717,6 +797,8 @@ namespace MovieDatabaseAPI.Migrations
                     b.Navigation("MovieRatings");
 
                     b.Navigation("Posters");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("MovieDatabaseAPI.Entities.User", b =>
@@ -726,6 +808,8 @@ namespace MovieDatabaseAPI.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("MovieRatings");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("UserImages");
 

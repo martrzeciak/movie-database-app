@@ -18,7 +18,7 @@ namespace MovieDatabaseAPI.Data
         public DbSet<ActorImage> ActorImages { get; set; }
         public DbSet<MovieRating> MovieRatings { get; set; }
         public DbSet<ActorRating> ActorRatings { get; set; }
-
+        public DbSet<Review> Reviews { get; set; }
         public DataContext(DbContextOptions options) : base(options)
         {
 
@@ -74,6 +74,37 @@ namespace MovieDatabaseAPI.Data
                 .HasMany(u => u.Users)
                 .WithMany(m => m.Movies)
                 .UsingEntity("WantToWatch");
+
+            modelBuilder.Entity<Review>()
+                .HasOne(u => u.User)
+                .WithMany(r => r.Reviews)
+                .HasForeignKey(u => u.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Review>()
+                .HasOne(m => m.Movie)
+                .WithMany(r => r.Reviews)
+                .HasForeignKey(m => m.MovieId)
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasMany(c => c.LikedComments)
+                .WithMany(u => u.Likes)
+                .UsingEntity("UserCommentLikes");
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(u => u.User)
+                .WithMany(r => r.Comments)
+                .HasForeignKey(u => u.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(u => u.Movie)
+                .WithMany(r => r.Comments)
+                .HasForeignKey(u => u.MovieId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -111,10 +111,5 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             _dataContext.ActorRatings.Remove(actorRating);
         }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _dataContext.SaveChangesAsync() > 0;
-        }
     }
 }

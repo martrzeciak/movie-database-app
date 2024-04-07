@@ -30,7 +30,7 @@ export class CommentListComponent implements OnInit {
       next: user => {
         this.user = user;
       }
-   })
+    })
   }
 
   ngOnInit(): void {
@@ -46,12 +46,26 @@ export class CommentListComponent implements OnInit {
     this.commentService.getMovieComments(movieId).subscribe({
       next: comments => {
         this.comments = comments;
+        
+      console.log(this.comments)
       }
     })
   }
 
   handleCommentCreation(comment: CommentInterface) {
     this.comments.unshift(comment);
+  }
+
+  addLike(commentId: string) {
+    this.commentService.addLike(commentId).subscribe(() => {
+      this.toastr.success("Like added successfully");
+    })
+  }
+
+  removeLike(commentId: string) {
+    this.commentService.removeLike(commentId).subscribe(() => {
+      this.toastr.success("Like removed successfully");
+    })
   }
 
   loadCurrentMember(username: string) {

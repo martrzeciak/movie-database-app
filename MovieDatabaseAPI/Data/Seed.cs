@@ -14,7 +14,8 @@ namespace MovieDatabaseAPI.Data
             var roles = new List<AppRole>
             {
                 new AppRole{Name = "User" },
-                new AppRole{Name = "Admin" }
+                new AppRole{Name = "Admin" },
+                new AppRole{Name = "Reviewer" }
             };
 
             foreach (var role in roles)
@@ -49,6 +50,8 @@ namespace MovieDatabaseAPI.Data
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "User");
             }
+
+            await userManager.AddToRoleAsync(usersToSeed[1], "Reviewer");
 
             var admin = new User
             {

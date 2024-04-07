@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MovieDatabaseAPI.Data.Repositories;
 using MovieDatabaseAPI.Interfaces;
 
 namespace MovieDatabaseAPI.Data
@@ -14,17 +15,19 @@ namespace MovieDatabaseAPI.Data
             _mapper = mapper;
         }
 
-        public IActorRepository ActorRepository => throw new NotImplementedException();
+        public IActorRepository ActorRepository => new ActorRepository(_dataContext, _mapper);
 
-        public ICommentRepository CommentRepository => throw new NotImplementedException();
+        public ICommentRepository CommentRepository => new CommentRepository(_dataContext);
 
-        public IGenreRepository GenreRepository => throw new NotImplementedException();
+        public IGenreRepository GenreRepository => new GenreRepository(_dataContext);
 
-        public IMovieRepository MovieRepository => throw new NotImplementedException();
+        public IMovieRepository MovieRepository => new MovieRepository(_dataContext, _mapper);
 
-        public IRatingRepository RatingRepository => throw new NotImplementedException();
+        public IRatingRepository RatingRepository => new RatingRepository(_dataContext, _mapper);
 
-        public IUserRepository UserRepository => throw new NotImplementedException();
+        public IUserRepository UserRepository => new UserRepository(_dataContext, _mapper);
+
+        public IReviewRepository ReviewRepository => new ReviewRepository(_dataContext);
 
         public async Task<bool> Complete()
         {

@@ -17,7 +17,6 @@ export class NavComponent {
     login() {
       this.accountService.login(this.model).subscribe({
         next: _ => {
-          this.router.navigateByUrl('/');
           this.model = {};
         }
       })
@@ -25,6 +24,5 @@ export class NavComponent {
 
     logout() {
       this.accountService.logout();
-      this.router.navigateByUrl('/')
     }
 }

@@ -18,6 +18,5 @@ namespace MovieDatabaseAPI.Interfaces
         void Add(Actor actor);
         void Update(Actor actor);
         void Delete(Actor actor);
-        Task<bool> SaveAllAsync();
     }
 }

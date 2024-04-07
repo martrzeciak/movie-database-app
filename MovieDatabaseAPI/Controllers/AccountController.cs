@@ -54,7 +54,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var user = await _userManager.Users
                 .Include(i => i.UserImages)
-                .FirstOrDefaultAsync(x => x.UserName == loginDto.UserName || x.Email == loginDto.UserName);
+                .FirstOrDefaultAsync(x => x.UserName == loginDto.UserNameOrEmail || x.Email == loginDto.UserNameOrEmail);
 
             if (user == null) return Unauthorized("Invalid username or email");
 

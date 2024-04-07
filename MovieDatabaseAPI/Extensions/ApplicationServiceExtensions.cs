@@ -21,12 +21,7 @@ namespace MovieDatabaseAPI.Extensions
             services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IImageService, ImageService>();
-            services.AddScoped<IMovieRepository, MovieRepository>();
-            services.AddScoped<IActorRepository, ActorRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
-            services.AddScoped<IGenreRepository, GenreRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

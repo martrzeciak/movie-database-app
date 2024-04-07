@@ -33,6 +33,11 @@
                 >Rated movies</a
               >
               <a class="dropdown-item" routerLink="/user/user-rated-actors">Rated actors</a>
+              <ng-container *appHasRole="['Reviewer']">
+                <li class="divider dropdown-divider"></li>
+                <a class="dropdown-item" routerLink="/review/add-review">Add Review</a>
+                <a class="dropdown-item" routerLink="/review/user-list">My Reviews</a>
+              </ng-container>
             </div>
           </li>
           <li *appHasRole="['Admin']" class="nav-item">
@@ -74,10 +79,10 @@
         >
           <input
             name="username"
-            [(ngModel)]="model.username"
+            [(ngModel)]="model.usernameOrEmail"
             class="form-control me-2"
             type="text"
-            placeholder="Username"
+            placeholder="Username or Email"
           />
           <input
             name="password"

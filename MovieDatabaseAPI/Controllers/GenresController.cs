@@ -7,19 +7,19 @@ namespace MovieDatabaseAPI.Controllers
 {
     public class GenresController : BaseApiController
     {
-        private readonly IGenreRepository _genreRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GenresController(IGenreRepository genreRepository, IMapper mapper)
+        public GenresController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _genreRepository = genreRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GenreDto>>> GetGenres()
         {
-            var genres = await _genreRepository.GetGenresAsync();
+            var genres = await _unitOfWork.GenreRepository.GetGenresAsync();
 
             return Ok(_mapper.Map<IEnumerable<GenreDto>>(genres));
         }
@@ -27,7 +27,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GenreDto>> GetGenre(Guid id)
         {
-            var genre = await _genreRepository.GetGenreByIdAsync(id);
+            var genre = await _unitOfWork.GenreRepository.GetGenreByIdAsync(id);
 
             if (genre == null) return NotFound();
 

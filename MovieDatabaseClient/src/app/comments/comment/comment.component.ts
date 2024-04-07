@@ -13,6 +13,8 @@ export class CommentComponent {
   @Input() currentUserId: string | undefined;
   @Output() deleteCommentId: EventEmitter<string> = new EventEmitter<string>();
   @Output() editedComment: EventEmitter<CommentInterface> = new EventEmitter<CommentInterface>();
+  @Output() likedCommentId: EventEmitter<string> = new EventEmitter<string>();
+  @Output() unlikedCommentId: EventEmitter<string> = new EventEmitter<string>();
 
   editComment() {
     this.editedComment.emit(this.comment);
@@ -22,6 +24,22 @@ export class CommentComponent {
   deleteComment() {
     if (this.comment?.id) {
       this.deleteCommentId.emit(this.comment.id);
+    }
+  }
+
+  addLike() {
+    if (this.comment?.id) {
+      this.comment.isCommentLikedByCurrentUser = true;
+      this.comment.likes = this.comment.likes + 1;
+      this.likedCommentId.emit(this.comment.id);
+    }
+  }
+
+  removeLike() {
+    if (this.comment?.id) {
+      this.comment.isCommentLikedByCurrentUser = false;
+      this.comment.likes = this.comment.likes - 1;
+      this.unlikedCommentId.emit(this.comment.id);
     }
   }
 }

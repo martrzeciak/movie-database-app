@@ -10,14 +10,17 @@ namespace MovieDatabaseAPI.Helpers
         {
             CreateMap<RegisterDto, User>();
             CreateMap<Genre, GenreDto>();
-            CreateMap<Comment, CommentDto>();
             CreateMap<MemberUpdateDto, User>();
             CreateMap<UserImage, UserImageDto>();
             CreateMap<MovieForCreationDto, Movie>();
             CreateMap<ActorForCreationDto, Actor>();
             CreateMap<Poster, PosterDto>();
             CreateMap<ActorImage, ActorImageDto>();
+            CreateMap<Review, ReviewDto>();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
+            CreateMap<Comment, CommentDto>()
+                .ForMember(dest => dest.Likes,
+                    opt => opt.MapFrom(src => src.Likes.Count()));
 
             CreateMap<User, MemberDto>()
                 .ForMember(dest => dest.ImageUrl,

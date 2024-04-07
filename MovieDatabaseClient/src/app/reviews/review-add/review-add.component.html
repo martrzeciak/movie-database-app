@@ -1,0 +1,32 @@
+<div class="container col-9 mt-5 border rounded shadow p-4">
+    <h2 class="ms-2">Add review</h2>
+    <hr>
+    <form [formGroup]="addForm" (ngSubmit)="addForm.valid && addReview()">
+
+        <select formControlName="rating" class="form-select mb-3">
+            <option value="" selected>Select rating</option>
+            <option *ngFor="let i of [1, 2, 3, 4, 5]" [value]="i">{{ i }}</option>
+        </select>
+
+        <app-text-input 
+            [formControl]="$any(addForm.controls['reviewContent'])" 
+            [label]="'Review'"
+            [type]="'textarea'"
+        ></app-text-input>
+    
+        <ng-select [items]="movieList"
+            [searchable]="true"
+            bindLabel="title"
+            bindValue="id"
+            placeholder="Select movie"
+            [multiple]="false"
+            formControlName="movieId"
+            class="mb-3">
+        </ng-select>
+        <hr>
+        <div class="text-end me-2">
+            <a class="btn btn-dark me-2" routerLink="/review/user-list">Cancel</a>
+            <button [disabled]="!addForm.valid" class="btn btn-primary" type="submit">Add</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+<div *ngIf="review" class="container col-9 mt-5 border rounded shadow p-4">
+    <h2 class="ms-2">Edit review for {{ review.movie.title }}</h2>
+    <hr>
+    <form [formGroup]="editForm" (ngSubmit)="editForm.valid && editForm.touched && updateReview()">
+
+        <select formControlName="rating" class="form-select mb-3">
+            <option value="" selected>Select rating</option>
+            <option *ngFor="let i of [1, 2, 3, 4, 5]" [value]="i">{{ i }}</option>
+        </select>
+
+        <app-text-input 
+            [formControl]="$any(editForm.controls['reviewContent'])" 
+            [label]="'Review'"
+            [type]="'textarea'"
+        ></app-text-input>
+
+        <hr>
+        <div class="text-end me-2">
+            <a class="btn btn-dark me-2" routerLink="/review/user-list">Cancel</a>
+            <button [disabled]="!editForm.valid && editForm.touched" class="btn btn-primary" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+
+

@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Reviews:</h3>
+        </div>
+        <div class="col-auto">
+            <button class="fancy-btn" (click)="navigateBack()"><i class="fa fa-arrow-left me-2"></i>Take me back</button>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container">
+    <ng-container *ngIf="reviews && reviews.length > 0">
+        <div class="row">
+            <div *ngFor="let review of reviews" class="col-md-6 mb-2">
+                <app-review-card [review]="review"></app-review-card> 
+            </div>
+        </div>
+    </ng-container>
+</div>
+<hr>

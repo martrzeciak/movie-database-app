@@ -5,5 +5,7 @@ export interface CommentInterface {
     commentContent: string,
     createdAt: string,
     isEdited: boolean,
+    likes: number,
+    isCommentLikedByCurrentUser: boolean,
     user: Member
 }

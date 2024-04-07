@@ -1,16 +1,24 @@
-
 <div class="container">
-    <h2 class="ms-2">Admin panel</h2>
-    <hr>
-    <div class="row">
-        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
-            <a routerLink="movie-list" class="btn btn-dark w-100 p-3 shadow"><h4 class="m-0">Movie</h4></a>
-        </div>
-        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
-            <a (click)="navigateToAdminActorList()" class="btn btn-dark w-100 p-3"><h4 class="m-0">Actor</h4></a>
-        </div>
-        <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
-            <a routerLink="user-management" class="btn btn-dark w-100 p-3"><h4 class="m-0">User</h4></a>
-        </div>
+  <h2 class="ms-2">Admin panel</h2>
+  <hr />
+  <div class="row">
+    <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+      <a routerLink="movie-list" class="btn btn-dark w-100 p-3 shadow"
+        ><h4 class="m-0"><i class="fa fa-solid fa-film me-1"></i>Movies</h4></a
+      >
     </div>
+    <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+      <a routerLink="actor-list" class="btn btn-dark w-100 p-3 shadow"
+        ><h4 class="m-0"><i class="fa fa-solid fa-users me-1"></i>Actors</h4></a
+      >
+    </div>
+    <div class="col-md-4 mb-3 d-flex justify-content-center align-items-center">
+      <a routerLink="user-management" class="btn btn-dark w-100 p-3 shadow"
+        ><h4 class="m-0"><i class="fa fa-solid fa-user me-1"></i>Users</h4></a
+      >
+    </div>
+  </div>
+  <hr />
 </div>
+
+<router-outlet></router-outlet>

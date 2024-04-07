@@ -11,10 +11,10 @@ export class AdminPanelComponent {
   constructor(private router: Router) { }
 
   navigateToAdminMovieList() {
-    this.router.navigate(['/admin/movie-list']);
+    this.router.navigate(['movie-list']);
   }
 
   navigateToAdminActorList() {
-    this.router.navigate(['/admin/actor-list']);
+    this.router.navigate(['actor-list']);
   }
 }

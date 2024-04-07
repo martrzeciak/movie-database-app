@@ -11,7 +11,7 @@ export class AdminAddMovieComponent {
   isMovieAdded = false;
 
   handleMovieCreation(createdMovie: Movie) {
-   this. movie = createdMovie;
+   this.movie = createdMovie;
    this.isMovieAdded = true;
   }
 }

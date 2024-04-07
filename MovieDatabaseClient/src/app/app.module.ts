@@ -46,7 +46,6 @@ import { TimeagoModule } from "ngx-timeago";
 import { FooterComponent } from './footer/footer.component';
 import { AdminMovieListComponent } from './admin/admin-movie-list/admin-movie-list.component';
 import { AdminActorListComponent } from './admin/admin-actor-list/admin-actor-list.component';
-import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AdminAddMovieComponent } from './admin/admin-add-movie/admin-add-movie.component';
 import { AdminEditMovieComponent } from './admin/admin-edit-movie/admin-edit-movie.component';
 import { AdminAddActorComponent } from './admin/admin-add-actor/admin-add-actor.component';
@@ -64,9 +63,16 @@ import { EditCommentModalComponent } from './modals/edit-comment-modal/edit-comm
 import { UserWantToWatchListComponent } from './users/user-want-to-watch-list/user-want-to-watch-list.component';
 import { UserRatedActorsComponent } from './users/user-rated-actors/user-rated-actors.component';
 import { AdminMovieCommentListComponent } from './admin/admin-movie-comment-list/admin-movie-comment-list.component';
-import { AdminUserCommentListComponent } from './admin/admin-user-comment-list/admin-user-comment-list.component';
 import { MovieSearchResultsComponent } from './movies/movie-search-results/movie-search-results.component';
 import { ActorSearchResultsComponent } from './actors/actor-search-results/actor-search-results.component';
+import { ReviewAddComponent } from './reviews/review-add/review-add.component';
+import { MovieReviewListComponent } from './movies/movie-review-list/movie-review-list.component';
+import { ReviewCardComponent } from './reviews/review-card/review-card.component';
+import { MovieReviewFullListComponent } from './movies/movie-review-full-list/movie-review-full-list.component';
+import { ReviewDetailComponent } from './reviews/review-detail/review-detail.component';
+import { ReviewListComponent } from './users/review-list/review-list.component';
+import { EditReviewComponent } from './users/edit-review/edit-review.component';
+import { AdminMovieReviewsComponent } from './admin/admin-movie-reviews/admin-movie-reviews.component';
 
 
 
@@ -102,7 +108,6 @@ import { ActorSearchResultsComponent } from './actors/actor-search-results/actor
     FooterComponent,
     AdminMovieListComponent,
     AdminActorListComponent,
-    AdminUserListComponent,
     AdminAddMovieComponent,
     AdminEditMovieComponent,
     AdminAddActorComponent,
@@ -120,9 +125,16 @@ import { ActorSearchResultsComponent } from './actors/actor-search-results/actor
     UserWantToWatchListComponent,
     UserRatedActorsComponent,
     AdminMovieCommentListComponent,
-    AdminUserCommentListComponent,
     MovieSearchResultsComponent,
     ActorSearchResultsComponent,
+    ReviewAddComponent,
+    MovieReviewListComponent,
+    ReviewCardComponent,
+    MovieReviewFullListComponent,
+    ReviewDetailComponent,
+    ReviewListComponent,
+    EditReviewComponent,
+    AdminMovieReviewsComponent
   ],
   imports: [
     BrowserModule,

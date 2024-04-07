@@ -10,33 +10,40 @@ namespace MovieDatabaseAPI.Controllers
 {
     public class CommentsController : BaseApiController
     {
-        private readonly ICommentRepository _commentRepository;
-        private readonly IMovieRepository _movieRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CommentsController(ICommentRepository commentRepository, IMovieRepository movieRepository,
-            IUserRepository userRepository, IMapper mapper)
+        public CommentsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _commentRepository = commentRepository;
-            _movieRepository = movieRepository;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpGet("movie-comments/{movieId}")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetCommentsForMovie(Guid movieId)
         {
-            var comments = await _commentRepository.GetCommentsForMovieAsync(movieId);
+            var comments = await _unitOfWork.CommentRepository.GetCommentsForMovieAsync(movieId);
 
-            return Ok(_mapper.Map<IEnumerable<CommentDto>>(comments));
+            var commentDtos = _mapper.Map<IEnumerable<CommentDto>>(comments);
+
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                var userId = User.GetUserId();
+                foreach (var commentDto in commentDtos)
+                {
+                    commentDto.IsCommentLikedByCurrentUser = 
+                        await _unitOfWork.CommentRepository.CheckIfCommentIsLikedByUser(userId, commentDto.Id);
+                }
+            }
+            
+            return Ok(commentDtos);
         }
 
         [Authorize]
         [HttpGet("{commentId}")]
         public async Task<ActionResult<CommentDto>> GetComment(Guid commentId)
         {
-            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+            var comment = await _unitOfWork.CommentRepository.GetCommentByIdAsync(commentId);
 
             if (comment == null) return NotFound();
 
@@ -49,7 +56,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null) return NotFound("Movie does not exists");
 
@@ -61,11 +68,11 @@ namespace MovieDatabaseAPI.Controllers
                 MovieId = movieId
             };
 
-            _commentRepository.AddComment(comment);
+            _unitOfWork.CommentRepository.AddComment(comment);
 
-            if (await _commentRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
-                var user = await _userRepository.GetUserByIdAsync(userId);
+                var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
 
                 var commentDto = _mapper.Map<CommentDto>(comment);
 
@@ -83,7 +90,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+            var comment = await _unitOfWork.CommentRepository.GetCommentByIdAsync(commentId);
 
             if (comment == null) return NotFound("Comment not found");
 
@@ -95,9 +102,9 @@ namespace MovieDatabaseAPI.Controllers
             if (!comment.IsEdited)
                 comment.IsEdited = true;
 
-            _commentRepository.Update(comment);
+            _unitOfWork.CommentRepository.Update(comment);
 
-            if (await _commentRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to update comment");
         }
@@ -108,18 +115,66 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var comment = await _commentRepository.GetCommentByIdAsync(commentId);
+            var comment = await _unitOfWork.CommentRepository.GetCommentByIdAsync(commentId);
 
             if (comment == null) return NotFound("Comment not found");
 
             if (comment.UserId != userId)
                 return Unauthorized("You cannot delete this comment");
 
-            _commentRepository.Delete(comment);
+            _unitOfWork.CommentRepository.Delete(comment);
 
-            if (await _commentRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to delete comment");
+        }
+
+        [Authorize]
+        [HttpPost("add-like/{commentId}")]
+        public async Task<ActionResult> AddLike(Guid commentId)
+        {
+            var userId = User.GetUserId();
+
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound("User does not exist");
+
+            var comment = await _unitOfWork.CommentRepository.GetCommentByIdAsync(commentId);
+
+            if (comment == null) return NotFound("Comment does not exists.");
+
+            if (comment.Likes.Any(u => u.Id == userId))
+                return BadRequest("You already liked this comment");
+
+            comment.Likes.Add(user);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Failed to add like");
+        }
+
+        [Authorize]
+        [HttpDelete("remove-like/{commentId}")]
+        public async Task<ActionResult> RemoveLike(Guid commentId)
+        {
+            var userId = User.GetUserId();
+
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound("User does not exist");
+
+            var comment = await _unitOfWork.CommentRepository.GetCommentByIdAsync(commentId);
+
+            if (comment == null) return NotFound("Comment does not exists.");
+
+            if (!(comment.Likes.Any(u => u.Id == userId)))
+                return BadRequest("You didn't like this comment");
+
+            comment.Likes.Remove(user);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Failed to remove like");
         }
     }
 }

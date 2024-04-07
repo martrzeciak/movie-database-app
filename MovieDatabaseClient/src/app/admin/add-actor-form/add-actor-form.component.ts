@@ -47,7 +47,6 @@ export class AddActorFormComponent {
 
   addActor() {
     const values = {...this.addForm.value};
-    console.log(this.addForm?.value)
     this.actorService.addActor(values).subscribe({
       next: createdActor => {
         this.toastr.success('Actor added successfully');

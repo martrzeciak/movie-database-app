@@ -12,18 +12,13 @@ namespace MovieDatabaseAPI.Controllers
 {
     public class ActorsController : BaseApiController
     {
-        private readonly IActorRepository _actorRepository;
-        private readonly IRatingRepository _ratingRepository;
-        private readonly IMovieRepository _movieRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
         private readonly IMapper _mapper;
 
-        public ActorsController(IActorRepository actorRepository, IRatingRepository ratingRepository,
-            IMovieRepository movieRepository, IImageService imageService, IMapper mapper)
+        public ActorsController(IUnitOfWork unitOfWork, IImageService imageService, IMapper mapper)
         {
-            _actorRepository = actorRepository;
-            _ratingRepository = ratingRepository;
-            _movieRepository = movieRepository;
+            _unitOfWork = unitOfWork;
             _imageService = imageService;
             _mapper = mapper;
         }
@@ -31,7 +26,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<ActorDto>>> GetActors([FromQuery] ActorParams actorParams)
         {
-            var actors = await _actorRepository.GetActorsAsync(actorParams);
+            var actors = await _unitOfWork.ActorRepository.GetActorsAsync(actorParams);
 
             Response.AddPaginationHeader(new PaginationHeader(
                 actors.CurrentPage, actors.PageSize, actors.TotalCount, actors.TotalPages));
@@ -42,15 +37,15 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("{actorId}")]
         public async Task<ActionResult<ActorDto>> GetActor(Guid actorId)
         {
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
             var actorDto = _mapper.Map<ActorDto>(actor);
 
-            actorDto.AverageRating = await _ratingRepository.GetAverageRatingForActorAsync(actorId);
-            actorDto.RatingCount = await _ratingRepository.GetRatingCountForActorAsync(actorId);
-            actorDto.ActorPosition = await _actorRepository.GetActorPositionAsync(actorId);
+            actorDto.AverageRating = await _unitOfWork.RatingRepository.GetAverageRatingForActorAsync(actorId);
+            actorDto.RatingCount = await _unitOfWork.RatingRepository.GetRatingCountForActorAsync(actorId);
+            actorDto.ActorPosition = await _unitOfWork.ActorRepository.GetActorPositionAsync(actorId);
 
             return Ok(actorDto);
         }
@@ -65,16 +60,16 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var movieId in actorForCreationDto.MovieIds)
                 {
-                    var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+                    var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
                     if (movie != null)
                         actor.Movies.Add(movie);
                 }
             }
 
-            _actorRepository.Add(actor);
+            _unitOfWork.ActorRepository.Add(actor);
             var actorDto = _mapper.Map<ActorDto>(actor);
 
-            if (await _actorRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
                 return CreatedAtAction(nameof(GetActor), new { actorId = actor.Id }, actorDto);
 
             return BadRequest("Failed to add actor");
@@ -84,7 +79,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateActor(Guid id, ActorForCreationDto actorForUpdateDto)
         {
-            var actor = await _actorRepository.GetActorForUpdateAsync(id);
+            var actor = await _unitOfWork.ActorRepository.GetActorForUpdateAsync(id);
 
             if (actor == null) return NotFound();
 
@@ -95,15 +90,15 @@ namespace MovieDatabaseAPI.Controllers
             {
                 foreach (var movieId in actorForUpdateDto.MovieIds)
                 {
-                    var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+                    var movie = await _unitOfWork.MovieRepository.GetMovieByIdAsync(movieId);
                     if (movie != null)
                         actor.Movies.Add(movie);
                 }
             }
 
-            _actorRepository.Update(actor);
+            _unitOfWork.ActorRepository.Update(actor);
 
-            if (await _movieRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
                 var updatedActorDto = _mapper.Map<ActorDto>(actor);
                 return Ok(updatedActorDto);
@@ -116,24 +111,22 @@ namespace MovieDatabaseAPI.Controllers
         [HttpDelete("{actorId}")]
         public async Task<ActionResult> DeleteActor(Guid actorId)
         {
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
-            _actorRepository.Delete(actor);
+            _unitOfWork.ActorRepository.Delete(actor);
 
-            if (await _actorRepository.SaveAllAsync())
-            {
+            if (await _unitOfWork.Complete())
                 return NoContent();
-            }
-
+            
             return BadRequest("Failed to delete actor");
         }
 
         [HttpGet("movie-actors/{movieId}")]
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActorsForMovie(Guid movieId)
         {
-            var actorsForMovie = await _actorRepository.GetActorsForMovieAsync(movieId);
+            var actorsForMovie = await _unitOfWork.ActorRepository.GetActorsForMovieAsync(movieId);
 
             return Ok(_mapper.Map<IEnumerable<ActorDto>>(actorsForMovie));
         }
@@ -141,7 +134,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("actor-name")]
         public async Task<ActionResult<IEnumerable<ActorNameDto>>> GetActorNameList()
         {
-            var actors = await _actorRepository.GetActorNameListAsync();
+            var actors = await _unitOfWork.ActorRepository.GetActorNameListAsync();
 
             return Ok(_mapper.Map<IEnumerable<ActorNameDto>>(actors));
         }
@@ -149,7 +142,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("actor-name/{movieId}")]
         public async Task<ActionResult<IEnumerable<ActorNameDto>>> GetActorNameListForMovie(Guid movieId)
         {
-            var actors = await _actorRepository.GetActorNameListForMovieAsync(movieId);
+            var actors = await _unitOfWork.ActorRepository.GetActorNameListForMovieAsync(movieId);
 
             return Ok(_mapper.Map<IEnumerable<ActorNameDto>>(actors));
         }
@@ -158,7 +151,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpPost("add-actor-image/{actorId}")]
         public async Task<ActionResult<UserImageDto>> AddActorImage(Guid actorId, IFormFile file)
         {
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
@@ -176,21 +169,21 @@ namespace MovieDatabaseAPI.Controllers
 
             actor.Images.Add(image);
 
-            if (await _actorRepository.SaveAllAsync())
+            if (await _unitOfWork.Complete())
             {
                 return CreatedAtAction(nameof(GetActor),
                     new { actorId = actor.Id },
                     _mapper.Map<ActorImageDto>(image));
             }
 
-            return BadRequest("Problem adding photo");
+            return BadRequest("Problem adding image");
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("set-main-image/{actorId}/{imageId}")]
         public async Task<ActionResult> SetMainImage(Guid actorId, Guid imageId)
         {
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
@@ -204,7 +197,7 @@ namespace MovieDatabaseAPI.Controllers
             if (currentMain != null) currentMain.IsMain = false;
             image.IsMain = true;
 
-            if (await _actorRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to set main image");
         }
@@ -213,7 +206,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpDelete("delete-actor-image/{actorId}/{imageId}")]
         public async Task<ActionResult> DeleteImage(Guid actorId, Guid imageId)
         {
-            var actor = await _actorRepository.GetActorAsync(actorId);
+            var actor = await _unitOfWork.ActorRepository.GetActorAsync(actorId);
 
             if (actor == null) return NotFound();
 
@@ -231,7 +224,7 @@ namespace MovieDatabaseAPI.Controllers
 
             actor.Images.Remove(image);
 
-            if (await _actorRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to delete image");
         }
@@ -242,7 +235,7 @@ namespace MovieDatabaseAPI.Controllers
         {
             var userId = User.GetUserId();
 
-            var ratedActors = await _ratingRepository.GetRatedActorsForUserAsync(userId);
+            var ratedActors = await _unitOfWork.RatingRepository.GetRatedActorsForUserAsync(userId);
 
             return Ok(_mapper.Map<IEnumerable<ActorDto>>(ratedActors));
         }
@@ -250,7 +243,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<ActorDto>>> SearchActors([FromQuery] string query)
         {
-            var searchResults = await _actorRepository.SearchActorsAsync(query);
+            var searchResults = await _unitOfWork.ActorRepository.SearchActorsAsync(query);
 
             return Ok(_mapper.Map<IEnumerable<ActorDto>>(searchResults));
         }
@@ -258,7 +251,7 @@ namespace MovieDatabaseAPI.Controllers
         [HttpGet("search-suggestions")]
         public async Task<ActionResult<IEnumerable<ActorNameDto>>> GetSearchSuggestions([FromQuery] string query)
         {
-            var suggestions = await _actorRepository.GetSearchSuggestionsAsync(query);
+            var suggestions = await _unitOfWork.ActorRepository.GetSearchSuggestionsAsync(query);
 
             return Ok(_mapper.Map<IEnumerable<ActorNameDto>>(suggestions));
         }

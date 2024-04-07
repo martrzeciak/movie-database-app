@@ -16,6 +16,5 @@ namespace MovieDatabaseAPI.Interfaces
         Task<IEnumerable<Actor>> GetRatedActorsForUserAsync(Guid id);
         void RemoveMovieRating(MovieRating movieRating);
         void RemoveActorRating(ActorRating actorRating);
-        Task<bool> SaveAllAsync();
     }
 }

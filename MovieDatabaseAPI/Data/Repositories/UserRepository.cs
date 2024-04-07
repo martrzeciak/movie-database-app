@@ -56,11 +56,5 @@ namespace MovieDatabaseAPI.Data.Repositories
         {
             _dataContext.Entry(user).State = EntityState.Modified;
         }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _dataContext.SaveChangesAsync() > 0;
-        }
-
     }
 }
