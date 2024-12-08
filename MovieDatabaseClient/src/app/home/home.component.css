@@ -1,4 +1,4 @@
-/* .jumbotron {
+.jumbotron {
     background: linear-gradient(135deg, #343a40, #1d1f20);
     color: white;
     padding: 100px 0;
@@ -58,58 +58,4 @@
 
 .fancy-btn:last-child {
     margin-right: 0;
-}
- */
-
-
- :root {
-    --primary: #e6f60c;
-    --white: #fff;
-  }
-
-*, *::before, *::after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.hightlight {
-    color: var(--primary);
-}
-
-.hero {
-    background: url("/assets/hero-bg.jpg") no-repeat;
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    color: var(--white);
-    font-family: "Poppins", sans-serif;
-    padding: 0 90px;
-}
-
-.hero__subtitle {
-    color: var(--primary);
-    font-size: 40px;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.hero__title {
-    font-size: 59px;
-    max-width: 600px;
-    margin-bottom: 25px;
-    font-weight: 800;
-}
-
-.hero__btn {
-    text-decoration: none;
-    color: var(--white);
-    padding: 12px 20px;
-    background-color: #000;
-    border-radius: 30px;
-    border: 1px solid var(--primary);
-    font-size: 20px;
-    font-weight: 600;
 }
